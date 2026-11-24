@@ -6,6 +6,7 @@ import { STORIES } from "./stories";
 import { DEMO_2D_FRAMES, Demo2D } from "./two-d/Demo2D";
 import { FilmPlayer, loadFilmMetadata, type FilmPlayerProps } from "./two-d/film/FilmPlayer";
 import { FILMS } from "./two-d/films";
+import { MountainGallery } from "./two-d/library/MountainGallery";
 import { VillageGallery } from "./two-d/library/VillageGallery";
 
 // Each story gets two compositions: landscape for YouTube and portrait for Shorts.
@@ -28,6 +29,7 @@ export const RemotionRoot: React.FC = () => (
       />
     ))}
     <Composition id="library-village" component={VillageGallery} durationInFrames={90} fps={30} width={1920} height={1080} />
+    <Composition id="library-mountain" component={MountainGallery} durationInFrames={90} fps={30} width={1920} height={1080} />
     <Composition id="demo-2d" component={Demo2D} durationInFrames={DEMO_2D_FRAMES} fps={30} width={1920} height={1080} />
     {STORIES.map((story) => {
       const { totalFrames } = computeStoryTiming(story);

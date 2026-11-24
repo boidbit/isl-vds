@@ -1,0 +1,92 @@
+{
+  "id": "gufa-ke-teen",
+  "title": "Gufa Mein Phanse 3 Insaan",
+  "fps": 30,
+  "format": "short",
+  "motionBlur": 5,
+  "source": {
+    "references": ["Sahih al-Bukhari 2272", "Sahih al-Bukhari 2215 (baarish ka zikr)"],
+    "verified": false
+  },
+  "voice": {
+    "enabled": true,
+    "model": "gemini-3.8-flash-tts",
+    "speakers": {
+      "narrator": { "voice": "Gacrux", "style": "deep, cinematic storyteller; suspense at the start, emotional and warm towards the end" }
+    }
+  },
+  "assets": [
+    "musafir1", "musafir2", "musafir3", "pita", "maa", "aurat", "mazdoor",
+    "mountain-sky", "peaks", "lightning", "rain", "rain-splashes", "puddle", "rocky-ground", "cliff-cave", "boulder",
+    "cave-inside", "mud-room", "diya", "chatai", "sleeper", "milk-bowl", "gold-coins",
+    "green-field", "crop-rows", "fence", "cow", "camel", "wage-pouch", "goat", "village-tree", "village-sky", "birds",
+    "sfx-rain", "sfx-rain-muffled", "sfx-thunder", "sfx-rumble", "sfx-grind", "sfx-strain", "sfx-drip", "sfx-impact",
+    "sfx-whoosh", "sfx-step", "sfx-door", "sfx-birds", "sfx-wind", "sfx-chime", "sfx-shimmer"
+  ],
+  "scenes": [
+    {
+      "id": "s1-chattan",
+      "lines": [
+        {
+          "text": "Teen insaan ek gufa mein phans gaye. Ek vishal chattan ne bahar nikalne ka raasta band kar diya!",
+          "voiceText": "तीन इंसान एक गुफ़ा में फँस गए। एक विशाल चट्टान ने बाहर निकलने का रास्ता बंद कर दिया!"
+        }
+      ]
+    },
+    {
+      "id": "s2-dua",
+      "lines": [
+        {
+          "text": "Jab koi raasta nahi bacha, teeno ne apne nek aamaal ka zikr karke Allah se madad maangi.",
+          "voiceText": "जब कोई रास्ता नहीं बचा, तीनों ने अपने नेक आमाल का ज़िक्र करके अल्लाह से मदद माँगी।"
+        }
+      ]
+    },
+    {
+      "id": "s3-maa-baap",
+      "lines": [
+        {
+          "text": "Pehle ne kaha, Ya Allah! Maine apne maa-baap ki khatir poori raat doodh lekar intezar kiya tha.",
+          "voiceText": "पहले ने कहा, या अल्लाह! मैंने अपने माँ-बाप की ख़ातिर पूरी रात दूध लेकर इंतज़ार किया था।"
+        }
+      ]
+    },
+    {
+      "id": "s4-gunah-se-bachna",
+      "lines": [
+        {
+          "text": "Doosre ne kaha, Ya Allah! Jab mujhe gunah karne ka mauka mila, toh main tere khauf se ruk gaya aur maal bhi chhod diya.",
+          "voiceText": "दूसरे ने कहा, या अल्लाह! जब मुझे गुनाह करने का मौक़ा मिला, तो मैं तेरे ख़ौफ़ से रुक गया और माल भी छोड़ दिया।"
+        }
+      ]
+    },
+    {
+      "id": "s5-mazdoor",
+      "lines": [
+        {
+          "text": "Teesre ne kaha, Ya Allah! Maine ek mazdoor ki mazdoori se maal badhaya aur jab woh lauta, toh sab kuch use de diya.",
+          "voiceText": "तीसरे ने कहा, या अल्लाह! मैंने एक मज़दूर की मज़दूरी से माल बढ़ाया और जब वह लौटा, तो सब कुछ उसे दे दिया।"
+        }
+      ]
+    },
+    {
+      "id": "s6-madad",
+      "lines": [
+        {
+          "text": "Allah ne unki dua qubool farmaayi. Chattan hat gayi aur teeno zinda bahar nikal aaye!",
+          "voiceText": "अल्लाह ने उनकी दुआ क़ुबूल फ़रमाई। चट्टान हट गई और तीनों ज़िंदा बाहर निकल आए!"
+        }
+      ]
+    },
+    {
+      "id": "s7-ending",
+      "subtitleMax": 0.6,
+      "lines": [
+        {
+          "text": "Allah ki raza ke liye ki gayi neki kabhi zaya nahi hoti.",
+          "voiceText": "अल्लाह की रज़ा के लिए की गई नेकी कभी ज़ाया नहीं होती।"
+        }
+      ]
+    }
+  ]
+}

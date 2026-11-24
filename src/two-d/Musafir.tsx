@@ -45,7 +45,12 @@ export const BASE_POSE: MusafirPose = {
   time: 0,
 };
 
-export type Look = typeof C & { headwear: "turban" | "cap"; beardLength: number };
+export type Look = typeof C & {
+  headwear: "turban" | "cap" | "scarf"; // "scarf" = woman's headscarf (hijab) framing the face
+  beardLength: number; // 0 = no beard or moustache
+  vest?: string; // waistcoat over the kurta
+  shoulderCloth?: string; // cloth over the front shoulder (labourer)
+};
 
 const C = {
   skin: "#e2a774",
@@ -68,6 +73,14 @@ export const LOOKS: Record<string, Partial<Look>> = {
   musafir: {},
   kisan: { robe: "#e9d9b8", robeShade: "#cdb88f", sash: "#5f7a3a", turban: "#e8c77a", turbanShade: "#cfa95a", beard: "#3a2a1e", skin: "#d99a66", skinShade: "#bd8150" },
   malik: { robe: "#d8e2e6", robeShade: "#b5c3c9", sash: "#7b4a8c", turban: "#ffffff", turbanShade: "#dfe3e6", beard: "#2e231b", skin: "#e0a370", skinShade: "#c48756" },
+  // "Gufa mein phanse 3 insaan" cast
+  musafir1: { robe: "#f1e6cc", robeShade: "#d9c9a6", sash: "#8a5a36", vest: "#7a4b2c", turban: "#ffffff", turbanShade: "#e2ddd2", beard: "#3a2a1e" },
+  musafir2: { robe: "#33507f", robeShade: "#263d64", sash: "#c9a86a", turban: "#e6d4ab", turbanShade: "#cbb688", beard: "#2a1e16", skin: "#d99a66", skinShade: "#bd8150" },
+  musafir3: { robe: "#6f7a3a", robeShade: "#596230", sash: "#c9a86a", turban: "#8a5a36", turbanShade: "#6e4628", beard: "#4a3426", skin: "#e0a370", skinShade: "#c48756" },
+  pita: { robe: "#a3a8ad", robeShade: "#868b91", sash: "#6e6a62", headwear: "cap", turban: "#f4f1ea", turbanShade: "#ddd8cc", beard: "#f2efe9", beardLength: 1.6, skin: "#dfa97c", skinShade: "#c59066" },
+  maa: { robe: "#dcc6a2", robeShade: "#c2aa84", sash: "#a07a4c", headwear: "scarf", turban: "#7a4b2c", turbanShade: "#5e3820", beard: "#6a5a4a", beardLength: 0, skin: "#e2ad82", skinShade: "#c8936a" },
+  aurat: { robe: "#7a2a35", robeShade: "#5e1f2a", sash: "#5e1f2a", headwear: "scarf", turban: "#6a2430", turbanShade: "#4e1a24", beard: "#3a2a1e", beardLength: 0, skin: "#e6b088", skinShade: "#cc9670" },
+  mazdoor: { robe: "#8a6a4a", robeShade: "#6e523a", sash: "#5a4632", headwear: "cap", turban: "#d8c8a0", turbanShade: "#bfae84", shoulderCloth: "#d8c8a0", beard: "#2e231b", skin: "#c98a58", skinShade: "#a8703f" },
   buzurg: { robe: "#f6f1e4", robeShade: "#ddd3bd", sash: "#a07a3c", turban: "#ffffff", turbanShade: "#e6e1d6", beard: "#efece6", skin: "#e4ad80", skinShade: "#c99268", beardLength: 1.5 },
 };
 
@@ -135,7 +148,13 @@ const Eye: React.FC<{ cx: number; cy: number; open: number; look: number }> = ({
   );
 };
 
-const BackHead: React.FC<{ c: Look }> = ({ c: C }) => (
+const BackHead: React.FC<{ c: Look }> = ({ c: C }) =>
+  C.headwear === "scarf" ? (
+    <g>
+      <path d="M -50 -60 Q -50 -120 6 -124 Q 62 -120 62 -60 Q 64 0 72 12 L -58 12 Q -50 0 -50 -60 Z" fill={C.turban} {...stroke} />
+      <path d="M -20 -110 Q -36 -50 -30 8 M 30 -112 Q 44 -50 40 8" fill="none" stroke={C.turbanShade} strokeWidth={6} strokeLinecap="round" />
+    </g>
+  ) : (
   // Seen from behind: no face at all, only turban, back of the head and beard edge.
   <g>
     <rect x={-12} y={-18} width={24} height={22} rx={6} fill={C.skinShade} {...stroke} />
@@ -184,22 +203,36 @@ const Head: React.FC<{ p: MusafirPose; c: Look }> = ({ p, c: C }) => {
   return (
     <g>
       <rect x={-12} y={-18} width={24} height={22} rx={6} fill={C.skinShade} {...stroke} />
-      {/* turban tail behind */}
-      <path d="M -40 -92 Q -64 -50 -50 -8 L -32 -10 Q -42 -50 -22 -84 Z" fill={C.turbanShade} {...stroke} />
+      {C.headwear === "scarf" ? (
+        // headscarf drape behind the head, falling onto the shoulders
+        <path d="M 44 -108 Q 6 -128 -34 -106 Q -66 -66 -60 -2 Q -40 22 24 18 Q 56 12 62 -8 Z" fill={C.turbanShade} {...stroke} />
+      ) : C.headwear === "turban" ? (
+        // turban tail behind
+        <path d="M -40 -92 Q -64 -50 -50 -8 L -32 -10 Q -42 -50 -22 -84 Z" fill={C.turbanShade} {...stroke} />
+      ) : null}
       {/* head */}
       <ellipse cx={10} cy={-58} rx={44} ry={50} fill={C.skin} {...stroke} />
-      <ellipse cx={-22} cy={-56} rx={9} ry={12} fill={C.skinShade} {...stroke} />
+      {C.headwear !== "scarf" && <ellipse cx={-22} cy={-56} rx={9} ry={12} fill={C.skinShade} {...stroke} />}
       {/* beard + moustache */}
-      <path transform={`translate(0 -44) scale(1 ${C.beardLength}) translate(0 44)`} d="M -28 -60 Q -30 -10 8 4 Q 46 8 58 -30 Q 56 -42 50 -44 Q 38 -18 20 -22 Q 0 -26 -6 -56 Z" fill={C.beard} {...stroke} />
+      {C.beardLength > 0 && <path transform={`translate(0 -44) scale(1 ${C.beardLength}) translate(0 44)`} d="M -28 -60 Q -30 -10 8 4 Q 46 8 58 -30 Q 56 -42 50 -44 Q 38 -18 20 -22 Q 0 -26 -6 -56 Z" fill={C.beard} {...stroke} />}
+      {C.beardLength === 0 && <ellipse cx={44} cy={-48} rx={8} ry={5} fill="#e88a7a" opacity={0.35} />}
       {mouth()}
-      <path d="M 22 -40 Q 36 -46 50 -38" fill="none" stroke={C.beard} strokeWidth={8} strokeLinecap="round" />
+      {C.beardLength > 0 && <path d="M 22 -40 Q 36 -46 50 -38" fill="none" stroke={C.beard} strokeWidth={8} strokeLinecap="round" />}
       {/* nose */}
       <path d="M 46 -62 Q 58 -50 46 -44" fill={C.skin} {...stroke} strokeWidth={3} />
       <Eye cx={22} cy={-66} open={p.eyeOpen} look={p.look} />
       <Eye cx={44} cy={-66} open={p.eyeOpen} look={p.look} />
       <path d={browL(22, -84, -1)} fill="none" stroke={C.beard} strokeWidth={5} strokeLinecap="round" />
       <path d={browL(44, -84, 1)} fill="none" stroke={C.beard} strokeWidth={5} strokeLinecap="round" />
-      {C.headwear === "cap" ? (
+      {C.headwear === "scarf" ? (
+        // front of the headscarf: covers the hair and the back of the head, wraps under the chin
+        <>
+          <path d="M 54 -92 Q 30 -124 -20 -114 Q -58 -96 -56 -50 Q -54 -14 -20 0 Q -10 -40 -4 -64 Q 8 -94 54 -92 Z" fill={C.turban} {...stroke} />
+          <path d="M -12 2 Q 20 14 56 -12 L 62 -2 Q 30 26 -16 14 Z" fill={C.turban} {...stroke} />
+          <path d="M -34 -96 Q -46 -60 -36 -16" fill="none" stroke={C.turbanShade} strokeWidth={5} strokeLinecap="round" />
+          <path d="M 50 -94 Q 20 -96 2 -80" fill="none" stroke={C.turbanShade} strokeWidth={4} strokeLinecap="round" />
+        </>
+      ) : C.headwear === "cap" ? (
         <path d="M -34 -86 Q -30 -122 10 -124 Q 50 -122 54 -86 Q 10 -94 -34 -86 Z" fill={C.turban} {...stroke} />
       ) : (
       <>
@@ -285,8 +318,20 @@ export const Musafir: React.FC<{ x: number; y: number; flip?: boolean; scale?: n
           <Arm x={-6} y={-118} a={p.armB} back time={p.time} c={C} />
           <path d="M -46 4 C -54 -50 -52 -104 -38 -126 Q 0 -140 40 -126 C 54 -104 54 -50 46 4 Z" fill={C.robe} {...stroke} />
           <path d="M -30 -110 Q -40 -60 -34 0" fill="none" stroke={C.robeShade} strokeWidth={9} strokeLinecap="round" opacity={0.8} />
+          {C.vest && (
+            <>
+              <path d="M -46 4 C -54 -50 -52 -104 -38 -126 L -8 -132 Q -2 -60 -6 4 Z" fill={C.vest} {...stroke} />
+              <path d="M 46 4 C 54 -50 54 -104 40 -126 L 16 -132 Q 10 -60 14 4 Z" fill={C.vest} {...stroke} />
+              {[-100, -70, -40].map((by) => (
+                <circle key={by} cx={18} cy={by} r={4} fill="#d9b25a" stroke={OUT} strokeWidth={1.5} />
+              ))}
+            </>
+          )}
           <rect x={-48} y={-12} width={96} height={20} rx={8} fill={C.sash} {...stroke} />
           <path d="M 30 6 L 36 40 L 22 40 Z" fill={C.sash} {...stroke} />
+          {C.shoulderCloth && (
+            <path d="M -30 -132 Q 20 -142 46 -122 L 44 -50 Q 34 -38 26 -50 L 24 -108 Q -4 -112 -24 -118 Z" fill={C.shoulderCloth} {...stroke} />
+          )}
           <g transform={`translate(6 -128) rotate(${p.headTilt})`}>
             {seenFromBehind ? <BackHead c={C} /> : <Head p={p} c={C} />}
           </g>

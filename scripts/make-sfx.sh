@@ -15,6 +15,18 @@ gen -f lavfi -i "anoisesrc=color=pink:amplitude=0.8:duration=0.2:seed=7" -af "hi
 gen -f lavfi -i "anoisesrc=color=white:amplitude=0.6:duration=0.09:seed=9" -af "highpass=f=1200,lowpass=f=4500,afade=t=in:d=0.005,afade=t=out:st=0.02:d=0.07,volume=1.3" lap.wav
 # hand on stone
 gen -f lavfi -i "anoisesrc=color=pink:amplitude=0.8:duration=0.25:seed=11" -af "highpass=f=250,lowpass=f=1500,afade=t=in:d=0.01,afade=t=out:st=0.05:d=0.2,volume=1.5" scrape.wav
+# --- gufa-ke-teen: storm + stone
+# heavy rain (outside) and the same rain heard muffled from inside a cave
+gen -f lavfi -i "anoisesrc=color=pink:amplitude=0.6:duration=14:seed=41" -f lavfi -i "anoisesrc=color=white:amplitude=0.25:duration=14:seed=42" -filter_complex "[0]highpass=f=300,lowpass=f=7000[a];[1]highpass=f=3000,tremolo=f=9:d=0.5[b];[a][b]amix=inputs=2:weights=1 0.6,afade=t=in:d=0.3,afade=t=out:st=12.5:d=1.5,volume=1.6" -b:a 112k rain.mp3
+gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.6:duration=14:seed=43" -af "lowpass=f=500,highpass=f=50,tremolo=f=0.3:d=0.4,afade=t=in:d=1,afade=t=out:st=12:d=2,volume=1.6" -b:a 96k rain-muffled.mp3
+# thunder: sharp crack then a long rolling rumble
+gen -f lavfi -i "anoisesrc=color=white:amplitude=1:duration=3.5:seed=44" -f lavfi -i "anoisesrc=color=brown:amplitude=1:duration=3.5:seed=45" -filter_complex "[0]highpass=f=1500,afade=t=out:st=0:d=0.25:curve=exp[c];[1]lowpass=f=160,tremolo=f=5:d=0.6,afade=t=in:d=0.08,afade=t=out:st=0.6:d=2.9[r];[c][r]amix=inputs=2:weights=0.6 1.4,volume=2.6" thunder.wav
+# boulder rolling down: rumble with bumps
+gen -f lavfi -i "anoisesrc=color=brown:amplitude=1:duration=2.6:seed=46" -af "lowpass=f=260,tremolo=f=7:d=0.8,afade=t=in:d=0.4,afade=t=out:st=2.1:d=0.5,volume=3" rumble.wav
+# heavy stone sliding / grinding a little
+gen -f lavfi -i "anoisesrc=color=pink:amplitude=0.9:duration=1.8:seed=47" -af "bandpass=f=420:width_type=o:w=1.4,tremolo=f=16:d=0.7,afade=t=in:d=0.15,afade=t=out:st=1.2:d=0.6,volume=2.6" grind.wav
+# hands straining on rock (pushing)
+gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.7:duration=0.9:seed=48" -af "lowpass=f=400,tremolo=f=11:d=0.6,afade=t=in:d=0.2,afade=t=out:st=0.5:d=0.4,volume=1.8" strain.wav
 ls -la
 # ---- village / treasure set (sone-ka-matka) ----
 # hoe into dry soil
@@ -43,4 +55,16 @@ gen -f lavfi -i "aevalsrc=0.35*sin(2*PI*880*t)*exp(-1.6*t)+0.2*sin(2*PI*1320*t)*
 gen -f lavfi -i "aevalsrc=0.12*sin(2*PI*220*t)+0.1*sin(2*PI*277.2*t)+0.09*sin(2*PI*329.6*t)+0.05*sin(2*PI*440*t):d=10" -af "tremolo=f=0.4:d=0.3,afade=t=in:d=1.5,afade=t=out:st=8:d=2,lowpass=f=1800,volume=1.4" pad.wav
 # village ambience: light wind + distant birds
 gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.4:duration=40:seed=31" -f lavfi -i "aevalsrc=0.04*sin(2*PI*(3400+700*sin(2*PI*11*t))*t)*gt(sin(2*PI*0.4*t)\,0.85):d=40" -filter_complex "[0]highpass=f=80,lowpass=f=600,tremolo=f=0.15:d=0.5[a];[a][1]amix=inputs=2:weights=1 1,volume=1.4" -b:a 96k village-ambience.mp3
+# --- gufa-ke-teen: storm + stone
+# heavy rain (outside) and the same rain heard muffled from inside a cave
+gen -f lavfi -i "anoisesrc=color=pink:amplitude=0.6:duration=14:seed=41" -f lavfi -i "anoisesrc=color=white:amplitude=0.25:duration=14:seed=42" -filter_complex "[0]highpass=f=300,lowpass=f=7000[a];[1]highpass=f=3000,tremolo=f=9:d=0.5[b];[a][b]amix=inputs=2:weights=1 0.6,afade=t=in:d=0.3,afade=t=out:st=12.5:d=1.5,volume=1.6" -b:a 112k rain.mp3
+gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.6:duration=14:seed=43" -af "lowpass=f=500,highpass=f=50,tremolo=f=0.3:d=0.4,afade=t=in:d=1,afade=t=out:st=12:d=2,volume=1.6" -b:a 96k rain-muffled.mp3
+# thunder: sharp crack then a long rolling rumble
+gen -f lavfi -i "anoisesrc=color=white:amplitude=1:duration=3.5:seed=44" -f lavfi -i "anoisesrc=color=brown:amplitude=1:duration=3.5:seed=45" -filter_complex "[0]highpass=f=1500,afade=t=out:st=0:d=0.25:curve=exp[c];[1]lowpass=f=160,tremolo=f=5:d=0.6,afade=t=in:d=0.08,afade=t=out:st=0.6:d=2.9[r];[c][r]amix=inputs=2:weights=0.6 1.4,volume=2.6" thunder.wav
+# boulder rolling down: rumble with bumps
+gen -f lavfi -i "anoisesrc=color=brown:amplitude=1:duration=2.6:seed=46" -af "lowpass=f=260,tremolo=f=7:d=0.8,afade=t=in:d=0.4,afade=t=out:st=2.1:d=0.5,volume=3" rumble.wav
+# heavy stone sliding / grinding a little
+gen -f lavfi -i "anoisesrc=color=pink:amplitude=0.9:duration=1.8:seed=47" -af "bandpass=f=420:width_type=o:w=1.4,tremolo=f=16:d=0.7,afade=t=in:d=0.15,afade=t=out:st=1.2:d=0.6,volume=2.6" grind.wav
+# hands straining on rock (pushing)
+gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.7:duration=0.9:seed=48" -af "lowpass=f=400,tremolo=f=11:d=0.6,afade=t=in:d=0.2,afade=t=out:st=0.5:d=0.4,volume=1.8" strain.wav
 ls -la
