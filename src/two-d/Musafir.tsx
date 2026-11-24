@@ -20,7 +20,7 @@ export type MusafirPose = {
   mouth: Mouth;
   look: number; // -1..1 pupil direction
   sweat: number; // 0..1 visibility of a sweat drop
-  khuff: "none" | "hand";
+  khuff: "none" | "hand" | "mouth";
   pour: boolean;
   time: number; // seconds, for small secondary motion
 };
@@ -164,6 +164,13 @@ const Head: React.FC<{ p: MusafirPose }> = ({ p }) => {
       <path d="M -36 -84 Q -40 -128 6 -134 Q 52 -136 58 -90 Q 30 -98 10 -96 Q -14 -96 -36 -84 Z" fill={C.turban} {...stroke} />
       <path d="M -30 -100 Q 10 -114 54 -100" fill="none" stroke={C.turbanShade} strokeWidth={5} strokeLinecap="round" />
       <path d="M -24 -116 Q 14 -126 46 -114" fill="none" stroke={C.turbanShade} strokeWidth={5} strokeLinecap="round" />
+      {p.khuff === "mouth" && (
+        // held with the teeth while climbing (as in the hadith)
+        <g transform="translate(54 -16) rotate(-20)">
+          <path d="M -9 -2 L -10 30 Q -10 44 6 44 L 24 44 Q 31 44 31 37 Q 31 30 20 28 L 11 26 L 10 -2 Z" fill="#8f5a33" {...stroke} />
+          <ellipse cx={0} cy={-2} rx={10} ry={4} fill="#5b3820" {...stroke} />
+        </g>
+      )}
       {p.sweat > 0.02 && (
         <path
           transform={`translate(64 ${-82 + p.sweat * 40})`}
@@ -178,7 +185,7 @@ const Head: React.FC<{ p: MusafirPose }> = ({ p }) => {
   );
 };
 
-export const Musafir: React.FC<{ x: number; y: number; flip?: boolean; scale?: number; pose: MusafirPose }> = ({ x, y, flip, scale = 1, pose: p }) => {
+export const Musafir: React.FC<{ x: number; y: number; flip?: boolean; scale?: number; pose: MusafirPose; noShadow?: boolean }> = ({ x, y, flip, scale = 1, pose: p, noShadow }) => {
   const k = p.kneel;
   const hipY = -165 + k * 92;
   const bob = -Math.abs(Math.sin(p.step)) * 6 * p.walk;
@@ -193,7 +200,7 @@ export const Musafir: React.FC<{ x: number; y: number; flip?: boolean; scale?: n
   return (
     <g transform={`translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})`}>
       {/* soft contact shadow */}
-      <ellipse cx={back * 0.4} cy={2} rx={95 + k * 30} ry={13} fill="#7a4a24" opacity={0.25} />
+      {!noShadow && <ellipse cx={back * 0.4} cy={2} rx={95 + k * 30} ry={13} fill="#7a4a24" opacity={0.25} />}
       {/* feet */}
       {k < 0.5 ? (
         <>

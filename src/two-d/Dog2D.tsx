@@ -14,6 +14,7 @@ export type DogPose = {
   happy: number; // 0 sad brows .. 1 happy brows
   ears: number; // 0 droopy .. 1 perked
   lap: number; // 0..1 drinking (lapping) motion
+  sit?: number; // 0..1 sitting on its haunches
   time: number;
 };
 
@@ -37,18 +38,27 @@ export const Dog2D: React.FC<{ x: number; y: number; flip?: boolean; scale?: num
       // folded legs: paws forward along the ground
       return <rect x={lx - 6} y={-22} width={52} height={18} rx={9} fill={fill} {...stroke} />;
     }
-    const swing = Math.sin(phase) * 0;
+    void phase;
+    const sitK = p.sit ?? 0;
+    // sitting: front legs reach down to the ground, back legs tuck under the haunch
+    const len = lx > 0 ? legLen + sitK * 66 : legLen * (1 - sitK * 0.7);
     return (
-      <g transform={`translate(${lx} ${bodyY + 18}) rotate(${swing})`}>
-        <rect x={-9} y={0} width={18} height={legLen} rx={8} fill={fill} {...stroke} />
-        <ellipse cx={5} cy={legLen} rx={14} ry={7} fill={fill} {...stroke} />
+      <g transform={`translate(${lx} ${bodyY + 18}) rotate(${lx > 0 ? sitK * 28 : 0})`}>
+        <rect x={-9} y={0} width={18} height={len} rx={8} fill={fill} {...stroke} />
+        <ellipse cx={5} cy={len} rx={14} ry={7} fill={fill} {...stroke} />
       </g>
     );
   };
 
+  const sit = p.sit ?? 0;
   return (
     <g transform={`translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})`}>
       <ellipse cx={0} cy={2} rx={95} ry={12} fill="#7a4a24" opacity={0.25} />
+      {sit > 0.01 && (
+        // folded haunch when sitting
+        <ellipse cx={-48} cy={-26} rx={40 * sit} ry={26 * sit} fill={C.furShade} {...stroke} />
+      )}
+      <g transform={`rotate(${-sit * 28} -60 ${-20})`}>
       {leg(-52, true, 0)}
       {leg(46, true, 1)}
       {/* tail */}
@@ -88,6 +98,7 @@ export const Dog2D: React.FC<{ x: number; y: number; flip?: boolean; scale?: num
             <path d="M 0 0 Q -24 4 -22 40 Q -10 46 2 30 Q 8 12 0 0 Z" fill={C.dark} {...stroke} />
           </g>
         </g>
+      </g>
       </g>
     </g>
   );
