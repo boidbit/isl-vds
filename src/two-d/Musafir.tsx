@@ -1,0 +1,236 @@
+// 2D cut-out "puppet" of the traveller. Every body part is a separate shape
+// rotated around its joint, like Adobe Animate / Toon Boom rigs.
+// Local coordinates: feet at (0,0), facing right (+x), y grows downward.
+
+import React from "react";
+import { LINE, OUT } from "./kit";
+
+export type Mouth = "neutral" | "smile" | "open" | "pant" | "sad";
+
+export type MusafirPose = {
+  step: number; // walk phase (radians); 0 amplitude when standing
+  walk: number; // 0..1 walk amplitude
+  kneel: number; // 0..1
+  lean: number; // degrees, + leans forward
+  headTilt: number; // degrees, + nods down/forward
+  armF: [number, number]; // front arm: shoulder, elbow (degrees, + forward/up)
+  armB: [number, number];
+  eyeOpen: number; // 0..1
+  brow: number; // -1 sad/worried .. 0 .. +1 happy/raised
+  mouth: Mouth;
+  look: number; // -1..1 pupil direction
+  sweat: number; // 0..1 visibility of a sweat drop
+  khuff: "none" | "hand";
+  pour: boolean;
+  time: number; // seconds, for small secondary motion
+};
+
+export const BASE_POSE: MusafirPose = {
+  step: 0,
+  walk: 0,
+  kneel: 0,
+  lean: 0,
+  headTilt: 0,
+  armF: [8, 10],
+  armB: [-6, 8],
+  eyeOpen: 1,
+  brow: 0,
+  mouth: "neutral",
+  look: 0.3,
+  sweat: 0,
+  khuff: "none",
+  pour: false,
+  time: 0,
+};
+
+const C = {
+  skin: "#e2a774",
+  skinShade: "#c98c5c",
+  robe: "#f4ead6",
+  robeShade: "#dccbaa",
+  sash: "#b5643c",
+  turban: "#ffffff",
+  turbanShade: "#e2ddd2",
+  beard: "#4a3426",
+  sandal: "#7a4b2c",
+  khuff: "#8f5a33",
+  water: "#8fd3f0",
+};
+
+const stroke = { stroke: OUT, strokeWidth: LINE, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
+
+const Arm: React.FC<{ x: number; y: number; a: [number, number]; back?: boolean; khuff?: boolean; pour?: boolean; time: number }> = ({
+  x,
+  y,
+  a,
+  back,
+  khuff,
+  pour,
+  time,
+}) => {
+  const robe = back ? C.robeShade : C.robe;
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${-a[0]})`}>
+      <path d="M -15 -6 Q -19 30 -17 62 L 17 62 Q 19 30 15 -6 Q 0 -14 -15 -6 Z" fill={robe} {...stroke} />
+      <g transform={`translate(0 56) rotate(${-a[1]})`}>
+        {/* bell sleeve */}
+        <path d="M -16 0 Q -20 30 -24 56 Q 0 64 24 56 Q 20 30 16 0 Z" fill={robe} {...stroke} />
+        <circle cx={0} cy={66} r={12} fill={back ? C.skinShade : C.skin} {...stroke} />
+        {khuff && (
+          <g transform={`translate(0 70) rotate(${pour ? 115 : 0})`}>
+            {/* leather sock: the man's only vessel */}
+            <path d="M -11 -4 L -12 34 Q -12 50 6 50 L 26 50 Q 34 50 34 42 Q 34 34 22 32 L 12 30 L 11 -4 Z" fill={C.khuff} {...stroke} />
+            <ellipse cx={0} cy={-4} rx={12} ry={5} fill="#5b3820" {...stroke} />
+            {pour && (
+              <g transform={`rotate(-115) translate(${Math.sin(time * 20)} 0)`}>
+                <path d={`M -2 -8 Q 2 40 0 ${110} L 6 ${110} Q 6 40 5 -8 Z`} fill={C.water} stroke="#5aa9cf" strokeWidth={2} opacity={0.9} />
+                {[0, 1, 2].map((i) => {
+                  const yy = 20 + ((time * 160 + i * 33) % 90);
+                  return <circle key={i} cx={4 + Math.sin(i * 3) * 4} cy={yy} r={3} fill="#d8f2ff" />;
+                })}
+              </g>
+            )}
+          </g>
+        )}
+      </g>
+    </g>
+  );
+};
+
+const Eye: React.FC<{ cx: number; cy: number; open: number; look: number }> = ({ cx, cy, open, look }) => {
+  const ry = 11 * Math.max(0.08, open);
+  return (
+    <g>
+      <ellipse cx={cx} cy={cy} rx={9.5} ry={ry} fill="#fff" stroke={OUT} strokeWidth={2.5} />
+      {open > 0.25 && <circle cx={cx + 3 + look * 2.5} cy={cy + 1} r={Math.min(5.5, ry * 0.6)} fill="#2a1a12" />}
+      {open > 0.25 && <circle cx={cx + 4.5 + look * 2.5} cy={cy - 1.5} r={1.6} fill="#fff" />}
+      {open < 0.7 && (
+        // heavy upper lid for a tired look
+        <path d={`M ${cx - 11} ${cy - ry + 1} Q ${cx} ${cy - ry - 3} ${cx + 11} ${cy - ry + 1}`} fill="none" stroke={OUT} strokeWidth={3} strokeLinecap="round" />
+      )}
+    </g>
+  );
+};
+
+const Head: React.FC<{ p: MusafirPose }> = ({ p }) => {
+  // brow angle: sad lifts the inner (front) end
+  const browL = (x: number, y: number, inner: 1 | -1) => {
+    const lift = p.brow < 0 ? -p.brow * 7 * inner : 0;
+    const raise = p.brow > 0 ? -p.brow * 5 : 0;
+    return `M ${x - 10} ${y + raise + (inner < 0 ? -lift : 0)} Q ${x} ${y - 4 + raise} ${x + 10} ${y + raise - (inner > 0 ? lift : 0)}`;
+  };
+  const mouth = () => {
+    const mx = 36;
+    const my = -30;
+    switch (p.mouth) {
+      case "smile":
+        return <path d={`M ${mx - 10} ${my - 2} Q ${mx} ${my + 9} ${mx + 10} ${my - 3}`} fill="#8b2f2f" {...stroke} strokeWidth={3} />;
+      case "open":
+        return <ellipse cx={mx} cy={my} rx={6} ry={8} fill="#6e1f1f" {...stroke} strokeWidth={3} />;
+      case "pant": {
+        const o = 6 + Math.sin(p.time * 14) * 2;
+        return (
+          <g>
+            <ellipse cx={mx} cy={my} rx={7} ry={o} fill="#6e1f1f" {...stroke} strokeWidth={3} />
+            <ellipse cx={mx} cy={my + o * 0.5} rx={4.5} ry={3} fill="#e07a7a" />
+          </g>
+        );
+      }
+      case "sad":
+        return <path d={`M ${mx - 9} ${my + 3} Q ${mx} ${my - 5} ${mx + 9} ${my + 3}`} fill="none" {...stroke} strokeWidth={3} />;
+      default:
+        return <path d={`M ${mx - 8} ${my} L ${mx + 8} ${my}`} {...stroke} strokeWidth={3} />;
+    }
+  };
+  return (
+    <g>
+      <rect x={-12} y={-18} width={24} height={22} rx={6} fill={C.skinShade} {...stroke} />
+      {/* turban tail behind */}
+      <path d="M -40 -92 Q -64 -50 -50 -8 L -32 -10 Q -42 -50 -22 -84 Z" fill={C.turbanShade} {...stroke} />
+      {/* head */}
+      <ellipse cx={10} cy={-58} rx={44} ry={50} fill={C.skin} {...stroke} />
+      <ellipse cx={-22} cy={-56} rx={9} ry={12} fill={C.skinShade} {...stroke} />
+      {/* beard + moustache */}
+      <path d="M -28 -60 Q -30 -10 8 4 Q 46 8 58 -30 Q 56 -42 50 -44 Q 38 -18 20 -22 Q 0 -26 -6 -56 Z" fill={C.beard} {...stroke} />
+      {mouth()}
+      <path d="M 22 -40 Q 36 -46 50 -38" fill="none" stroke={C.beard} strokeWidth={8} strokeLinecap="round" />
+      {/* nose */}
+      <path d="M 46 -62 Q 58 -50 46 -44" fill={C.skin} {...stroke} strokeWidth={3} />
+      <Eye cx={22} cy={-66} open={p.eyeOpen} look={p.look} />
+      <Eye cx={44} cy={-66} open={p.eyeOpen} look={p.look} />
+      <path d={browL(22, -84, -1)} fill="none" stroke={C.beard} strokeWidth={5} strokeLinecap="round" />
+      <path d={browL(44, -84, 1)} fill="none" stroke={C.beard} strokeWidth={5} strokeLinecap="round" />
+      {/* wrapped turban */}
+      <path d="M -36 -84 Q -40 -128 6 -134 Q 52 -136 58 -90 Q 30 -98 10 -96 Q -14 -96 -36 -84 Z" fill={C.turban} {...stroke} />
+      <path d="M -30 -100 Q 10 -114 54 -100" fill="none" stroke={C.turbanShade} strokeWidth={5} strokeLinecap="round" />
+      <path d="M -24 -116 Q 14 -126 46 -114" fill="none" stroke={C.turbanShade} strokeWidth={5} strokeLinecap="round" />
+      {p.sweat > 0.02 && (
+        <path
+          transform={`translate(64 ${-82 + p.sweat * 40})`}
+          d="M 0 -10 Q 7 2 0 8 Q -7 2 0 -10 Z"
+          fill="#bfe9ff"
+          stroke="#5aa9cf"
+          strokeWidth={2}
+          opacity={Math.min(1, (1 - p.sweat) * 3)}
+        />
+      )}
+    </g>
+  );
+};
+
+export const Musafir: React.FC<{ x: number; y: number; flip?: boolean; scale?: number; pose: MusafirPose }> = ({ x, y, flip, scale = 1, pose: p }) => {
+  const k = p.kneel;
+  const hipY = -165 + k * 92;
+  const bob = -Math.abs(Math.sin(p.step)) * 6 * p.walk;
+  const sway = Math.sin(p.step) * 10 * p.walk;
+  const hem = -14 + k * 4;
+  const footF = 18 + Math.sin(p.step) * 26 * p.walk;
+  const footB = -12 - Math.sin(p.step) * 26 * p.walk;
+  const liftF = -Math.max(0, Math.cos(p.step)) * 9 * p.walk;
+  const liftB = -Math.max(0, -Math.cos(p.step)) * 9 * p.walk;
+  const back = -k * 55;
+
+  return (
+    <g transform={`translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})`}>
+      {/* soft contact shadow */}
+      <ellipse cx={back * 0.4} cy={2} rx={95 + k * 30} ry={13} fill="#7a4a24" opacity={0.25} />
+      {/* feet */}
+      {k < 0.5 ? (
+        <>
+          <ellipse cx={footB} cy={-8 + liftB} rx={22} ry={9} fill={C.sandal} {...stroke} />
+          <ellipse cx={footF} cy={-8 + liftF} rx={22} ry={9} fill={C.sandal} {...stroke} />
+        </>
+      ) : (
+        <>
+          <ellipse cx={-118} cy={-8} rx={10} ry={20} transform="rotate(-70 -118 -8)" fill={C.sandal} {...stroke} />
+          <ellipse cx={-100} cy={-6} rx={10} ry={20} transform="rotate(-70 -100 -6)" fill={C.sandal} {...stroke} />
+        </>
+      )}
+      <g transform={`translate(0 ${bob})`}>
+        {/* skirt of the robe, sways with the stride and spreads when kneeling */}
+        <path
+          d={`M -46 ${hipY} C -58 ${hipY + 60} ${-78 + back + sway * 0.4} ${hem - 50} ${-84 + back + sway} ${hem}
+              Q 0 ${hem + 10} ${84 + sway} ${hem}
+              C ${78 + sway * 0.4} ${hem - 50} 58 ${hipY + 60} 46 ${hipY} Z`}
+          fill={C.robe}
+          {...stroke}
+        />
+        <path d={`M ${-30 + back * 0.5} ${hem - 4} Q ${-24 + back * 0.3} ${(hipY + hem) / 2} -18 ${hipY + 30}`} fill="none" stroke={C.robeShade} strokeWidth={4} strokeLinecap="round" />
+        <path d={`M ${24 + sway * 0.6} ${hem - 4} Q 20 ${(hipY + hem) / 2} 14 ${hipY + 30}`} fill="none" stroke={C.robeShade} strokeWidth={4} strokeLinecap="round" />
+
+        {/* upper body leans around the waist */}
+        <g transform={`translate(0 ${hipY + 6}) rotate(${p.lean})`}>
+          <Arm x={-6} y={-118} a={p.armB} back time={p.time} />
+          <path d="M -46 4 C -54 -50 -52 -104 -38 -126 Q 0 -140 40 -126 C 54 -104 54 -50 46 4 Z" fill={C.robe} {...stroke} />
+          <path d="M -30 -110 Q -40 -60 -34 0" fill="none" stroke={C.robeShade} strokeWidth={9} strokeLinecap="round" opacity={0.8} />
+          <rect x={-48} y={-12} width={96} height={20} rx={8} fill={C.sash} {...stroke} />
+          <path d="M 30 6 L 36 40 L 22 40 Z" fill={C.sash} {...stroke} />
+          <g transform={`translate(6 -128) rotate(${p.headTilt})`}>
+            <Head p={p} />
+          </g>
+          <Arm x={12} y={-114} a={p.armF} khuff={p.khuff === "hand"} pour={p.pour} time={p.time} />
+        </g>
+      </g>
+    </g>
+  );
+};
