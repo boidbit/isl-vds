@@ -2,6 +2,7 @@
 
 import React from "react";
 import { LINE, OUT } from "../kit";
+import { VillageTree } from "./Village";
 
 const stroke = { stroke: OUT, strokeWidth: LINE, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
 const SKIN = "#e2a774";
@@ -9,32 +10,8 @@ const SKIN_SHADE = "#c98c5c";
 const ROBE = "#f4ead6";
 const ROBE_SHADE = "#dccbaa";
 
-/** Lush rounded tree that gives shade (the "hara-bhara ped"). */
-export const GreenTree: React.FC<{ x: number; y: number; s?: number; sway?: number }> = ({ x, y, s = 1, sway = 0 }) => (
-  <g transform={`translate(${x} ${y}) scale(${s})`}>
-    <ellipse cx={0} cy={6} rx={230} ry={26} fill="#5a3a1c" opacity={0.25} />
-    <path d="M -26 0 Q -18 -120 -40 -230 L -10 -236 Q 6 -150 4 -110 Q 30 -170 70 -210 L 86 -196 Q 40 -150 26 -90 Q 24 -40 30 0 Z" fill="#8a5a36" {...stroke} />
-    <g transform={`rotate(${sway} 0 -260)`}>
-      {[
-        [-110, -260, 110],
-        [0, -330, 130],
-        [110, -270, 115],
-        [-40, -230, 100],
-        [70, -220, 95],
-      ].map(([cx, cy, r], i) => (
-        <circle key={i} cx={cx} cy={cy} r={r} fill={i % 2 ? "#6aa84f" : "#7dbb5a"} {...stroke} />
-      ))}
-      {/* leaf highlights */}
-      {[
-        [-60, -330],
-        [40, -390],
-        [140, -310],
-      ].map(([cx, cy], i) => (
-        <path key={i} d={`M ${cx} ${cy} q 30 -20 60 0`} fill="none" stroke="#a6d77e" strokeWidth={8} strokeLinecap="round" />
-      ))}
-    </g>
-  </g>
-);
+/** Lush rounded tree that gives shade (the "hara-bhara ped"): the detailed neem from the village library. */
+export const GreenTree: React.FC<{ x: number; y: number; s?: number; sway?: number; t?: number }> = (p) => <VillageTree kind="neem" {...p} />;
 
 /** Dark damp patch of sand next to the well. */
 export const WetMud: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) => (

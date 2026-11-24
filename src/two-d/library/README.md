@@ -12,3 +12,4 @@ Assets built for a script are saved here and reused by later stories.
 | Water surface + ripples, cupped hands, filling khuff | `Closeups.tsx` | pyasa-kutta | close-up, water |
 | Man from behind (over-shoulder), man from above | `Closeups.tsx` | pyasa-kutta | character, camera |
 | Sound effects: step, splash, drip, pant, lap, scrape, wind | `../../../public/sfx`, `scripts/make-sfx.sh` | pyasa-kutta | sound |
+| Village (detailed): mud house, desi goat (3 coats; chew/graze/bleat/walk), village tree (neem/kikar, nest); preview: composition `library-village` | `Village.tsx`, `VillageGallery.tsx` | library | village |

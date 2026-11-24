@@ -1,7 +1,7 @@
 // Village & farm assets (library). Built for "sone-ka-matka", reusable for any village story.
 
 import React from "react";
-import { LINE, OUT } from "../kit";
+import { blink, LINE, OUT } from "../kit";
 
 const stroke = { stroke: OUT, strokeWidth: LINE, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
 
@@ -96,8 +96,12 @@ export const Stone: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s 
   </g>
 );
 
-/** Flat-roofed mud house with beam ends, small window and an optional door that swings open. */
-export const MudHouse: React.FC<{ x: number; y: number; w?: number; h?: number; door?: number; tone?: number; doorX?: number }> = ({
+/**
+ * Detailed flat-roofed mud house: plinth + step, parapet with roof beams, hay on the roof, water spout,
+ * plaster cracks and bare-brick patches, lime border, wall niche with a diya, wooden window with half-open
+ * shutters and bars, door frame with lintel, planked door with studs and a ring (swings open with `door` 0..1).
+ */
+export const MudHouse: React.FC<{ x: number; y: number; w?: number; h?: number; door?: number; tone?: number; doorX?: number; t?: number }> = ({
   x,
   y,
   w = 520,
@@ -105,38 +109,149 @@ export const MudHouse: React.FC<{ x: number; y: number; w?: number; h?: number; 
   door,
   tone = 0,
   doorX = 0,
+  t = 0,
 }) => {
   const wall = ["#d9a873", "#cf9c68", "#e0b382"][tone % 3];
   const wallShade = ["#bf8c58", "#b5824f", "#c99a68"][tone % 3];
+  const wallLight = ["#e8c08f", "#deb07f", "#eec79a"][tone % 3];
+  const brick = "#b46a44";
+  const wood = "#8a5a36";
+  const woodDark = "#6a4226";
+  const hw = w / 2;
+  const winX = w * 0.18;
+  const winY = -h * 0.72;
+  const nicheX = -w * 0.34;
+  const flame = 1 + Math.sin(t * 9) * 0.12;
+  const Bricks: React.FC<{ bx: number; by: number; rows: number; cols: number }> = ({ bx, by, rows, cols }) => (
+    <g transform={`translate(${bx} ${by})`}>
+      <path d={`M -6 -4 Q ${cols * 15} -14 ${cols * 30 + 6} -2 L ${cols * 30 + 2} ${rows * 16 + 4} Q ${cols * 14} ${rows * 16 + 12} -4 ${rows * 16 + 2} Z`} fill={wallShade} />
+      {Array.from({ length: rows }, (_, r) =>
+        Array.from({ length: cols }, (_, c) => (
+          <rect key={`${r}-${c}`} x={c * 30 + (r % 2) * 14 - 4} y={r * 16} width={26} height={12} rx={2} fill={brick} stroke={OUT} strokeWidth={2} />
+        )),
+      )}
+    </g>
+  );
   return (
     <g transform={`translate(${x} ${y})`}>
-      <ellipse cx={0} cy={6} rx={w * 0.55} ry={16} fill="#6b4422" opacity={0.25} />
-      <path d={`M ${-w / 2} 0 L ${-w / 2 + 6} ${-h} Q 0 ${-h - 14} ${w / 2 - 6} ${-h} L ${w / 2} 0 Z`} fill={wall} {...stroke} />
-      <path d={`M ${w / 2 - 70} ${-h + 4} L ${w / 2 - 6} ${-h} L ${w / 2} 0 L ${w / 2 - 50} 0 Z`} fill={wallShade} />
-      {/* roof beams sticking out */}
-      {[-0.35, -0.1, 0.15, 0.4].map((k, i) => (
-        <rect key={i} x={w * k - 10} y={-h - 22} width={20} height={30} rx={6} fill="#8a5a36" {...stroke} />
+      <ellipse cx={0} cy={10} rx={w * 0.6} ry={18} fill="#6b4422" opacity={0.25} />
+      {/* hay bundle on the roof (behind parapet) */}
+      <g transform={`translate(${-hw * 0.55} ${-h - 8})`}>
+        <path d="M -60 0 Q -56 -40 -10 -50 Q 40 -54 62 -18 L 64 0 Z" fill="#d8b45a" {...stroke} />
+        {[-40, -20, 0, 20, 40].map((k) => (
+          <path key={k} d={`M ${k} -4 q 4 -22 12 -38`} fill="none" stroke="#b8923e" strokeWidth={3} strokeLinecap="round" />
+        ))}
+      </g>
+      {/* main wall */}
+      <path d={`M ${-hw} 0 L ${-hw + 6} ${-h} L ${hw - 6} ${-h} L ${hw} 0 Z`} fill={wall} {...stroke} />
+      {/* sunlit top-left wash and shaded right side */}
+      <path d={`M ${-hw + 10} ${-h + 10} L ${-hw * 0.2} ${-h + 10} Q ${-hw * 0.5} ${-h * 0.6} ${-hw + 14} ${-h * 0.35} Z`} fill={wallLight} opacity={0.7} />
+      <path d={`M ${hw - 70} ${-h + 4} L ${hw - 6} ${-h} L ${hw} 0 L ${hw - 50} 0 Z`} fill={wallShade} />
+      {/* shadow under the roof slab */}
+      <path d={`M ${-hw + 6} ${-h + 2} L ${hw - 6} ${-h + 2} L ${hw - 8} ${-h + 18} Q 0 ${-h + 26} ${-hw + 8} ${-h + 18} Z`} fill={wallShade} opacity={0.8} />
+      {/* parapet with rounded mud bumps */}
+      <path
+        d={`M ${-hw - 8} ${-h + 4} L ${-hw - 6} ${-h - 18} ${Array.from({ length: 6 }, (_, i) => {
+          const x0 = -hw - 6 + ((w + 12) / 6) * i;
+          const x1 = x0 + (w + 12) / 6;
+          return `Q ${(x0 + x1) / 2} ${-h - 32 - (i % 2) * 4} ${x1} ${-h - 18}`;
+        }).join(" ")} L ${hw + 8} ${-h + 4} Z`}
+        fill={wallLight}
+        {...stroke}
+      />
+      <path d={`M ${-hw - 4} ${-h - 2} L ${hw + 4} ${-h - 2}`} stroke={wallShade} strokeWidth={5} strokeLinecap="round" />
+      {/* roof beams sticking out, with end grain */}
+      {[-0.36, -0.12, 0.12, 0.36].map((k, i) => (
+        <g key={i}>
+          <rect x={w * k - 11} y={-h - 4} width={22} height={22} rx={6} fill={wood} {...stroke} />
+          <circle cx={w * k} cy={-h + 7} r={5} fill="none" stroke={woodDark} strokeWidth={2.5} />
+        </g>
       ))}
-      {/* plaster texture */}
+      {/* water spout (parnala) with a stain below */}
+      <path d={`M ${hw - 30} ${-h + 22} Q ${hw - 26} ${-h * 0.5} ${hw - 34} ${-h * 0.2}`} fill="none" stroke={wallShade} strokeWidth={14} strokeLinecap="round" opacity={0.7} />
+      <path d={`M ${hw - 40} ${-h + 10} L ${hw + 26} ${-h + 4} L ${hw + 28} ${-h + 16} L ${hw - 40} ${-h + 24} Z`} fill={woodDark} {...stroke} strokeWidth={3} />
+      {/* plaster swirls */}
       {[0, 1, 2, 3].map((i) => (
-        <path key={i} d={`M ${-w / 2 + 40 + i * 110} ${-h + 80 + (i % 2) * 90} q 30 -10 60 0`} fill="none" stroke={wallShade} strokeWidth={5} strokeLinecap="round" />
+        <path key={i} d={`M ${-hw + 40 + i * (w / 4.6)} ${-h + 80 + (i % 2) * 90} q 30 -10 60 0`} fill="none" stroke={wallShade} strokeWidth={5} strokeLinecap="round" />
       ))}
-      <rect x={w * 0.18} y={-h * 0.72} width={70} height={70} rx={10} fill="#4a2e1c" {...stroke} />
-      <path d={`M ${w * 0.18 + 35} ${-h * 0.72} L ${w * 0.18 + 35} ${-h * 0.72 + 70} M ${w * 0.18} ${-h * 0.72 + 35} L ${w * 0.18 + 70} ${-h * 0.72 + 35}`} stroke="#8a5a36" strokeWidth={6} />
+      {/* cracks */}
+      <path d={`M ${-hw + 30} ${-h + 40} l 14 22 l -6 16 l 12 20 m -12 -20 l -14 10`} fill="none" stroke={OUT} strokeWidth={2.5} strokeLinecap="round" opacity={0.6} />
+      <path d={`M ${winX + 80} ${winY + 76} l 10 18 l -4 14 l 10 16`} fill="none" stroke={OUT} strokeWidth={2.5} strokeLinecap="round" opacity={0.6} />
+      {/* bare-brick patches where plaster fell */}
+      <Bricks bx={-hw * 0.62} by={-h * 0.3} rows={2} cols={3} />
+      <Bricks bx={hw * 0.52} by={-h * 0.42} rows={3} cols={2} />
+      {/* lime-wash border along the base */}
+      <path d={`M ${-hw + 2} -34 L ${hw - 2} -34`} stroke="#f3e6cf" strokeWidth={6} />
+      {Array.from({ length: Math.floor(w / 40) }, (_, i) => (
+        <path key={i} d={`M ${-hw + 14 + i * 40} -34 l 10 -12 l 10 12`} fill="none" stroke="#f3e6cf" strokeWidth={4} strokeLinejoin="round" />
+      ))}
+      {/* wall niche (aala) with an oil lamp */}
+      <g transform={`translate(${nicheX} ${-h * 0.55})`}>
+        <path d="M -24 24 L -24 -10 Q 0 -38 24 -10 L 24 24 Z" fill="#5a3a22" {...stroke} strokeWidth={3} />
+        <path d="M -16 24 Q 0 14 16 24 Z" fill="#b45f34" stroke={OUT} strokeWidth={2} />
+        <ellipse cx={0} cy={6} rx={5 * flame} ry={9 * flame} fill="#ffcf5a" />
+        <ellipse cx={0} cy={9} rx={2.5} ry={4} fill="#fff4c2" />
+        <path d="M -30 26 L 30 26" stroke={wallLight} strokeWidth={6} strokeLinecap="round" />
+      </g>
+      {/* wooden pegs with a hanging rope coil */}
+      <g transform={`translate(${-hw * 0.12} ${-h * 0.62})`}>
+        <rect x={-6} y={-4} width={14} height={8} rx={3} fill={wood} stroke={OUT} strokeWidth={2} />
+        <ellipse cx={2} cy={20} rx={14} ry={22} fill="none" stroke="#c9ad74" strokeWidth={5} />
+        <ellipse cx={2} cy={22} rx={9} ry={18} fill="none" stroke="#b39459" strokeWidth={3} />
+      </g>
+      {/* window: frame, lintel, bars, half-open shutters, sill */}
+      <g transform={`translate(${winX} ${winY})`}>
+        <rect x={-10} y={-16} width={90} height={14} rx={4} fill={wood} {...stroke} strokeWidth={3} />
+        <rect x={0} y={0} width={70} height={70} rx={6} fill="#3a2414" {...stroke} />
+        <rect x={6} y={6} width={58} height={58} rx={4} fill="#4a2e1c" />
+        {[18, 35, 52].map((bx) => (
+          <path key={bx} d={`M ${bx} 2 L ${bx} 68`} stroke="#5a5048" strokeWidth={4} />
+        ))}
+        <path d="M 0 0 L -24 8 L -24 64 L 0 70 Z" fill="#9c6a42" {...stroke} strokeWidth={3} />
+        <path d="M 70 0 L 92 6 L 92 66 L 70 70 Z" fill="#8f5f3a" {...stroke} strokeWidth={3} />
+        <path d="M -12 12 L -12 60 M 81 12 L 81 60" stroke={woodDark} strokeWidth={3} />
+        <rect x={-14} y={70} width={98} height={10} rx={4} fill={wallLight} {...stroke} strokeWidth={3} />
+      </g>
+      {/* plinth (chabutra) */}
+      <path d={`M ${-hw - 14} 6 L ${-hw - 10} -20 L ${hw + 10} -20 L ${hw + 14} 6 Z`} fill={wallShade} {...stroke} />
+      <path d={`M ${-hw - 8} -14 L ${hw + 6} -14`} stroke={wall} strokeWidth={4} opacity={0.8} />
       {door !== undefined && (
         <g transform={`translate(${doorX - 80} 0)`}>
+          {/* step */}
+          <path d="M -26 10 L -20 -8 L 180 -8 L 186 10 Z" fill={wallLight} {...stroke} />
+          {/* door frame (chaukhat) + lintel */}
+          <path d="M -14 -8 L -14 -196 Q 80 -254 174 -196 L 174 -8 Z" fill={wood} {...stroke} />
+          <rect x={-30} y={-250} width={220} height={22} rx={5} fill={woodDark} {...stroke} />
+          {[-10, 30, 70, 110, 150].map((dx) => (
+            <circle key={dx} cx={dx + 10} cy={-239} r={4} fill="#d9b25a" />
+          ))}
           {/* doorway (dark interior) */}
-          <path d="M 0 0 L 0 -190 Q 80 -240 160 -190 L 160 0 Z" fill="#3a2414" {...stroke} />
+          <path d="M 0 -8 L 0 -190 Q 80 -240 160 -190 L 160 -8 Z" fill="#2e1c10" {...stroke} />
+          <path d="M 10 -10 L 10 -150 Q 30 -170 50 -176 L 50 -10 Z" fill="#4a2e1c" opacity={0.6 * (door ?? 0)} />
           {/* door leaf swinging inward: narrows as it opens */}
           <g transform={`scale(${1 - door * 0.82} 1)`}>
-            <path d="M 0 0 L 0 -190 Q 80 -240 160 -190 L 160 0 Z" fill="#9c6a42" {...stroke} />
-            {[40, 80, 120].map((dx) => (
-              <path key={dx} d={`M ${dx} -10 L ${dx} -200`} stroke="#7a4f2e" strokeWidth={5} />
+            <path d="M 0 -8 L 0 -190 Q 80 -240 160 -190 L 160 -8 Z" fill="#9c6a42" {...stroke} />
+            {[32, 64, 96, 128].map((dx) => (
+              <path key={dx} d={`M ${dx} -12 L ${dx} -196`} stroke="#7a4f2e" strokeWidth={5} />
             ))}
-            <circle cx={130} cy={-100} r={7} fill="#d9b25a" {...stroke} strokeWidth={2} />
+            {[-50, -150].map((by) => (
+              <g key={by}>
+                <rect x={6} y={by - 6} width={148} height={12} rx={3} fill="#6a4226" stroke={OUT} strokeWidth={2} />
+                {[18, 50, 82, 114, 142].map((sx) => (
+                  <circle key={sx} cx={sx} cy={by} r={3.5} fill="#3a3430" />
+                ))}
+              </g>
+            ))}
+            <circle cx={132} cy={-100} r={11} fill="none" stroke="#c9a24a" strokeWidth={4} />
+            <circle cx={132} cy={-111} r={4} fill="#d9b25a" stroke={OUT} strokeWidth={2} />
           </g>
         </g>
       )}
+      {/* grass tufts and straw at the base */}
+      {[-hw - 6, -hw * 0.45, hw * 0.4, hw + 4].map((gx, i) => (
+        <path key={i} d={`M ${gx - 12} 8 q 4 -20 6 -26 q 2 14 6 20 q 4 -18 10 -24 q 0 16 2 30 Z`} fill={i % 2 ? "#8a9a4a" : "#9aab55"} stroke={OUT} strokeWidth={2.5} strokeLinejoin="round" />
+      ))}
+      <path d={`M ${hw * 0.1} 10 l 30 -6 M ${hw * 0.14} 12 l 24 2 M ${hw * 0.2} 8 l 18 -10`} stroke="#d8b45a" strokeWidth={3} strokeLinecap="round" />
     </g>
   );
 };
@@ -173,22 +288,251 @@ export const ClayPots: React.FC<{ x: number; y: number }> = ({ x, y }) => (
   </g>
 );
 
-export const Goat: React.FC<{ x: number; y: number; t: number; s?: number; flip?: boolean }> = ({ x, y, t, s = 1, flip }) => {
-  const chew = Math.sin(t * 6) * 3;
+const GOAT_COATS = {
+  white: { base: "#f4efe4", shade: "#ddd3c2", patch: "#c99a6a", nose: "#d9a5a0", beard: "#e6dccb", horn: "#a8977c" },
+  brown: { base: "#b5794a", shade: "#96603a", patch: "#f2e6d2", nose: "#6e4a36", beard: "#7a5236", horn: "#8f8068" },
+  black: { base: "#4a3f3a", shade: "#352c28", patch: "#e9e1d3", nose: "#2e2522", beard: "#2e2522", horn: "#9c8c74" },
+};
+export type GoatCoat = keyof typeof GOAT_COATS;
+
+/**
+ * Detailed desi goat (bakri): floppy ears, curved ridged horns, slit pupils with blink, beard, collar + bell,
+ * coat patch and belly fur, wagging tail. `t` in seconds drives chewing/ear flicks; `graze` 0..1 lowers the head
+ * to the ground, `bleat` 0..1 opens the mouth, `walk` 0..1 swings the legs. `coat`: white / brown / black.
+ */
+export const Goat: React.FC<{
+  x: number;
+  y: number;
+  t: number;
+  s?: number;
+  flip?: boolean;
+  coat?: GoatCoat;
+  graze?: number;
+  bleat?: number;
+  walk?: number;
+}> = ({ x, y, t, s = 1, flip, coat = "white", graze = 0, bleat = 0, walk = 0 }) => {
+  const c = GOAT_COATS[coat];
+  const chew = bleat > 0.05 ? 0 : Math.sin(t * 6) * 3;
+  const open = bleat * 10;
+  const f = Math.round(t * 30);
+  const eye = blink(f, Math.round(x) % 50);
+  const ear = Math.sin(t * 1.7) * 4 + (Math.sin(t * 0.9) > 0.92 ? Math.sin(t * 40) * 10 : 0);
+  const wag = Math.sin(t * 5) * 14;
+  const breathe = 1 + Math.sin(t * 2.4) * 0.015;
+  const headTilt = Math.sin(t * 0.8) * 5 * (1 - graze) - bleat * 12;
+  const bob = walk * Math.abs(Math.sin(t * 8)) * -3;
+  const Leg: React.FC<{ lx: number; phase: number; far?: boolean }> = ({ lx, phase, far }) => (
+    <g transform={`rotate(${Math.sin(t * 8 + phase) * 16 * walk} ${lx} -48)`}>
+      <path d={`M ${lx} -52 Q ${lx + 3} -30 ${lx + 1} -22 L ${lx} -6`} fill="none" stroke={OUT} strokeWidth={15} strokeLinecap="round" />
+      <path d={`M ${lx} -52 Q ${lx + 3} -30 ${lx + 1} -22 L ${lx} -6`} fill="none" stroke={far ? c.shade : c.base} strokeWidth={9} strokeLinecap="round" />
+      <circle cx={lx + 1} cy={-24} r={4} fill={c.shade} />
+      <path d={`M ${lx - 7} 0 L ${lx - 5} -9 L ${lx + 6} -9 L ${lx + 8} 0 Z`} fill="#3a2e26" stroke={OUT} strokeWidth={2} strokeLinejoin="round" />
+      <path d={`M ${lx + 1} -8 L ${lx + 1} 0`} stroke="#5a4a3e" strokeWidth={1.5} />
+    </g>
+  );
   return (
     <g transform={`translate(${x} ${y}) scale(${flip ? -s : s} ${s})`}>
-      <ellipse cx={0} cy={4} rx={70} ry={10} fill="#6b4422" opacity={0.25} />
-      {[-40, -26, 30, 44].map((lx, i) => (
-        <rect key={i} x={lx} y={-50} width={12} height={50} rx={5} fill={i % 2 ? "#f2ede2" : "#ded6c6"} {...stroke} strokeWidth={3} />
-      ))}
-      <ellipse cx={0} cy={-62} rx={64} ry={32} fill="#f4efe4" {...stroke} />
-      <path d="M -62 -70 Q -80 -84 -76 -96" fill="none" stroke={OUT} strokeWidth={5} strokeLinecap="round" />
-      <g transform={`translate(54 -86) rotate(${Math.sin(t * 0.8) * 6})`}>
-        <ellipse cx={18} cy={0} rx={26} ry={20} fill="#f4efe4" {...stroke} />
-        <path d="M 10 -16 Q 4 -40 -12 -46" fill="none" stroke="#8a7a62" strokeWidth={6} strokeLinecap="round" />
-        <path d="M 2 -6 Q -18 4 -14 16 Q -2 10 6 4 Z" fill="#d9cfbd" {...stroke} strokeWidth={3} />
-        <circle cx={22} cy={-4} r={3.5} fill={OUT} />
-        <path d={`M 36 ${10 + chew} Q 40 ${24 + chew} 32 ${30 + chew}`} fill="none" stroke="#bdb09a" strokeWidth={5} strokeLinecap="round" />
+      <ellipse cx={4} cy={4} rx={76} ry={11} fill="#6b4422" opacity={0.25} />
+      <Leg lx={-34} phase={Math.PI} far />
+      <Leg lx={40} phase={0} far />
+      <g transform={`translate(0 ${bob})`}>
+        {/* tail */}
+        <g transform={`rotate(${wag} -62 -88)`}>
+          <path d="M -62 -88 Q -76 -102 -70 -116 Q -58 -104 -54 -90 Z" fill={c.base} {...stroke} strokeWidth={3} />
+        </g>
+        {/* body */}
+        <g transform={`translate(0 -66) scale(1 ${breathe}) translate(0 66)`}>
+          <path d="M -66 -70 Q -70 -98 -40 -100 Q 0 -92 40 -102 Q 72 -104 76 -76 Q 80 -50 56 -40 Q 30 -30 0 -32 Q -30 -30 -54 -40 Q -72 -50 -66 -70 Z" fill={c.base} {...stroke} />
+          <path d="M -56 -44 Q 0 -26 58 -44 Q 30 -50 0 -48 Q -30 -48 -56 -44 Z" fill={c.shade} />
+          <path d="M -34 -90 Q -6 -98 10 -82 Q 14 -60 -12 -54 Q -38 -58 -38 -76 Z" fill={c.patch} opacity={0.85} />
+          {/* fur strokes */}
+          {[
+            [-56, -78],
+            [24, -90],
+            [20, -76],
+            [44, -72],
+            [30, -58],
+            [-50, -58],
+          ].map(([fx, fy], i) => (
+            <path key={i} d={`M ${fx} ${fy} l 4 7 M ${fx + 7} ${fy - 1} l 4 7`} fill="none" stroke={c.shade} strokeWidth={3} strokeLinecap="round" />
+          ))}
+          {/* belly hair tufts */}
+          {[-40, -24, -8, 8, 24, 40].map((hx) => (
+            <path key={hx} d={`M ${hx} -34 l -3 8 l 6 -4`} fill="none" stroke={OUT} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
+          ))}
+        </g>
+        <Leg lx={-48} phase={0} />
+        <Leg lx={28} phase={Math.PI} />
+        {/* neck + head (pivot at the shoulders for grazing) */}
+        <g transform={`rotate(${graze * 80} 48 -80)`}>
+          <path d="M 32 -96 Q 46 -114 60 -124 L 84 -104 Q 86 -80 72 -60 Q 56 -58 42 -70 Z" fill={c.base} {...stroke} />
+          <path d="M 70 -110 Q 80 -90 70 -66" fill="none" stroke={c.shade} strokeWidth={4} strokeLinecap="round" />
+          {/* collar with bell */}
+          <path d="M 46 -104 Q 64 -92 82 -100" fill="none" stroke={OUT} strokeWidth={9} strokeLinecap="round" />
+          <path d="M 46 -104 Q 64 -92 82 -100" fill="none" stroke="#c0392b" strokeWidth={5} strokeLinecap="round" />
+          <g transform={`rotate(${Math.sin(t * 5) * 10} 66 -96)`}>
+            <path d="M 59 -94 Q 58 -80 66 -78 Q 74 -80 73 -94 Z" fill="#d9a83a" stroke={OUT} strokeWidth={2.5} />
+            <circle cx={66} cy={-79} r={2.5} fill={OUT} />
+          </g>
+          <g transform={`translate(76 -120) rotate(${headTilt})`}>
+            {/* far horn + far ear */}
+            <path d="M -2 -20 Q -12 -46 -32 -52 Q -24 -40 -12 -16 Z" fill={c.horn} opacity={0.75} {...stroke} strokeWidth={3} />
+            <g transform={`rotate(${-ear * 0.6} -6 -6)`}>
+              <path d="M -4 -6 Q -22 2 -22 26 Q -12 30 -6 18 Q -2 6 -2 -6 Z" fill={c.shade} {...stroke} strokeWidth={3} />
+            </g>
+            {/* head */}
+            <path d="M -18 -10 Q -10 -28 10 -24 Q 30 -18 40 0 Q 48 14 40 22 Q 30 28 18 22 Q 0 14 -12 8 Q -22 0 -18 -10 Z" fill={c.base} {...stroke} />
+            <path d="M 4 -20 Q 18 -16 26 -6" fill="none" stroke={c.patch} strokeWidth={6} strokeLinecap="round" opacity={0.6} />
+            {/* muzzle, nostril, mouth */}
+            <ellipse cx={38} cy={12} rx={8} ry={6} fill={c.nose} />
+            <path d="M 38 8 q 4 1 4 5" fill="none" stroke={OUT} strokeWidth={2.5} strokeLinecap="round" />
+            {open > 1 ? (
+              <path d={`M 26 ${21} Q 34 ${22 + open} 40 ${20}`} fill="#5a2a2a" stroke={OUT} strokeWidth={2.5} />
+            ) : (
+              <path d={`M 28 ${22 + chew * 0.4} Q 34 ${24 + chew * 0.4} 40 ${20}`} fill="none" stroke={OUT} strokeWidth={2.5} strokeLinecap="round" />
+            )}
+            {/* eye with slit pupil */}
+            <ellipse cx={14} cy={-8} rx={7} ry={6 * eye} fill="#f0d98a" stroke={OUT} strokeWidth={2.5} />
+            {eye > 0.4 && <rect x={10.5} y={-9.2} width={7} height={2.4} rx={1} fill={OUT} />}
+            <path d="M 6 -15 Q 14 -18 22 -13" fill="none" stroke={OUT} strokeWidth={2.5} strokeLinecap="round" />
+            {/* near horn with ridges */}
+            <path d="M 2 -20 Q -4 -48 -26 -58 Q -18 -46 -6 -14 Z" fill={c.horn} {...stroke} strokeWidth={3} />
+            {[0, 1, 2].map((i) => (
+              <path key={i} d={`M ${-2 - i * 6} ${-28 - i * 8} l 7 -2`} stroke="#7d6e58" strokeWidth={2} strokeLinecap="round" />
+            ))}
+            {/* near floppy ear */}
+            <g transform={`rotate(${ear} -4 -4)`}>
+              <path d="M -2 -4 Q -18 6 -16 32 Q -4 36 2 22 Q 6 10 4 -4 Z" fill={c.base} {...stroke} strokeWidth={3} />
+              <path d="M -2 2 Q -10 12 -10 26" fill="none" stroke={c.nose} strokeWidth={4} strokeLinecap="round" opacity={0.7} />
+            </g>
+            {/* beard */}
+            <g transform={`rotate(${Math.sin(t * 2) * 6 + chew} 24 22)`}>
+              <path d="M 18 20 Q 18 40 26 48 Q 32 36 32 22 Z" fill={c.beard} {...stroke} strokeWidth={3} />
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  );
+};
+
+/** Ellipse outline made of leafy bumps (for tree canopies). */
+const scallop = (cx: number, cy: number, rx: number, ry: number, grow = 0) => {
+  const n = Math.max(8, Math.round((Math.PI * (rx + ry)) / 46));
+  const pt = (a: number, k: number) => `${(cx + Math.cos(a) * (rx + grow) * k).toFixed(1)} ${(cy + Math.sin(a) * (ry + grow) * k).toFixed(1)}`;
+  let d = `M ${pt(0, 1)}`;
+  for (let i = 0; i < n; i++) {
+    const a0 = (i / n) * Math.PI * 2;
+    const a1 = ((i + 1) / n) * Math.PI * 2;
+    d += ` Q ${pt((a0 + a1) / 2, 1.13)} ${pt(a1, 1)}`;
+  }
+  return d + " Z";
+};
+type Clump = [number, number, number, number?]; // cx, cy, rx, ry (ry defaults to rx)
+const TREE_KINDS: Record<"neem" | "kikar", { back: Clump[]; mid: Clump[]; dark: string; mid1: string; mid2: string; light: string; flower?: string }> = {
+  neem: {
+    back: [[-160, -250, 95], [160, -262, 95], [0, -390, 110], [-100, -372, 95], [108, -372, 95], [-200, -316, 72], [210, -322, 72]],
+    mid: [[-112, -270, 100], [0, -320, 125], [112, -282, 104], [-52, -228, 88], [72, -224, 84], [-64, -392, 80], [62, -402, 80]],
+    dark: "#4f8a3c", mid1: "#6aa84f", mid2: "#7dbb5a", light: "#a6d77e",
+  },
+  kikar: {
+    back: [[-210, -300, 120, 44], [0, -350, 170, 54], [200, -312, 120, 44], [-90, -398, 110, 40], [110, -392, 100, 38]],
+    mid: [[-180, -290, 100, 34], [10, -332, 150, 44], [180, -300, 96, 34], [-70, -384, 88, 30], [100, -380, 82, 28]],
+    dark: "#5f7f34", mid1: "#7b9a42", mid2: "#8aab4c", light: "#b6cf74", flower: "#f2c94c",
+  },
+};
+
+/**
+ * Detailed village tree. `kind` "neem" (dense round shade tree) or "kikar" (flat-topped thorny acacia with
+ * yellow flowers). Trunk with root flares, bark lines and a knot; branches showing between leaf masses;
+ * three-tone canopy with one outer outline, leaf flicks and highlights; leaves flutter with `t`, canopy rocks
+ * with `sway` (degrees). `nest` adds a small bird nest. Ground at y = 0.
+ */
+export const VillageTree: React.FC<{ x: number; y: number; s?: number; sway?: number; t?: number; kind?: "neem" | "kikar"; nest?: boolean; flip?: boolean }> = ({
+  x,
+  y,
+  s = 1,
+  sway = 0,
+  t = 0,
+  kind = "neem",
+  nest = false,
+  flip = false,
+}) => {
+  const k = TREE_KINDS[kind];
+  const bark = "#8a5a36";
+  const barkDark = "#6a4226";
+  const wob = (i: number) => `translate(${Math.sin(t * 1.6 + i * 1.3) * 2.5} ${Math.cos(t * 1.3 + i) * 1.5})`;
+  const clumps = (list: Clump[], fill: string, outline: boolean, off = 0) =>
+    list.map(([cx, cy, rx, ry], i) => (
+      <g key={i} transform={wob(i + off)}>
+        <path d={scallop(cx, cy, rx, ry ?? rx, outline ? LINE : 0)} fill={outline ? OUT : fill} />
+      </g>
+    ));
+  const neem = kind === "neem";
+  return (
+    <g transform={`translate(${x} ${y}) scale(${flip ? -s : s} ${s})`}>
+      <ellipse cx={0} cy={6} rx={240} ry={28} fill="#5a3a1c" opacity={0.25} />
+      {/* trunk with root flares */}
+      {neem ? (
+        <path d="M -54 4 Q -30 -6 -26 -30 Q -18 -120 -40 -230 L -10 -236 Q 6 -150 4 -110 Q 30 -170 70 -214 L 88 -198 Q 40 -150 26 -90 Q 22 -30 38 -8 Q 56 2 60 6 Z" fill={bark} {...stroke} />
+      ) : (
+        <path d="M -40 4 Q -14 -8 -14 -60 Q -18 -140 -60 -230 Q -100 -280 -150 -300 L -140 -316 Q -86 -292 -44 -250 Q -20 -220 -6 -180 Q 0 -260 -10 -330 L 12 -334 Q 20 -250 12 -170 Q 40 -240 140 -300 L 150 -284 Q 60 -230 24 -130 Q 18 -40 40 4 Z" fill={bark} {...stroke} />
+      )}
+      {/* bark lines + knot */}
+      <path d="M -12 -20 Q -6 -70 -14 -120 M 10 -30 Q 14 -60 8 -96 M -20 -150 Q -18 -180 -24 -200" fill="none" stroke={barkDark} strokeWidth={4} strokeLinecap="round" />
+      <ellipse cx={4} cy={-70} rx={7} ry={11} fill={barkDark} stroke={OUT} strokeWidth={2.5} />
+      <path d="M -40 2 q 8 -6 14 -2 M 30 2 q 8 -6 14 0" fill="none" stroke={barkDark} strokeWidth={3} strokeLinecap="round" />
+      <g transform={`rotate(${sway} 0 -260)`}>
+        {/* back leaf mass: one outline pass, then fills */}
+        {clumps(k.back, "", true)}
+        {clumps(k.back, k.dark, false)}
+        {/* branches peeking between leaves */}
+        {neem ? (
+          <path d="M -6 -230 Q -60 -280 -150 -290 M 40 -200 Q 100 -250 170 -270 M -10 -236 Q 0 -300 -30 -370" fill="none" stroke={barkDark} strokeWidth={9} strokeLinecap="round" />
+        ) : (
+          <path d="M -150 -300 Q -200 -310 -250 -296 M 140 -300 Q 190 -320 240 -310 M -10 -330 Q -20 -370 -60 -396" fill="none" stroke={barkDark} strokeWidth={6} strokeLinecap="round" />
+        )}
+        {/* front leaf mass */}
+        {k.mid.map(([cx, cy, rx, ry], i) => (
+          <g key={i} transform={wob(i + 7)}>
+            <path d={scallop(cx, cy, rx, ry ?? rx)} fill={i % 2 ? k.mid1 : k.mid2} stroke={k.dark} strokeWidth={3} strokeLinejoin="round" />
+            {/* highlight on the sunny upper-left */}
+            <path d={scallop(cx - rx * 0.22, cy - (ry ?? rx) * 0.28, rx * 0.5, (ry ?? rx) * 0.45)} fill={k.light} opacity={0.5} />
+            {/* leaf flicks along the top edge */}
+            {[-150, -120, -90, -60, -30].map((a, j) => {
+              const r = (a * Math.PI) / 180;
+              const lx = cx + Math.cos(r) * rx * 0.86;
+              const ly = cy + Math.sin(r) * (ry ?? rx) * 0.86;
+              const flick = Math.sin(t * 4 + i * 2 + j) * 8;
+              return (
+                <path
+                  key={j}
+                  d={`M ${lx} ${ly} q ${8 + flick * 0.3} -10 18 -2 q -8 8 -18 2 Z`}
+                  fill={k.light}
+                  stroke={k.dark}
+                  strokeWidth={2}
+                  transform={`rotate(${a + 90 + flick} ${lx} ${ly})`}
+                />
+              );
+            })}
+          </g>
+        ))}
+        {/* small leaf clusters for texture */}
+        {k.mid.map(([cx, cy, rx], i) => (
+          <path key={i} d={`M ${cx + rx * 0.2} ${cy + rx * 0.1} l 10 -12 m -10 12 l 14 -2 M ${cx - rx * 0.4} ${cy + rx * 0.3} l 8 -11 m -8 11 l 13 -3`} fill="none" stroke={k.dark} strokeWidth={4} strokeLinecap="round" opacity={0.7} />
+        ))}
+        {k.flower &&
+          k.mid.flatMap(([cx, cy, rx], i) =>
+            [0, 1, 2, 3].map((j) => <circle key={`${i}-${j}`} cx={cx + Math.cos(i * 3 + j * 1.7) * rx * 0.7} cy={cy + Math.sin(i * 2 + j * 2.3) * 20} r={5} fill={k.flower} stroke={OUT} strokeWidth={1.5} />),
+          )}
+        {nest && (
+          <g transform={`translate(${neem ? 120 : 150} ${neem ? -250 : -296})`}>
+            <path d="M -30 0 Q -26 22 0 24 Q 26 22 30 0 Z" fill="#9c7444" {...stroke} strokeWidth={3} />
+            <path d="M -26 6 l 52 -4 M -22 14 l 44 4 M -18 2 l 10 18 M 10 2 l -6 20" stroke="#6a4a26" strokeWidth={2.5} strokeLinecap="round" />
+            <ellipse cx={-8} cy={-2} rx={7} ry={5} fill="#e8f0f4" stroke={OUT} strokeWidth={2} />
+            <ellipse cx={8} cy={-3} rx={7} ry={5} fill="#dfeaf0" stroke={OUT} strokeWidth={2} />
+          </g>
+        )}
       </g>
     </g>
   );
