@@ -1,0 +1,25 @@
+// Every asset in the 2D library, by the name a film.json uses.
+// A new asset is added here when it is built for a script; later films reuse it.
+export const LIBRARY: Record<string, { description: string; tags: string[]; builtFor: string }> = {
+  musafir: { description: "Traveller puppet: walk, kneel, climb, pour, expressions, khuff in hand/mouth", tags: ["character", "man"], builtFor: "pyasa-kutta" },
+  dog: { description: "Dog puppet: lie, stand, lick, drink, wag, sit", tags: ["character", "animal"], builtFor: "pyasa-kutta" },
+  "desert-world": { description: "Sky, sun, clouds, hills/mesas, dunes, palms, rocks, grass", tags: ["environment", "desert"], builtFor: "pyasa-kutta" },
+  "well-exterior": { description: "Well with back/front split so a character can be inside", tags: ["environment", "well"], builtFor: "pyasa-kutta" },
+  "well-topdown": { description: "Looking straight down the well", tags: ["environment", "well"], builtFor: "pyasa-kutta" },
+  "well-shaft": { description: "Inside the shaft, low angle to the light", tags: ["environment", "well"], builtFor: "pyasa-kutta" },
+  "well-opening": { description: "Over the rim into the dark", tags: ["environment", "well"], builtFor: "pyasa-kutta" },
+  "green-tree": { description: "Lush shade tree", tags: ["nature"], builtFor: "pyasa-kutta" },
+  "wet-mud": { description: "Damp sand patch", tags: ["nature"], builtFor: "pyasa-kutta" },
+  "water-closeup": { description: "Water surface inside a well with ripples", tags: ["close-up", "water"], builtFor: "pyasa-kutta" },
+  "cupped-hands": { description: "Cupped hands drinking water", tags: ["close-up", "hands"], builtFor: "pyasa-kutta" },
+  "khuff-filling": { description: "Leather sock filling with water", tags: ["close-up", "prop"], builtFor: "pyasa-kutta" },
+  "back-shoulder": { description: "Man from behind, for over-the-shoulder", tags: ["character", "camera"], builtFor: "pyasa-kutta" },
+  "topdown-man": { description: "Man seen from above", tags: ["character", "camera"], builtFor: "pyasa-kutta" },
+  "sfx-step": { description: "Footstep in sand", tags: ["sound"], builtFor: "pyasa-kutta" },
+  "sfx-splash": { description: "Splash", tags: ["sound"], builtFor: "pyasa-kutta" },
+  "sfx-drip": { description: "Water drop", tags: ["sound"], builtFor: "pyasa-kutta" },
+  "sfx-pant": { description: "Dog panting breath", tags: ["sound"], builtFor: "pyasa-kutta" },
+  "sfx-lap": { description: "Dog lapping water", tags: ["sound"], builtFor: "pyasa-kutta" },
+  "sfx-scrape": { description: "Hand on stone", tags: ["sound"], builtFor: "pyasa-kutta" },
+  "sfx-wind": { description: "Desert wind ambience", tags: ["sound"], builtFor: "pyasa-kutta" },
+};

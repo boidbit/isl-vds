@@ -1,0 +1,71 @@
+{
+  "id": "pyasa-kutta",
+  "title": "Pyase Kutte Ki Kahani",
+  "fps": 30,
+  "source": {
+    "references": ["Sahih al-Bukhari 2363"],
+    "verified": false
+  },
+  "voice": {
+    "enabled": true,
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Sulafat",
+    "style": "warm, calm and gentle storyteller, speaking slowly"
+  },
+  "assets": [
+    "musafir",
+    "dog",
+    "desert-world",
+    "well-exterior",
+    "well-topdown",
+    "well-shaft",
+    "well-opening",
+    "green-tree",
+    "wet-mud",
+    "water-closeup",
+    "cupped-hands",
+    "khuff-filling",
+    "back-shoulder",
+    "topdown-man",
+    "sfx-step",
+    "sfx-splash",
+    "sfx-drip",
+    "sfx-pant",
+    "sfx-lap",
+    "sfx-scrape",
+    "sfx-wind"
+  ],
+  "scenes": [
+    {
+      "id": "s1-tapta-registan",
+      "narration": "Ek baar ek musafir pyaas se behaal tha. Use ek kuan mila.",
+      "voiceText": "एक बार एक मुसाफ़िर प्यास से बेहाल था। उसे एक कुआँ मिला।"
+    },
+    {
+      "id": "s2-paani-ki-talaash",
+      "narration": "Woh neeche utra aur paani peekar bahar aaya.",
+      "voiceText": "वह नीचे उतरा, और पानी पीकर बाहर आया।"
+    },
+    {
+      "id": "s3-pyasa-kutta",
+      "narration": "Wahan ek kutta pyaas se tadapkar geeli mitti chaat raha tha.",
+      "voiceText": "वहाँ एक कुत्ता प्यास से तड़पकर, गीली मिट्टी चाट रहा था।"
+    },
+    {
+      "id": "s4-rehamdili",
+      "narration": "Usne dobara kuen mein utarkar apne joote mein paani bhara.",
+      "voiceText": "उसने दोबारा कुएँ में उतरकर, अपने जूते में पानी भरा।"
+    },
+    {
+      "id": "s5-neki",
+      "narration": "Aur us bejubaan kutte ko paani pilaya.",
+      "voiceText": "और उस बेज़ुबान कुत्ते को पानी पिलाया।"
+    },
+    {
+      "id": "s6-anjaam",
+      "narration": "Allah ko uski ye neki itni pasand aayi ki uske gunah maaf farma diye.",
+      "voiceText": "अल्लाह को उसकी यह नेकी इतनी पसंद आई, कि उसके गुनाह माफ़ फ़रमा दिए।",
+      "subtitleMax": 0.5
+    }
+  ]
+}

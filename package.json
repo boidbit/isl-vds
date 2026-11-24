@@ -10,7 +10,10 @@
     "test": "tsx --test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
     "still": "tsx scripts/stills.ts",
-    "render": "tsx scripts/render.ts"
+    "render": "tsx scripts/render.ts",
+    "validate:films": "tsx scripts/validate-films.ts",
+    "voice": "tsx scripts/voice.ts",
+    "sfx": "bash scripts/make-sfx.sh"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.2",

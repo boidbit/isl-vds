@@ -2,7 +2,8 @@
 // Scene -> shots, each with its own camera. Assets come from the 2D library.
 
 import React from "react";
-import { AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate } from "remotion";
+import type { FilmVisuals } from "../film/types";
 import { Dog2D, type DogPose } from "../Dog2D";
 import { blink, clamp01, kf, layerTransform, mix, type Cam, W, H } from "../kit";
 import { BASE_POSE, Musafir, type MusafirPose } from "../Musafir";
@@ -10,7 +11,7 @@ import { Clouds, FarMountains, GROUND_Y, Grass, Ground, MidDunes, Palm, Rock, Sk
 import { BackShoulder, CuppedHands, GreenTree, KhuffFilling, TopDownMan, WaterCloseup, WetMud } from "../library/Closeups";
 import { WellBack, WellFront, WellOpening, WellShaft, WellTopDown } from "../library/Well";
 
-export const FILM_FRAMES = 960;
+const FILM_FRAMES = 960;
 
 // ------------------------------------------------------------------ timeline
 const S1 = 0; // tapta registan
@@ -29,25 +30,7 @@ const END = FILM_FRAMES;
 const WELL_X = 2200;
 const TREE_X = 2760;
 
-const NARRATION: { from: number; to: number; text: string }[] = [
-  { from: 12, to: 146, text: "Ek baar ek musafir pyaas se behaal tha. Use ek kuan mila." },
-  { from: 155, to: 266, text: "Woh neeche utra aur paani peekar bahar aaya." },
-  { from: 282, to: 416, text: "Wahan ek kutta pyaas se tadapkar geeli mitti chaat raha tha." },
-  { from: 428, to: 626, text: "Usne dobara kuen mein utarkar apne joote mein paani bhara." },
-  { from: 636, to: 746, text: "Aur us bejubaan kutte ko paani pilaya." },
-  { from: 756, to: 850, text: "Allah ko uski ye neki itni pasand aayi ki uske gunah maaf farma diye." },
-];
-
 // ------------------------------------------------------------------ helpers
-const Blur: React.FC = () => (
-  <defs>
-    {Array.from({ length: 10 }, (_, i) => (
-      <filter key={i} id={`blur${i + 1}`} x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation={i + 1} />
-      </filter>
-    ))}
-  </defs>
-);
 const blurAttr = (v: number) => (v < 0.5 ? undefined : `url(#blur${Math.min(10, Math.round(v))})`);
 
 const L: React.FC<{ cam: Cam; depth: number; blur?: number; children: React.ReactNode }> = ({ cam, depth, blur = 0, children }) => (
@@ -434,52 +417,28 @@ const Scene6: React.FC<{ f: number }> = ({ f }) => {
   );
 };
 
-// ------------------------------------------------------------------ sound design
-const SFX: React.FC = () => {
-  const one = (file: string, at: number, volume = 0.7) => (
-    <Sequence key={`${file}${at}`} from={at} durationInFrames={30}>
-      <Audio src={staticFile(`sfx/${file}`)} volume={volume} />
-    </Sequence>
-  );
-  return (
-    <>
-      <Audio src={staticFile("sfx/desert-wind.mp3")} volume={0.32} />
-      {footstepFrames(4, S2, 12).map((at) => one("step.wav", at, 0.55))}
-      {one("splash.wav", S2b + 14, 0.8)}
-      {[S2b + 30, S2b + 36, S2b + 41].map((at) => one("drip.wav", at, 0.5))}
-      {[S2c + 4, S2c + 12, S2c + 20].map((at) => one("scrape.wav", at, 0.6))}
-      {footstepFrames(S3, S3 + 30, 12).map((at) => one("step.wav", at, 0.4))}
-      {footstepFrames(S3, S4, 10).map((at) => one("pant.wav", at, 0.55))}
-      {one("splash.wav", S4b + 18, 0.8)}
-      {[S4b + 60, S4b + 66, S4b + 71].map((at) => one("drip.wav", at, 0.5))}
-      {footstepFrames(S4c, S5, 15).map((at) => one("scrape.wav", at, 0.5))}
-      {footstepFrames(S5 + 26, S6, 7).map((at) => one("lap.wav", at, 0.45))}
-      {footstepFrames(S6 + 25, END - 20, 12).map((at) => one("step.wav", at, 0.35))}
-    </>
-  );
-};
+// ------------------------------------------------------------------ sound design (nominal frames)
+const sfx = (file: string, frames: number[], volume: number) => frames.map((at) => ({ file: `sfx/${file}`, at, volume }));
+const SFX: FilmVisuals["sfx"] = [
+  ...sfx("step.wav", footstepFrames(4, S2, 12), 0.55),
+  ...sfx("splash.wav", [S2b + 14], 0.8),
+  ...sfx("drip.wav", [S2b + 30, S2b + 36, S2b + 41], 0.5),
+  ...sfx("scrape.wav", [S2c + 4, S2c + 12, S2c + 20], 0.6),
+  ...sfx("step.wav", footstepFrames(S3, S3 + 30, 12), 0.4),
+  ...sfx("pant.wav", footstepFrames(S3, S4, 10), 0.55),
+  ...sfx("splash.wav", [S4b + 18], 0.8),
+  ...sfx("drip.wav", [S4b + 60, S4b + 66, S4b + 71], 0.5),
+  ...sfx("scrape.wav", footstepFrames(S4c, S5, 15), 0.5),
+  ...sfx("lap.wav", footstepFrames(S5 + 26, S6, 7), 0.45),
+  ...sfx("step.wav", footstepFrames(S6 + 25, END - 20, 12), 0.35),
+];
 
-// ------------------------------------------------------------------ film
-export const PyasaKuttaFilm: React.FC = () => {
-  const f = useCurrentFrame();
-  const scene = f < S2 ? <Scene1 f={f} /> : f < S3 ? <Scene2 f={f} /> : f < S4 ? <Scene3 f={f} /> : f < S5 ? <Scene4 f={f} /> : f < S6 ? <Scene5 f={f} /> : <Scene6 f={f} />;
-  const sub = NARRATION.find((n) => f >= n.from && f < n.to);
-  const subO = sub ? Math.min(1, (f - sub.from) / 8, (sub.to - f) / 8) : 0;
+// ------------------------------------------------------------------ title + end card (nominal frames)
+const Overlay: React.FC<{ f: number }> = ({ f }) => {
   const titleO = interpolate(f, [14, 32, 110, 135], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const moralO = interpolate(f, [852, 872], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const black = Math.max(
-    interpolate(f, [0, 12], [1, 0], { extrapolateRight: "clamp" }),
-    interpolate(f, [END - 22, END], [0, 1], { extrapolateLeft: "clamp" }),
-  );
-  const dip = [S2, S3, S4, S5, S6].reduce((m, c) => Math.max(m, 1 - Math.min(1, Math.abs(f - c) / 4)), 0) * 0.55;
-
   return (
-    <AbsoluteFill style={{ background: "#000" }}>
-      <SFX />
-      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
-        <Blur />
-        {scene}
-      </svg>
+    <>
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 110, opacity: titleO }}>
         <div style={{ fontFamily: "'DejaVu Serif', Georgia, serif", fontWeight: 700, fontSize: 92, color: "#fff7e6", WebkitTextStroke: "3px #6b3a1c", textShadow: "0 6px 0 #8a4b22, 0 10px 24px rgba(0,0,0,0.35)" }}>
           Pyase Kutte Ki Kahani
@@ -491,14 +450,21 @@ export const PyasaKuttaFilm: React.FC = () => {
           <div style={{ fontSize: 36, marginTop: 18, color: "#f6dcb0" }}>Sahih al-Bukhari — 2363</div>
         </div>
       </AbsoluteFill>
-      {sub && (
-        <div style={{ position: "absolute", bottom: 56, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: subO }}>
-          <div style={{ maxWidth: "80%", textAlign: "center", fontFamily: "Inter, 'DejaVu Sans', sans-serif", fontWeight: 700, fontSize: 42, color: "#fff", background: "rgba(40,24,12,0.62)", padding: "12px 28px", borderRadius: 16 }}>
-            {sub.text}
-          </div>
-        </div>
-      )}
-      <AbsoluteFill style={{ background: "#000", opacity: Math.max(black, dip) }} />
-    </AbsoluteFill>
+    </>
   );
+};
+
+/** Scene visuals keyed by the scene ids in films/pyasa-kutta/film.json */
+export const pyasaKuttaVisuals: FilmVisuals = {
+  scenes: {
+    "s1-tapta-registan": { nominal: [S1, S2], render: (f) => <Scene1 f={f} /> },
+    "s2-paani-ki-talaash": { nominal: [S2, S3], render: (f) => <Scene2 f={f} /> },
+    "s3-pyasa-kutta": { nominal: [S3, S4], render: (f) => <Scene3 f={f} /> },
+    "s4-rehamdili": { nominal: [S4, S5], render: (f) => <Scene4 f={f} /> },
+    "s5-neki": { nominal: [S5, S6], render: (f) => <Scene5 f={f} /> },
+    "s6-anjaam": { nominal: [S6, END], render: (f) => <Scene6 f={f} /> },
+  },
+  ambience: { file: "sfx/desert-wind.mp3", volume: 0.32 },
+  sfx: SFX,
+  overlay: (f) => <Overlay f={f} />,
 };
