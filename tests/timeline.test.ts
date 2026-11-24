@@ -99,6 +99,16 @@ describe("camera", () => {
     assert.ok(dist(cam.position, [0, 1.6, 0]) < 2.5);
   });
 
+  it("eases a custom shot from its start to its end position and focuses on the focus actor", () => {
+    const shot = { start: 0, shot: "custom" as const, move: "follow" as const, position: [0, 1, 10] as [number, number, number], toPosition: [0, 1, 4] as [number, number, number], lookAt: [0, 1, 0] as [number, number, number] };
+    const sc = { ...s, focus: "a", camera: shot };
+    const startCam = computeCamera(sc, 0, { height: () => 1.75 }, 16 / 9);
+    const endCam = computeCamera(sc, s.duration, { height: () => 1.75 }, 16 / 9);
+    assert.ok(Math.abs(startCam.position[2] - 10) < 0.1);
+    assert.ok(Math.abs(endCam.position[2] - 4) < 0.1);
+    assert.ok(Math.abs(endCam.focus[1] - 1.75 * 0.6) < 1e-6, "focus at the actor's chest height");
+  });
+
   it("widens the field of view for portrait (Shorts)", () => {
     const land = computeCamera(s, 1, { height: () => 1.75 }, 16 / 9);
     const port = computeCamera(s, 1, { height: () => 1.75 }, 9 / 16);

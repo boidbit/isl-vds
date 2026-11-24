@@ -25,7 +25,7 @@ export const LOCATIONS = ["registan", "registan-kuan"] as const;
 export const ENVIRONMENT_NAMES = Object.keys(ENVIRONMENTS);
 
 /** Scene props that can be placed in the world. */
-export const PROPS = ["well", "rock", "shrub", "acacia", "wet-sand", "puddle", "khuff"] as const;
+export const PROPS = ["well", "rock", "shrub", "grass", "acacia", "palm", "wet-sand", "puddle", "khuff"] as const;
 
 /** Props a character can hold during an action. */
 export const HOLDABLE = ["khuff"] as const;
@@ -45,6 +45,7 @@ export const CAMERA_SHOTS = [
   "tracking",
   "two-shot",
   "over-shoulder",
+  "custom",
 ] as const;
 
 export const CAMERA_MOVES = ["follow", "static", "push-in", "pull-out", "orbit", "crane-up", "crane-down"] as const;

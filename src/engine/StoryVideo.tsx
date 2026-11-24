@@ -50,8 +50,6 @@ const Overlays: React.FC<{ story: Story; scene: Scene; sceneIndex: number; t: nu
 
   return (
     <AbsoluteFill>
-      {/* vignette */}
-      <AbsoluteFill style={{ background: "radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.38) 100%)" }} />
       {/* cinematic letterbox (landscape only) */}
       {bar > 0 && (
         <>
@@ -164,7 +162,7 @@ export const StoryVideo: React.FC<{ story: Story }> = ({ story }) => {
           <ThreeCanvas
             width={width}
             height={height}
-            shadows="percentage"
+            shadows="variance"
             gl={{ antialias: true, preserveDrawingBuffer: true }}
             camera={{ fov: 35, near: 0.05, far: 1200, position: [0, 2, 8] }}
           >

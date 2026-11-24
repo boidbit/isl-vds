@@ -9,6 +9,12 @@ stories/pyasa-kutta.json  ──►  validator  ──►  3D engine (Three.js +
    (Claude likhta hai)        (galti pakadta)     (characters, camera, light)          (YouTube / Shorts)
 ```
 
+## Visual style
+
+Art direction: **soft storybook cartoon + cinematic light** (poori detail: [`docs/ART_DIRECTION.md`](docs/ART_DIRECTION.md)).
+Gol, mulayam shapes, kapde par sheen, low golden sun + rim light + lavender shadows, depth of field,
+hawa mein dhool, aur dur ke pahad dhund mein. Benchmark shot: `npm run render -- benchmark-pilana`.
+
 ## Phase 1 mein kya bana hai
 
 | Hissa | Kya hai |
@@ -17,8 +23,9 @@ stories/pyasa-kutta.json  ──►  validator  ──►  3D engine (Three.js +
 | **Validator** | Galat animation, galat character, scene se lambi action, galat camera target: render se pehle pakadta hai |
 | **Characters** | Ek procedural insaan (6 presets: musafir, buzurg, naujawan, vyapari, gareeb, bachcha) + kutta (3 presets). Chehre par aankhen nahi: emotion body language se |
 | **Animations** | Insaan: 15 (walk, walk-tired, climb, kneel-give, wipe-brow…). Kutta: 7 (lie-pant, lick-ground, drink, wag…). Har action ke beech smooth blending |
-| **Locations** | Registan (dunes, pathar, jhaadiyan) aur registan-kuan (kuan + babool ka ped) |
-| **Environments** | morning, noon, golden, night: aasmaan, dhoop, saaye, fog |
+| **Locations** | Registan (ripple wali ret, sandstone chattanein, ghaas, dur ke mesa, baadal) aur registan-kuan (gol pattharon ka kuan, babool, khajoor) |
+| **Environments** | morning, noon, afternoon, golden, night: key sun + rim + fill, color grade, bloom, vignette |
+| **Post-processing** | Depth of field (subject par focus), bloom, ACES tone mapping, color grade, SMAA |
 | **Camera** | 13 film shots (close-up, two-shot, over-shoulder, low-angle…) + moves (push-in, orbit, crane) + halka handheld drift |
 | **Video** | Subtitles, title, fade transitions, letterbox, vignette, end card, hawa ki awaaz |
 | **Automation** | GitHub Actions: har push par tests, aur ek button se MP4 render |

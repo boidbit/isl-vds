@@ -52,6 +52,11 @@ export const CameraShotSchema = z.object({
   amount: z.number().optional(),
   /** World point to frame instead of an actor (for establishing shots). */
   lookAt: Vec3.optional(),
+  /** "custom" shots: exact camera position, eased towards toPosition/toLookAt over the shot. */
+  position: Vec3.optional(),
+  toPosition: Vec3.optional(),
+  toLookAt: Vec3.optional(),
+  fov: z.number().min(10).max(90).optional(),
 });
 
 export const PropSchema = z.object({
@@ -79,6 +84,8 @@ export const SceneSchema = z.object({
   narration: z.string().optional(),
   subtitles: z.union([z.string(), z.array(SubtitleSchema)]).optional(),
   transition: z.enum(["cut", "fade"]).default("cut"),
+  /** Actor the depth of field focuses on (default: the camera's main target). */
+  focus: z.string().optional(),
   props: z.array(PropSchema).default([]),
   actors: z.array(SceneActorSchema).default([]),
   camera: z.union([CameraShotSchema, z.array(CameraShotSchema).min(1)]),
@@ -207,7 +214,10 @@ export const checkStory = (input: unknown): { story?: Story; issues: StoryIssue[
         add(cp, `"${shot.shot}" needs two targets`);
       }
       if (shot.start >= scene.duration) add(cp, `starts at ${shot.start}s, after the scene ends`);
+      if (shot.shot === "custom" && (!shot.position || !shot.lookAt)) add(cp, '"custom" shot needs position and lookAt');
     });
+
+    if (scene.focus && !actorIds.has(scene.focus)) add(`${sp}.focus`, `focus "${scene.focus}" is not an actor in this scene`);
 
     if (Array.isArray(scene.subtitles)) {
       scene.subtitles.forEach((s, i) => {

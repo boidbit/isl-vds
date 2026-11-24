@@ -1,7 +1,7 @@
 // Film-style virtual camera. A shot is described by intent ("close-up of musafir,
 // slow push-in") and this module computes the exact camera position each frame.
 
-import { DEG, addVec, clamp, easeInOut, lerp, scaleVec, wobble, type Vec3 } from "./math";
+import { DEG, addVec, clamp, easeInOut, lerp, lerpVec, scaleVec, wobble, type Vec3 } from "./math";
 import type { CameraShot, Scene } from "./schema";
 import { actorPositionAt, evaluateActor } from "./timeline";
 
@@ -28,9 +28,10 @@ const SHOTS: Record<CameraShot["shot"], ShotSpec> = {
   tracking: { dist: 4.6, height: 1.4, lookHeight: 0.6, fov: 36, angle: 70, scaleWithTarget: true },
   "two-shot": { dist: 3.6, height: 1.45, lookHeight: 0.6, fov: 36, angle: 70, scaleWithTarget: false },
   "over-shoulder": { dist: 1.9, height: 1.75, lookHeight: 0.6, fov: 36, angle: 180, scaleWithTarget: false },
+  custom: { dist: 0, height: 0, lookHeight: 0, fov: 35, angle: 0, scaleWithTarget: false },
 };
 
-export type CameraFrame = { position: Vec3; lookAt: Vec3; fov: number };
+export type CameraFrame = { position: Vec3; lookAt: Vec3; fov: number; /** World point the depth of field focuses on. */ focus: Vec3 };
 
 export type TargetInfo = { height: (id: string) => number };
 
@@ -67,6 +68,24 @@ export const computeCamera = (
   const shotStart = shot.start;
   const p = easeInOut(clamp((t - shotStart) / Math.max(0.001, shotEnd - shotStart)));
   const spec = SHOTS[shot.shot];
+
+  const focusPoint = (fallback: Vec3): Vec3 => {
+    const id = scene.focus ?? (Array.isArray(shot.target) ? shot.target[0] : shot.target);
+    const actor = id ? scene.actors.find((a) => a.id === id) : undefined;
+    if (!actor) return fallback;
+    const pos = smoothedPosition(scene, actor.id, t);
+    return [pos[0], pos[1] + info.height(actor.id) * 0.6, pos[2]];
+  };
+
+  if (shot.shot === "custom" && shot.position && shot.lookAt) {
+    let position = lerpVec(shot.position, shot.toPosition ?? shot.position, p);
+    let lookAt = lerpVec(shot.lookAt, shot.toLookAt ?? shot.lookAt, p);
+    let fov = shot.fov ?? spec.fov;
+    if (aspect < 1) fov = (2 * Math.atan((Math.tan((fov * DEG) / 2) * (16 / 9)) / (aspect * 1.6))) / DEG;
+    position = addVec(position, [wobble(t * 0.35, 11) * 0.02, wobble(t * 0.3, 12) * 0.012, 0]);
+    lookAt = addVec(lookAt, [wobble(t * 0.25, 13) * 0.01, 0, 0]);
+    return { position, lookAt, fov, focus: focusPoint(lookAt) };
+  }
 
   const targets =
     shot.target === undefined
@@ -170,5 +189,5 @@ export const computeCamera = (
   position = addVec(position, [wobble(t * 0.35, 11) * drift, wobble(t * 0.3, 12) * drift * 0.6, 0]);
   lookAt = addVec(lookAt, [wobble(t * 0.25, 13) * drift * 0.4, 0, 0]);
 
-  return { position, lookAt, fov };
+  return { position, lookAt, fov, focus: focusPoint(lookAt) };
 };

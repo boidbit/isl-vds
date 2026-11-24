@@ -39,11 +39,13 @@ CATALOG (only these names exist)
   point, kneel, kneel-give, kneel-comfort, sit, climb, drink-hands
 - dog animations: idle, walk, lie-pant, lie-look, lick-ground, drink, wag
 - locations: registan, registan-kuan
-- environments: morning, noon, golden, night
-- props: well, rock, shrub, acacia, wet-sand, puddle, khuff
+- environments: morning, noon, afternoon, golden, night
+- props: well, rock, shrub, grass, acacia, palm, wet-sand, puddle, khuff
 - holdable: khuff in slot rightHand | leftHand | mouth (with optional "pour": [from,to])
 - camera shots: establishing, wide, full, medium, close-up, extreme-close-up, low-angle,
-  high-angle, top-down, side, tracking, two-shot (2 targets), over-shoulder (2 targets)
+  high-angle, top-down, side, tracking, two-shot (2 targets), over-shoulder (2 targets),
+  custom (exact "position"/"lookAt", optional "toPosition"/"toLookAt"/"fov")
+- scene "focus": actor id the depth of field focuses on
 - camera moves: follow, static, push-in, pull-out, orbit, crane-up, crane-down
 
 EXAMPLE

@@ -116,10 +116,14 @@ const drink: Clip = (c) => {
   const lap = Math.max(0, Math.sin(c.t * Math.PI * 2 * 2.4));
   const revive = smoothstep(0.3, 1, c.progress);
   return {
-    bodyPitch: 0.2,
-    legFL: -0.2,
-    legFR: -0.2,
-    kneeF: 0.3,
+    bodyPitch: 0.1,
+    bodyY: -0.03,
+    legFL: -0.32,
+    legFR: -0.28,
+    legBL: 0.08,
+    legBR: 0.1,
+    kneeF: 0.15,
+    kneeB: 0.25,
     headPitch: 1.1 + lap * 0.12,
     tongue: 0.5 + lap * 0.5,
     jaw: 0.3 + lap * 0.3,

@@ -33,14 +33,14 @@ export const HUMAN_PRESETS: Record<string, HumanLook> = {
     build: 0.95,
     skin: "#b98a62",
     robe: "#e4d6bd",
-    robeTrim: "#b49a73",
-    cloak: "#7a5638",
+    robeTrim: "#c9a77a",
+    cloak: null,
     headwear: "turban",
     headwearColor: "#efe8da",
     headband: "#cbbfa6",
     beard: "full",
     beardColor: "#2e2219",
-    sash: "#8b3a2b",
+    sash: "#7d5a44",
   },
   buzurg: {
     height: 1.68,
@@ -115,7 +115,7 @@ export const HUMAN_PRESETS: Record<string, HumanLook> = {
 };
 
 export const DOG_PRESETS: Record<string, DogLook> = {
-  "desert-dog": { size: 1, fur: "#c9a273", furDark: "#8c6a45", thin: 0.8 },
+  "desert-dog": { size: 0.92, fur: "#a27a58", furDark: "#5c4433", thin: 0.8 },
   "street-dog": { size: 0.9, fur: "#6f5a48", furDark: "#3f3228", thin: 0.3 },
   "white-dog": { size: 1.05, fur: "#e9e2d6", furDark: "#b8ab98", thin: 0 },
 };
