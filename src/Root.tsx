@@ -22,7 +22,7 @@ export const RemotionRoot: React.FC = () => (
         defaultProps={{ filmId: id, timing: null }}
         calculateMetadata={async ({ props }: { props: FilmPlayerProps }) => {
           const meta = await loadFilmMetadata(props.filmId);
-          return { durationInFrames: meta.durationInFrames, fps: meta.fps, props: { ...props, timing: meta.timing } };
+          return { durationInFrames: meta.durationInFrames, fps: meta.fps, width: meta.width, height: meta.height, props: { ...props, timing: meta.timing } };
         }}
       />
     ))}

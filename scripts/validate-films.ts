@@ -2,7 +2,7 @@
 // Fails with a clear list when a film needs something the library does not have yet.
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { FilmSchema } from "../src/two-d/film/schema";
+import { FilmSchema, sceneLines } from "../src/two-d/film/schema";
 import { FILMS } from "../src/two-d/films";
 import { LIBRARY } from "../src/two-d/library/registry";
 
@@ -38,7 +38,7 @@ for (const id of ids) {
         if (!film.scenes.some((s) => s.id === sid)) warnings.push(`Visual scene "${sid}" is not used in film.json`);
       });
     }
-    if (film.voice.enabled) film.scenes.forEach((s) => !s.voiceText && !s.narration && warnings.push(`Scene "${s.id}" has no narration`));
+    if (film.voice.enabled) film.scenes.forEach((s) => sceneLines(s).length === 0 && warnings.push(`Scene "${s.id}" has no spoken lines`));
     if (!film.source.verified) warnings.push("Religious source not verified yet: check the reference before publishing.");
   }
   console.log(`${errors.length ? "✗" : "✓"} ${id}`);

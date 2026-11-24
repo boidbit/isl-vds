@@ -20,6 +20,7 @@
     "@react-three/postprocessing": "^3.2.2",
     "@remotion/bundler": "^4.0.546",
     "@remotion/cli": "^4.0.546",
+    "@remotion/motion-blur": "^4.0.546",
     "@remotion/renderer": "^4.0.546",
     "@remotion/three": "^4.0.546",
     "postprocessing": "^6.39.6",

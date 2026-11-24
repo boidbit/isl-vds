@@ -1,0 +1,81 @@
+{
+  "id": "sone-ka-matka",
+  "title": "Sone Se Bhara Matka",
+  "fps": 30,
+  "format": "short",
+  "motionBlur": 5,
+  "source": {
+    "references": ["Sahih al-Bukhari 3472", "Sahih Muslim 1721"],
+    "verified": false
+  },
+  "voice": {
+    "enabled": true,
+    "model": "gemini-3.8-flash-tts",
+    "speakers": {
+      "narrator": { "voice": "Gacrux", "style": "deep, warm, emotional storyteller, gripping pace" },
+      "kharidar": { "voice": "Achird", "style": "humble and sincere" },
+      "malik": { "voice": "Orus", "style": "calm, kind and firm" },
+      "buzurg": { "voice": "Algenib", "style": "old, wise and gentle, speaking slowly" }
+    }
+  },
+  "assets": [
+    "kharidar", "malik", "buzurg-back", "village-sky", "hills", "farm-ground", "mud-house", "mud-wall",
+    "door", "goat", "charpai", "clay-pots", "birds", "bush", "stone", "green-tree", "matka", "gold-inside",
+    "dig-topdown", "hoe-strike", "hand-grip", "hoe", "seat-mat", "light-rays",
+    "sfx-dig", "sfx-tak", "sfx-lid", "sfx-shimmer", "sfx-whoosh", "sfx-impact", "sfx-riser", "sfx-door",
+    "sfx-knock", "sfx-birds", "sfx-chime", "sfx-pad", "sfx-village-ambience", "sfx-step"
+  ],
+  "scenes": [
+    {
+      "id": "s1-khazana",
+      "lines": [
+        {
+          "text": "Ek aadmi ne zameen khareedi… lekin khodte waqt use kuch aisa mila, jise dekhkar uski saansein ruk gayin!",
+          "voiceText": "एक आदमी ने ज़मीन ख़रीदी… लेकिन खोदते वक़्त उसे कुछ ऐसा मिला, जिसे देखकर उसकी साँसें रुक गईं!"
+        }
+      ]
+    },
+    {
+      "id": "s2-matka-khulta-hai",
+      "lines": [{ "text": "Matke ke andar… sona hi sona tha!", "voiceText": "मटके के अंदर… सोना ही सोना था!" }]
+    },
+    {
+      "id": "s3-imaandari",
+      "lines": [
+        { "text": "Lekin usne socha…", "voiceText": "लेकिन उसने सोचा…" },
+        { "speaker": "kharidar", "text": "Maine aapse zameen khareedi thi, khazana nahi. Ye sona aapka hai.", "voiceText": "मैंने आपसे ज़मीन ख़रीदी थी, ख़ज़ाना नहीं। यह सोना आपका है।" }
+      ]
+    },
+    {
+      "id": "s4-pehla-malik",
+      "lines": [
+        { "text": "Magar pehle malik ne kaha…", "voiceText": "मगर पहले मालिक ने कहा…" },
+        { "speaker": "malik", "text": "Maine tumhe zameen bech di thi. Ab jo kuch usme nikla, wo tumhara hai.", "voiceText": "मैंने तुम्हें ज़मीन बेच दी थी। अब जो कुछ उसमें निकला, वह तुम्हारा है।" }
+      ]
+    },
+    {
+      "id": "s5-twist",
+      "lines": [
+        {
+          "text": "Dono itne imaandaar the… ki sona rakhne ko koi tayyar hi nahi tha! Aakhir dono ek buzurg ke paas gaye.",
+          "voiceText": "दोनों इतने ईमानदार थे… कि सोना रखने को कोई तैयार ही नहीं था! आख़िर दोनों एक बुज़ुर्ग के पास गए।"
+        }
+      ]
+    },
+    {
+      "id": "s6-faisla",
+      "subtitleMax": 0.78,
+      "lines": [
+        { "speaker": "buzurg", "text": "Kya tumhara koi beta hai?", "voiceText": "क्या तुम्हारा कोई बेटा है?" },
+        { "speaker": "kharidar", "text": "Haan, hai.", "voiceText": "हाँ, है।" },
+        { "speaker": "buzurg", "text": "Aur tumhari koi beti?", "voiceText": "और तुम्हारी कोई बेटी?" },
+        { "speaker": "malik", "text": "Haan.", "voiceText": "हाँ।" },
+        {
+          "text": "Tab faisla hua — ek ke bete aur doosre ki beti ki shaadi kar di jaye… aur khazana unhe de diya jaye.",
+          "voiceText": "तब फ़ैसला हुआ — एक के बेटे और दूसरे की बेटी की शादी कर दी जाए… और ख़ज़ाना उन्हें दे दिया जाए।"
+        },
+        { "text": "Aisi hoti hai asli imaandari.", "voiceText": "ऐसी होती है असली ईमानदारी।" }
+      ]
+    }
+  ]
+}
