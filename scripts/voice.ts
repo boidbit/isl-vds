@@ -15,6 +15,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { FilmSchema, TimingSchema, lineKey, sceneLines, speakerVoice, type Film, type Timing } from "../src/two-d/film/schema";
+import { SR, splitAligned, trim, type Pcm } from "./audio-split";
 
 const root = join(import.meta.dirname, "..");
 const filmId = process.argv[2];
@@ -45,10 +46,8 @@ const previous: Timing | null = (() => {
   }
 })();
 
-const SR = 24000;
 
 // ------------------------------------------------------------------ wav helpers
-type Pcm = Int16Array;
 const readWav = (buf: Buffer): Pcm => {
   let off = 12;
   while (off + 8 <= buf.length) {
@@ -79,57 +78,6 @@ const writeWav = (pcm: Pcm) => {
   h.write("data", 36);
   h.writeUInt32LE(data.length, 40);
   return Buffer.concat([h, data]);
-};
-
-/** Silent stretches (>= minSec) as [startSample, endSample]. */
-const silences = (pcm: Pcm, minSec = 0.28, thresholdDb = -40) => {
-  const win = Math.round(SR * 0.02);
-  const thr = 32768 * Math.pow(10, thresholdDb / 20);
-  const out: [number, number][] = [];
-  let start = -1;
-  for (let i = 0; i < pcm.length; i += win) {
-    let sum = 0;
-    const end = Math.min(pcm.length, i + win);
-    for (let j = i; j < end; j++) sum += pcm[j] * pcm[j];
-    const rms = Math.sqrt(sum / Math.max(1, end - i));
-    if (rms < thr) {
-      if (start < 0) start = i;
-    } else if (start >= 0) {
-      if (i - start >= minSec * SR) out.push([start, i]);
-      start = -1;
-    }
-  }
-  if (start >= 0 && pcm.length - start >= minSec * SR) out.push([start, pcm.length]);
-  return out;
-};
-
-const trim = (pcm: Pcm) => {
-  const s = silences(pcm, 0.05, -45);
-  let a = 0;
-  let b = pcm.length;
-  if (s.length && s[0][0] === 0) a = Math.max(0, s[0][1] - Math.round(SR * 0.05));
-  const last = s[s.length - 1];
-  if (last && last[1] >= pcm.length - 1) b = Math.min(pcm.length, last[0] + Math.round(SR * 0.08));
-  return pcm.slice(a, Math.max(a + 1, b));
-};
-
-/** Cut a take into n lines at the n-1 longest inner silences. Null if it does not line up. */
-const splitInto = (pcm: Pcm, n: number): Pcm[] | null => {
-  if (n === 1) return [trim(pcm)];
-  const inner = silences(pcm).filter(([a, b]) => a > SR * 0.1 && b < pcm.length - SR * 0.1);
-  if (inner.length < n - 1) return null;
-  const cuts = [...inner]
-    .sort((x, y) => y[1] - y[0] - (x[1] - x[0]))
-    .slice(0, n - 1)
-    .sort((x, y) => x[0] - y[0])
-    .map(([a, b]) => Math.round((a + b) / 2));
-  const parts: Pcm[] = [];
-  let prev = 0;
-  [...cuts, pcm.length].forEach((c) => {
-    parts.push(trim(pcm.slice(prev, c)));
-    prev = c;
-  });
-  return parts.every((p) => p.length > SR * 0.25) ? parts : null;
 };
 
 // ------------------------------------------------------------------ Gemini
@@ -261,7 +209,7 @@ for (const group of groups) {
   const take = await synth(lines.map((l, i) => ({ speaker: l.speaker, text: i < lines.length - 1 ? `${l.text} <long pause>` : l.text })));
   calls++;
   writeFileSync(join(rawDir, `${group.join("+")}.wav`), writeWav(take));
-  let parts = splitInto(take, lines.length);
+  let parts = splitAligned(take, lines.map((l) => l.text));
   if (!parts) {
     console.warn(`  could not cut the take into ${lines.length} lines; generating line by line instead`);
     parts = [];
