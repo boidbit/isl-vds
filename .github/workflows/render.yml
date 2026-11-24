@@ -1,0 +1,46 @@
+name: Render video
+
+# Manually start from the GitHub "Actions" tab: pick a story, get an MP4 as a downloadable artifact.
+on:
+  workflow_dispatch:
+    inputs:
+      story:
+        description: "Story id (file name in /stories without .json)"
+        required: true
+        default: pyasa-kutta
+      format:
+        description: "landscape (YouTube 1920x1080), short (Shorts 1080x1920) or both"
+        type: choice
+        options: [landscape, short, both]
+        default: landscape
+      scale:
+        description: "Resolution scale (0.5 = fast preview)"
+        default: "1"
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      STORY: ${{ inputs.story }}
+      SCALE: ${{ inputs.scale }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate stories
+        run: npm run validate
+      - name: Render landscape
+        if: inputs.format != 'short'
+        run: npm run render -- "$STORY" --scale "$SCALE" --out "out/$STORY.mp4"
+      - name: Render short
+        if: inputs.format != 'landscape'
+        run: npm run render -- "$STORY" --short --scale "$SCALE" --out "out/$STORY-short.mp4"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.story }}-video
+          path: out/*.mp4
+          retention-days: 14

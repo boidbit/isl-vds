@@ -1,0 +1,34 @@
+{
+  "name": "isl-vds",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Code-based 3D Islamic story animation studio: story JSON in, MP4 out.",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "validate": "tsx scripts/validate-stories.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "still": "tsx scripts/stills.ts",
+    "render": "tsx scripts/render.ts"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.8.2",
+    "@remotion/bundler": "^4.0.546",
+    "@remotion/cli": "^4.0.546",
+    "@remotion/renderer": "^4.0.546",
+    "@remotion/three": "^4.0.546",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "remotion": "^4.0.546",
+    "three": "^0.187.0",
+    "zod": "^3.22.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.2.2",
+    "@types/three": "^0.187.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

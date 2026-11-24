@@ -1,0 +1,284 @@
+{
+  "id": "pyasa-kutta",
+  "title": "Pyase Kutte Ki Kahani",
+  "language": "hi-Latn",
+  "fps": 30,
+  "source": {
+    "type": "hadith",
+    "references": ["Sahih al-Bukhari 2363", "Sahih al-Bukhari 2466", "Sahih Muslim 2244"],
+    "summary": "A man travelling became very thirsty, found a well, went down into it and drank. When he came out he saw a dog panting and licking the moist earth out of thirst. He said: this dog has become as thirsty as I was. He went down again, filled his leather sock (khuff) with water, held it with his mouth, climbed up and gave the dog water. Allah appreciated his deed and forgave him. The Companions asked: is there a reward for us in (serving) animals? He said: there is a reward for (serving) every living being.",
+    "verified": false
+  },
+  "audio": {
+    "ambience": "sfx/desert-wind.mp3",
+    "ambienceVolume": 0.4
+  },
+  "cast": {
+    "musafir": { "type": "human", "preset": "musafir", "name": "Musafir" },
+    "kutta": { "type": "dog", "preset": "desert-dog", "name": "Pyasa kutta" }
+  },
+  "scenes": [
+    {
+      "id": "s1-safar",
+      "location": "registan",
+      "environment": "noon",
+      "duration": 6,
+      "title": "Pyase Kutte Ki Kahani",
+      "narration": "Ek aadmi registan mein safar kar raha tha.",
+      "subtitles": [{ "text": "Ek aadmi registan mein safar kar raha tha...", "start": 3.2 }],
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [-3, 0, -2.5],
+          "actions": [{ "type": "walk-tired", "start": 0, "duration": 6, "to": [1, 0, 1.5] }]
+        }
+      ],
+      "camera": { "shot": "establishing", "target": "musafir", "angle": 40, "move": "orbit", "amount": 18 }
+    },
+    {
+      "id": "s2-pyaas",
+      "location": "registan",
+      "environment": "noon",
+      "duration": 6,
+      "narration": "Raaste mein use bahut sakht pyaas lagi.",
+      "subtitles": "Raaste mein use bahut sakht pyaas lagi.",
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [0, 0, -1.5],
+          "actions": [
+            { "type": "walk-tired", "start": 0, "duration": 3.4, "to": [0, 0, 1.3] },
+            { "type": "wipe-brow", "start": 3.4, "duration": 2.6 }
+          ]
+        }
+      ],
+      "camera": [
+        { "start": 0, "shot": "medium", "target": "musafir", "angle": 25, "move": "follow" },
+        { "start": 3.4, "shot": "close-up", "target": "musafir", "angle": 35, "move": "push-in" }
+      ]
+    },
+    {
+      "id": "s3-kuan",
+      "location": "registan-kuan",
+      "environment": "noon",
+      "duration": 7,
+      "narration": "Tab use ek kuan nazar aaya.",
+      "subtitles": [{ "text": "Tab use ek kuan nazar aaya.", "start": 1.4 }],
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [-2, 0, 6],
+          "face": 170,
+          "actions": [
+            { "type": "look-around", "start": 0, "duration": 2.6 },
+            { "type": "walk-tired", "start": 2.6, "duration": 4.4, "to": [-0.5, 0, 1.5] }
+          ]
+        }
+      ],
+      "camera": [
+        { "start": 0, "shot": "medium", "target": "musafir", "angle": 15, "move": "static" },
+        { "start": 2.6, "shot": "wide", "target": "musafir", "angle": 200, "move": "follow" }
+      ]
+    },
+    {
+      "id": "s4-utarna",
+      "location": "registan-kuan",
+      "environment": "noon",
+      "duration": 6,
+      "narration": "Woh kuen mein utra aur paani piya.",
+      "subtitles": [{ "text": "Woh kuen mein utra, aur paani piya.", "start": 0.6 }],
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [-0.5, 0, 1.5],
+          "face": 161,
+          "actions": [
+            { "type": "climb", "start": 0.6, "duration": 4.8, "path": [[-0.25, 0.78, 0.6], [0, 0.78, 0], [0, -1.9, 0]] }
+          ]
+        }
+      ],
+      "camera": { "shot": "high-angle", "lookAt": [0, 0.4, 0], "angle": 35, "move": "static" }
+    },
+    {
+      "id": "s5-kutta",
+      "location": "registan-kuan",
+      "environment": "noon",
+      "transition": "fade",
+      "duration": 8,
+      "narration": "Jab woh bahar nikla to dekha ek kutta pyaas ki shiddat se haanp raha hai aur geeli mitti chaat raha hai.",
+      "subtitles": [
+        { "text": "Jab woh bahar nikla, to dekha ek kutta pyaas se haanp raha hai...", "start": 0.6, "end": 4.6 },
+        { "text": "...aur pyaas ki shiddat se geeli mitti chaat raha hai.", "start": 4.7 }
+      ],
+      "props": [{ "type": "wet-sand", "at": [2.4, 0, -1.55] }],
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [0, -1.9, 0],
+          "face": 125,
+          "actions": [
+            { "type": "climb", "start": 0, "duration": 3.6, "path": [[0, 0.78, 0], [0.45, 0.72, -0.35]] },
+            { "type": "walk-tired", "start": 3.6, "duration": 1.0, "to": [1.2, 0, -0.85] },
+            { "type": "tired", "start": 4.6, "duration": 3.4, "face": "kutta" }
+          ]
+        },
+        {
+          "id": "kutta",
+          "at": [2.8, 0, -2.0],
+          "face": -50,
+          "actions": [{ "type": "lick-ground", "start": 0, "duration": 8 }]
+        }
+      ],
+      "camera": [
+        { "start": 0, "shot": "full", "lookAt": [0.2, 1.5, -0.2], "angle": 75, "move": "static" },
+        { "start": 4.6, "shot": "two-shot", "target": ["musafir", "kutta"], "angle": 75, "move": "push-in" }
+      ]
+    },
+    {
+      "id": "s6-ehsaas",
+      "location": "registan-kuan",
+      "environment": "noon",
+      "duration": 6.5,
+      "narration": "Usne socha, is kutte ko bhi waisi hi pyaas lagi hai jaisi mujhe lagi thi.",
+      "subtitles": [{ "text": "Usne socha: is kutte ko bhi waisi hi pyaas lagi hai, jaisi mujhe lagi thi.", "start": 0.4 }],
+      "props": [{ "type": "wet-sand", "at": [2.4, 0, -1.55] }],
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [1.2, 0, -0.85],
+          "face": "kutta",
+          "actions": [{ "type": "realize", "start": 0, "duration": 6.5, "face": "kutta" }]
+        },
+        {
+          "id": "kutta",
+          "at": [2.8, 0, -2.0],
+          "face": -50,
+          "actions": [
+            { "type": "lick-ground", "start": 0, "duration": 3.2 },
+            { "type": "lie-look", "start": 3.2, "duration": 3.3 }
+          ]
+        }
+      ],
+      "camera": [
+        { "start": 0, "shot": "close-up", "target": "musafir", "angle": 30, "move": "push-in" },
+        { "start": 3.4, "shot": "over-shoulder", "target": ["musafir", "kutta"], "move": "static" }
+      ]
+    },
+    {
+      "id": "s7-moza",
+      "location": "registan-kuan",
+      "environment": "noon",
+      "duration": 9,
+      "narration": "Woh dobara kuen mein utra, apne chamde ke moze mein paani bhara, aur use munh se pakad kar upar chadh aaya.",
+      "subtitles": [
+        { "text": "Woh dobara kuen mein utra, aur apne chamde ke moze mein paani bhara...", "start": 0.3, "end": 4.8 },
+        { "text": "...phir use daanton se pakad kar upar chadh aaya.", "start": 5.0 }
+      ],
+      "props": [{ "type": "wet-sand", "at": [2.4, 0, -1.55] }],
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [1.2, 0, -0.85],
+          "face": -55,
+          "actions": [
+            { "type": "climb", "start": 0.2, "duration": 3.8, "path": [[0.45, 0.72, -0.35], [0, 0.78, 0], [0, -1.9, 0]] },
+            {
+              "type": "climb",
+              "start": 4.8,
+              "duration": 4.2,
+              "path": [[0, 0.78, 0], [0.45, 0.72, -0.35], [1.2, 0, -0.85]],
+              "face": 125,
+              "hold": { "prop": "khuff", "slot": "mouth" }
+            }
+          ]
+        },
+        {
+          "id": "kutta",
+          "at": [2.8, 0, -2.0],
+          "face": -50,
+          "actions": [{ "type": "lie-pant", "start": 0, "duration": 9 }]
+        }
+      ],
+      "camera": [
+        { "start": 0, "shot": "high-angle", "lookAt": [0, 0.3, 0], "angle": 100, "move": "static" },
+        { "start": 4.6, "shot": "full", "lookAt": [0.4, 1.4, -0.3], "angle": 60, "move": "static" }
+      ]
+    },
+    {
+      "id": "s8-pilana",
+      "location": "registan-kuan",
+      "environment": "noon",
+      "duration": 9,
+      "narration": "Phir usne woh paani pyase kutte ko pilaya.",
+      "subtitles": [{ "text": "Phir usne woh paani pyase kutte ko pilaya.", "start": 2.4 }],
+      "props": [
+        { "type": "wet-sand", "at": [2.4, 0, -1.55] },
+        { "type": "puddle", "at": [2.47, 0, -1.63], "appear": 3.0 }
+      ],
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [1.2, 0, -0.85],
+          "actions": [
+            { "type": "walk", "start": 0, "duration": 1.6, "to": [2.15, 0, -1.3], "hold": { "prop": "khuff", "slot": "mouth" } },
+            {
+              "type": "kneel-give",
+              "start": 1.6,
+              "duration": 7.4,
+              "face": "kutta",
+              "hold": { "prop": "khuff", "slot": "rightHand" },
+              "pour": [1.2, 6.4]
+            }
+          ]
+        },
+        {
+          "id": "kutta",
+          "at": [2.8, 0, -2.0],
+          "face": "musafir",
+          "actions": [
+            { "type": "lie-look", "start": 0, "duration": 3.2 },
+            { "type": "drink", "start": 3.2, "duration": 5.8 }
+          ]
+        }
+      ],
+      "camera": [
+        { "start": 0, "shot": "medium", "target": "musafir", "angle": 70, "move": "follow" },
+        { "start": 2.8, "shot": "two-shot", "target": ["musafir", "kutta"], "angle": 95, "move": "push-in" },
+        { "start": 5.6, "shot": "low-angle", "target": "kutta", "angle": 75, "move": "push-in" }
+      ]
+    },
+    {
+      "id": "s9-maghfirat",
+      "location": "registan-kuan",
+      "environment": "golden",
+      "transition": "fade",
+      "duration": 8,
+      "narration": "Allah ne uske is amal ki qadr ki aur use maaf farma diya.",
+      "subtitles": [{ "text": "Allah ne uske is amal ki qadr ki, aur use maaf farma diya.", "start": 0.8, "end": 7.4 }],
+      "props": [{ "type": "puddle", "at": [2.47, 0, -1.63] }],
+      "actors": [
+        {
+          "id": "musafir",
+          "at": [2.15, 0, -1.3],
+          "face": "kutta",
+          "actions": [{ "type": "kneel-comfort", "start": 0, "duration": 8, "face": "kutta" }]
+        },
+        {
+          "id": "kutta",
+          "at": [2.8, 0, -2.0],
+          "face": "musafir",
+          "actions": [{ "type": "wag", "start": 0, "duration": 8 }]
+        }
+      ],
+      "camera": { "shot": "wide", "target": ["musafir", "kutta"], "angle": -95, "move": "crane-up", "amount": 4 }
+    }
+  ],
+  "endCard": {
+    "duration": 6,
+    "lines": [
+      "\"Har jaandaar ke saath bhalaai karne mein ajr hai.\"",
+      "Sahih al-Bukhari 2363  ·  Sahih Muslim 2244",
+      "Jaanwaron par reham karein."
+    ]
+  }
+}
