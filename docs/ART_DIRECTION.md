@@ -83,3 +83,13 @@ and **silhouette** (robe shape, dog posture).
 | Props | Rounded-stone well on a sand mound, sandstone boulders, grass tufts, a sculpted acacia, date palms. |
 | Camera | New `custom` shot (exact position and look-at with smooth start-to-end move) for hand-composed hero shots, plus DOF focus on a named actor. |
 | Benchmark | `stories/benchmark-pilana.json`: the emotional peak of the story, the man giving water to the dog, as one composed 8-second shot. |
+
+## 2D Shorts: shot rules (apply to every film)
+
+1. **Every shot shows a character.** Viewers connect to people, not objects. Tools, pots, water and coins are
+   framed *with* the person holding or looking at them.
+2. **Object-only inserts are the exception:** at most ~1 second, and the very next shot is the character's face/reaction.
+3. **Two characters in one frame are both sharp.** Depth blur only on far background layers.
+4. **Camera stays close:** medium or closer for dialogue; wide shots only to open a new place or to end.
+5. **Hook in the first 2 seconds** with the character doing something (not a title card).
+6. **Characters below the vertical middle, captions below them** (9:16): faces never covered by text.

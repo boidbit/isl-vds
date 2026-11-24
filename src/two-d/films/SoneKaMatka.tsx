@@ -11,13 +11,9 @@ import {
   Bush,
   Charpai,
   ClayPots,
-  DigTopDown,
   FarmGround,
   Goat,
-  GoldInside,
-  HandGrip,
   Hills,
-  HoeStrike,
   LightRays,
   Matka,
   MudHouse,
@@ -133,32 +129,90 @@ const Field: React.FC<{ cam: Cam; t: number; children?: React.ReactNode }> = ({ 
 );
 
 // ------------------------------------------------------------------ scene 1: hook
+// Rule: every shot shows the character. Objects are framed together with him.
+const DIG_X = 790; // where the hoe lands
+
+/** Dirt burst, spark and "TAK!" where the hoe hits (world coordinates). */
+const Impact: React.FC<{ k: number; t: number }> = ({ k, t }) =>
+  k <= 0 || k >= 1 ? null : (
+    <g>
+      <ellipse cx={DIG_X} cy={G + 6} rx={60 + 160 * k} ry={14 + 26 * k} fill="#e0c7a0" opacity={(1 - k) * 0.7} />
+      {Array.from({ length: 10 }, (_, i) => {
+        const a = -Math.PI / 2 + (i - 5) * 0.26;
+        const d = k * (80 + (i % 4) * 40);
+        return <ellipse key={i} cx={DIG_X + Math.cos(a) * d} cy={G - 4 + Math.sin(a) * d + k * k * 120} rx={9 + (i % 3) * 4} ry={7} fill="#8a5a34" stroke="#3d2a1e" strokeWidth={2.5} opacity={1 - k * 0.6} />;
+      })}
+      <g opacity={Math.max(0, 1 - k * 2.4)}>
+        <Sparkle x={DIG_X} y={G - 6} s={2.2} a={t * 200} />
+      </g>
+      <text x={DIG_X - 260} y={G - 250} fontFamily="'DejaVu Sans', sans-serif" fontWeight={900} fontSize={110} fill="#fff" stroke="#1d120a" strokeWidth={9} paintOrder="stroke" opacity={k < 0.75 ? 1 : 0} transform={`rotate(-8 ${DIG_X - 260} ${G - 250})`}>
+        TAK!
+      </text>
+    </g>
+  );
+
+const HIT = S1 + 22;
+
 const Scene1: React.FC<{ f: number; ctx: SceneCtx }> = ({ f }) => {
   const t = f / 30;
-  if (f < S1 + 34) {
-    // anticipation: hoe hangs high, then whips down (ease-in), impact at +16
-    const swing = kf(f, [[S1, 0], [S1 + 8, 0.05], [S1 + 16, 1]], Easing.in(Easing.cubic));
-    const impact = clamp01((f - (S1 + 16)) / 18);
-    const sh = shake(f, S1 + 16, 26, 12);
+  if (f < S1 + 40) {
+    // medium shot: he raises the hoe (anticipation) and brings it down hard
+    const up = kf(f, [[S1, 0], [S1 + 12, 1]], Easing.out(Easing.cubic));
+    const down = kf(f, [[S1 + 12, 0], [HIT, 1]], Easing.in(Easing.cubic));
+    const shoulder = mix(mix(110, 178, up), 38, down);
+    const sh = shake(f, HIT, 18, 12);
+    const cam: Cam = { x: 680 + sh.x, y: G - 240 + sh.y, zoom: kf(f, [[S1, 1.9], [S1 + 40, 2.1]]) };
     return (
-      <Shot zoom={kf(f, [[S1, 1.05], [S1 + 34, 1.18]])} dx={sh.x} dy={sh.y}>
-        <HoeStrike t={t} swing={swing} impact={f >= S1 + 16 ? impact : 0} w={VW} h={VH} />
-      </Shot>
+      <Field cam={cam} t={t}>
+        <Musafir
+          x={560}
+          y={G + 12}
+          look={KH}
+          pose={pose(f, { hold: "hoe", lean: mix(mix(4, -6, up), 30, down), headTilt: mix(0, 16, down), armF: [shoulder, mix(25, 6, down)], armB: [shoulder - 14, mix(30, 10, down)], brow: -0.2, mouth: "neutral", look: 1 })}
+        />
+        <Impact k={(f - HIT) / 18} t={t} />
+      </Field>
     );
   }
-  if (f < S1 + 60) {
-    const freeze = clamp01((f - (S1 + 34)) / 10);
+  if (f < S1 + 64) {
+    // close-up: his face freezes, eyes on the ground, hands still on the hoe
+    const freeze = clamp01((f - (S1 + 40)) / 8);
+    const cam: Cam = { x: 650, y: G - 320, zoom: kf(f, [[S1 + 40, 3.0], [S1 + 64, 3.3]]) };
     return (
-      <Shot zoom={kf(f, [[S1 + 34, 1.0], [S1 + 60, 1.12]])}>
-        <HandGrip t={t} freeze={freeze} w={VW} h={VH} />
-      </Shot>
+      <Field cam={cam} t={t}>
+        <Musafir
+          x={560}
+          y={G + 12}
+          look={KH}
+          pose={pose(f, { hold: "hoe", lean: 30 - freeze * 8, headTilt: 16, armF: [38, 6], armB: [24, 10], eyeOpen: 1, brow: freeze, mouth: freeze > 0.5 ? "open" : "neutral", look: 1 })}
+        />
+      </Field>
     );
   }
-  const reveal = kf(f, [[S1 + 66, 0], [S2 - 8, 1]]);
+  // he kneels and brushes the soil away: the lid of a buried pot appears
+  const reveal = kf(f, [[S1 + 70, 0], [S2 - 8, 1]]);
+  const swipe = Math.sin(t * 14);
+  const cam: Cam = { x: kf(f, [[S1 + 64, 700], [S2, 720]]), y: G - 210, zoom: kf(f, [[S1 + 64, 2.0], [S2, 2.3]]) };
   return (
-    <Shot zoom={kf(f, [[S1 + 60, 1.0], [S2, 1.22]])}>
-      <DigTopDown t={t} reveal={reveal} w={VW} h={VH} />
-    </Shot>
+    <Field cam={cam} t={t}>
+      <ellipse cx={DIG_X} cy={G + 14} rx={135} ry={36} fill="#5e3a1e" stroke="#3d2a1e" strokeWidth={4} />
+      <ellipse cx={DIG_X} cy={G + 12} rx={66} ry={18} fill="#a45530" stroke="#3d2a1e" strokeWidth={4} opacity={reveal} />
+      <ellipse cx={DIG_X} cy={G + 8} rx={18} ry={7} fill="#8e4523" opacity={reveal} />
+      {Array.from({ length: 9 }, (_, i) => {
+        const push = reveal * (60 + (i % 3) * 30);
+        const side = i % 2 ? 1 : -1;
+        return <ellipse key={i} cx={DIG_X + (i - 4) * 18 + side * push} cy={G + 10 - (i % 3) * 4} rx={20} ry={11} fill={i % 2 ? "#8a5a34" : "#9c6a40"} stroke="#3d2a1e" strokeWidth={2.5} opacity={1 - reveal * 0.7} />;
+      })}
+      <Musafir
+        x={600}
+        y={G + 12}
+        look={KH}
+        pose={pose(f, { kneel: 1, lean: 34, headTilt: 22, armF: [42 + swipe * 14, 12], armB: [30 - swipe * 14, 16], eyeOpen: 1, brow: 0.6 + reveal * 0.4, mouth: "open", look: 1 })}
+      />
+      {[0, 1, 2].map((i) => (
+        <circle key={i} cx={DIG_X - 60 + ((t * 140 + i * 50) % 160)} cy={G - 30 - ((t * 80 + i * 30) % 70)} r={7} fill="#c9a07a" opacity={0.6} />
+      ))}
+    </Field>
   );
 };
 
@@ -205,11 +259,21 @@ const Scene2: React.FC<{ f: number; ctx: SceneCtx }> = ({ f }) => {
     );
   }
   if (f < S2 + 80) {
-    const open = kf(f, [[S2 + 45, 0], [S2 + 65, 1]], Easing.out(Easing.cubic));
+    // he lifts the lid: gold light pours up onto him
+    const open = kf(f, [[S2 + 45, 0], [S2 + 62, 1]], Easing.out(Easing.cubic));
+    const cam: Cam = { x: 700, y: G - 250, zoom: kf(f, [[S2 + 45, 2.2], [S2 + 80, 2.6]]) };
     return (
-      <Shot zoom={kf(f, [[S2 + 45, 1.0], [S2 + 80, 1.2]])}>
-        <GoldInside t={t} open={open} w={VW} h={VH} />
-      </Shot>
+      <Field cam={cam} t={t}>
+        <g transform={`rotate(180 760 ${G - 120})`}>
+          <LightRays x={760} y={G - 120} t={t} o={0.28 * open} />
+        </g>
+        <Matka x={760} y={G + 10} s={0.9} lid={open} glow={open} t={t} />
+        <Musafir x={560} y={G + 12} look={KH} pose={pose(f, { kneel: 1, lean: 22, headTilt: 14, armF: [mix(70, 95, open), mix(20, 0, open)], armB: [50, 30], eyeOpen: 1, brow: open, mouth: "open", look: 1 })} />
+        <rect x={350} y={G - 600} width={600} height={700} fill="#ffcf3a" opacity={0.16 * open} />
+        {[0, 1, 2, 3].map((i) => (
+          <Sparkle key={i} x={700 + i * 40} y={G - 170 - ((t * 60 + i * 25) % 90)} s={(0.6 + Math.sin(t * 9 + i) * 0.4) * open} a={t * 150} />
+        ))}
+      </Field>
     );
   }
   // face lit by gold: dramatic push-in
