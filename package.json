@@ -13,7 +13,8 @@
     "render": "tsx scripts/render.ts",
     "validate:films": "tsx scripts/validate-films.ts",
     "voice": "tsx scripts/voice.ts",
-    "sfx": "bash scripts/make-sfx.sh"
+    "sfx": "bash scripts/make-sfx.sh",
+    "fetch:sfx": "tsx scripts/fetch-sfx.ts"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.2",

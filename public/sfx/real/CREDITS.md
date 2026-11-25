@@ -19,3 +19,4 @@ All files below are from [Freesound](https://freesound.org), licence **CC0 1.0 (
 | `strain.mp3` | [Grunting effort pushing something.wav](https://freesound.org/people/DeqstersLab/sounds/680135/) | DeqstersLab | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `steps-mud.mp3` | [mudsteps](https://freesound.org/people/saha213131/sounds/730197/) | saha213131 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `cave-drips.mp3` | [Ambience INT water drip dropping cave grotto spooky (quinta da regaleira portugal).flac](https://freesound.org/people/corkob/sounds/392668/) | corkob | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `horse.mp3` | [horse neigh shortened.wav](https://freesound.org/people/shadoWisp/sounds/269571/) | shadoWisp | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |

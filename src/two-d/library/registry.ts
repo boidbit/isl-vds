@@ -101,4 +101,5 @@ export const LIBRARY: Record<string, { description: string; tags: string[]; buil
   "sfx-camel": { description: "Camel grunt (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
   "sfx-steps-mud": { description: "Running steps in mud (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
   "sfx-cave-drips": { description: "Cave drips ambience (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
+  "sfx-horse": { description: "horse neigh shortened.wav (real, CC0)", tags: ["sound", "real"], builtFor: "library" },
 };
