@@ -94,4 +94,11 @@ export const LIBRARY: Record<string, { description: string; tags: string[]; buil
   "sfx-rumble": { description: "Boulder rolling", tags: ["sound"], builtFor: "gufa-ke-teen" },
   "sfx-grind": { description: "Heavy stone sliding", tags: ["sound"], builtFor: "gufa-ke-teen" },
   "sfx-strain": { description: "Straining push", tags: ["sound"], builtFor: "gufa-ke-teen" },
+  "sfx-rock-impact": { description: "Heavy rock slam (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
+  "sfx-breeze": { description: "Gentle wind (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
+  "sfx-goat": { description: "Goat bleat (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
+  "sfx-cow": { description: "Cow moo (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
+  "sfx-camel": { description: "Camel grunt (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
+  "sfx-steps-mud": { description: "Running steps in mud (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
+  "sfx-cave-drips": { description: "Cave drips ambience (real, CC0)", tags: ["sound", "real"], builtFor: "gufa-ke-teen" },
 };

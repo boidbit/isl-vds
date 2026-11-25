@@ -1,1 +1,17 @@
-{}
+{
+  "rain": "rain.mp3",
+  "rain-muffled": "rain-muffled.mp3",
+  "thunder": "thunder.mp3",
+  "rumble": "rumble.mp3",
+  "rock-impact": "rock-impact.mp3",
+  "grind": "grind.mp3",
+  "door": "door.mp3",
+  "birds": "birds.mp3",
+  "breeze": "breeze.mp3",
+  "goat": "goat.mp3",
+  "cow": "cow.mp3",
+  "camel": "camel.mp3",
+  "strain": "strain.mp3",
+  "steps-mud": "steps-mud.mp3",
+  "cave-drips": "cave-drips.mp3"
+}

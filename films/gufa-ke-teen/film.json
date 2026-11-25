@@ -21,7 +21,7 @@
     "cave-inside", "mud-room", "diya", "chatai", "sleeper", "milk-bowl", "gold-coins",
     "green-field", "crop-rows", "fence", "cow", "camel", "wage-pouch", "goat", "village-tree", "village-sky", "birds",
     "sfx-rain", "sfx-rain-muffled", "sfx-thunder", "sfx-rumble", "sfx-grind", "sfx-strain", "sfx-drip", "sfx-impact",
-    "sfx-whoosh", "sfx-step", "sfx-door", "sfx-birds", "sfx-wind", "sfx-chime", "sfx-shimmer"
+    "sfx-whoosh", "sfx-step", "sfx-rock-impact", "sfx-breeze", "sfx-goat", "sfx-cow", "sfx-camel", "sfx-steps-mud", "sfx-cave-drips", "sfx-door", "sfx-birds", "sfx-wind", "sfx-chime", "sfx-shimmer"
   ],
   "scenes": [
     {
