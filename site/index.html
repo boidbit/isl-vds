@@ -68,6 +68,7 @@ video{width:150px;aspect-ratio:9/16;border-radius:12px;background:#000;object-fi
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;transition:.25s;z-index:9}
 .toast.show{transform:translateX(-50%) translateY(0)}
 @media (max-width:520px){.grid{grid-template-columns:1fr} video{width:120px} h1{font-size:24px}}
+.prompt{white-space:pre-wrap;max-height:300px;overflow:auto;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:12px;margin:12px 0;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -78,6 +79,56 @@ video{width:150px;aspect-ratio:9/16;border-radius:12px;background:#000;object-fi
     <div class="spacer"></div>
     <button id="theme" title="Light / dark" aria-label="Light / dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
   </header>
+
+  <details class="panel" id="aiPanel">
+    <summary>🤖 ChatGPT / Gemini ke liye script prompt</summary>
+    <div class="hint">Ye prompt copy karke ChatGPT ya Gemini mein paste karo, upar SOURCE mein Hadith ka naam/number likho. Jo script mile, woh "Nayi video banao" mein ya seedha Claude ko de do.</div>
+    <pre class="prompt" id="aiPrompt">Tum ek Islamic kahani ke 2D cartoon YouTube Short (9:16, 45-60 second) ki script likhoge. Script Roman Urdu/Hindi mein do. Ye script ek animation system mein jayegi, isliye neeche diya FORMAT aur RULES bilkul follow karo.
+
+KAHANI KA SOURCE: [yahan Hadith / Quran ayat / waqia ka naam aur number likho, jaise &quot;Sahih al-Bukhari 2365&quot;]
+
+RULES (zaroori):
+1. Allah, kisi Nabi, farishte ya naam wale Sahabi ko kabhi na dikhao. Agar koi kirdar Nabi ho sakta hai to sirf peeche se ya silhouette mein, aur wajah likho.
+2. Dialogue sirf wahi jo source mein hai (Hadith/ayat ke alfaaz ka matlab). Apni taraf se kisi ke munh mein baat mat daalo. Baaki sab narration.
+3. Jaanwar kabhi nahi bolte (miaow, bhaunkna jaisi awaazein theek hain).
+4. Jo hissa source mein nahi hai (manzar, jagah, extra kirdar, seekh wala scene) use &quot;(tasawwur)&quot; likh kar mark karo. Hadith ka hissa bilkul sahi rakho.
+5. Jagah ka naam tabhi jab source mein ho.
+6. Maut, maar-peet ya saza graphic nahi: ishaare se dikhao (aankhein band, fade to black).
+7. Reference screen par dikhega, uska exact naam aur number do. Hadith ka matlab (translation) bhi do.
+8. Pehle 2 second mein hook: sawaal ya chaunkane wali baat + sabse dilchasp manzar.
+9. Narration chhoti lines mein, bolne mein aasaan. Har scene mein 1-2 lines. Poori script 45-60 second.
+10. Camera sirf side se nahi: har emotional moment par kirdar ka saamne se close-up (camera mein dekhta hua). Close-up, medium, low angle, POV, wide sab mix karo.
+
+FORMAT:
+TITLE: ...
+SOURCE: &lt;book + number&gt;
+HADITH KA MATLAB: &quot;&lt;translation&gt;&quot;
+
+CHARACTER DESIGN
+&lt;Kirdar&gt;: umar, kapde aur rang, chehra/expression. (Jaanwar bhi.)
+Background characters: ...
+
+SCENE 1 — &lt;naam&gt; (00–04 sec)
+Surroundings: ...
+Main action: ...
+Background activity: (kam se kam 3 cheezein jo hil rahi hon: parinde, ped, log, dhuan, kapde...)
+Camera: shot size + angle + move (saamne se close-up kahan hai, woh likho)
+Lighting: ...
+Narration: &quot;...&quot;
+Dialogue (sirf source se): &lt;kirdar&gt;: &quot;...&quot;
+Sound: ...
+(tasawwur: kaunsa hissa apni taraf se hai)
+
+SCENE 2 ... (5-8 scenes)
+
+AAKHRI SCENE: seekh + end card
+Final screen text: &lt;2-6 shabd ka yaadgaar jumla&gt;
+Reference: &lt;book + number&gt;
+
+HADITH SE FARQ: script mein jo cheezein source se alag ya zyada hain, unki list.
+</pre>
+    <div class="row"><button class="primary" id="copyPrompt">📋 Prompt copy karo</button></div>
+  </details>
 
   <details class="panel" id="newPanel">
     <summary>✍️ Nayi video banao</summary>
@@ -189,6 +240,7 @@ const scriptBody = () => {
   const s = $("#script").value.trim();
   return { id, s };
 };
+$("#copyPrompt").onclick = () => copy($("#aiPrompt").textContent, "Prompt copy ho gaya ✓");
 $("#sendIssue").onclick = async () => {
   const { id, s } = scriptBody();
   if (!s) return toast("Pehle script likho");
