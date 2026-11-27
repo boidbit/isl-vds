@@ -57,6 +57,16 @@ Plan each scene as a mini shot list first: `beat → shot size + angle + move + 
 - **Rhythm:** fast cuts (1-1.5 s) in the hook and tension; slower (3-4 s, still moving) at the emotional peak;
   last shot holds while the end card settles, then loops.
 
+## Not always from the side (front views)
+Side view is only the default because the puppets were drawn that way. Mix angles on purpose:
+- **Front close-up for every emotional peak:** sad/hopeful/shocked face looking into the camera (eye contact
+  stops the scroll). Chest-up framing is enough; walking and actions can stay side view.
+- **Head turn** side -> 3/4 -> front inside one shot when a character notices something or turns to the viewer.
+- **Animal front face** (cat/dog looking into the lens through bars, at a bowl, at a person) for hooks and thumbnails.
+- Also: over-the-shoulder, POV, top-down, low angle from the animal's height.
+- If the needed front/3/4 view does not exist yet, build it as a reusable view of the puppet (skill `film-assets`),
+  do not skip the shot. Aim: at least 2 front-facing close-ups per Short.
+
 ## Motion craft (Remotion)
 - Everything is frame-driven: `interpolate`/`kf(frame, [[f, v], ...], easing)` with clamp. Never CSS animations
   or `Math.random()` (use seeds: `Math.sin(i * 12.9898)` style).

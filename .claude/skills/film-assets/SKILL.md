@@ -27,6 +27,13 @@ Prefer adding a prop (mood, colour, variant, pose) to an existing asset over a n
   tail, water ripples, fire flickers, smoke rises. A static asset is not finished.
 - Animals and people: blink, breathe (1-2% scale on chest), idle weight shift.
 
+## Views to build (wanted, not there yet)
+Puppets are side/3/4 only (`Musafir` also has `back`). When a film needs it, add a `view` prop instead of a new puppet:
+1. `Cat2D` / `Dog2D` `view="front"`: face to camera, big eyes, ears, sitting front body (cheap, big impact).
+2. `Musafir` front close-up (chest up): face to camera, both eyes, blink, lip-flap from `talk`, scarf/turban/cap.
+3. Head turn: a `turn` 0..1 prop (side -> 3/4 -> front) so a character can turn to the viewer in one shot.
+Keep the look switchable by props (colour, outline weight, texture): see docs/ART_DIRECTION.md "2D look".
+
 ## 4. Register
 Add to `LIBRARY` in `registry.ts`: `"name": { description: "what + what it can do (moves, variants)", tags: [...], builtFor: "<film-id>" }`.
 List it in the film's `assets`. `npm run validate:films -- <id>` must pass.

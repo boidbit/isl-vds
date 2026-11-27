@@ -20,3 +20,11 @@ All files below are from [Freesound](https://freesound.org), licence **CC0 1.0 (
 | `steps-mud.mp3` | [mudsteps](https://freesound.org/people/saha213131/sounds/730197/) | saha213131 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `cave-drips.mp3` | [Ambience INT water drip dropping cave grotto spooky (quinta da regaleira portugal).flac](https://freesound.org/people/corkob/sounds/392668/) | corkob | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `horse.mp3` | [horse neigh shortened.wav](https://freesound.org/people/shadoWisp/sounds/269571/) | shadoWisp | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `cat-meow.mp3` | [Cat meowing for food 3](https://freesound.org/people/Sadiquecat/sounds/730100/) | Sadiquecat | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `crickets.mp3` | [Southern Summer Evening Ambience with Crickets 3](https://freesound.org/people/RyanKingArt/sounds/746364/) | RyanKingArt | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `fire-crackle.mp3` | [Fire - Chimney / Stove](https://freesound.org/people/Vrymaa/sounds/770108/) | Vrymaa | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `latch.mp3` | [Wooden Chest Lid Latches Close_02.wav](https://freesound.org/people/The_Frisbee_of_Peace/sounds/573649/) | The_Frisbee_of_Peace | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `children-play.mp3` | [children distant.wav](https://freesound.org/people/cognito%20perceptu/sounds/84359/) | cognito perceptu | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `donkey.mp3` | [Donkey Bray](https://freesound.org/people/StarNinjas37/sounds/560692/) | StarNinjas37 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `cat-meow-weak.mp3` | [Cat meow 3](https://freesound.org/people/MBPL/sounds/668815/) (filtered: lowpass=f=2500,atempo=0.85) | MBPL | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `dishes.mp3` | [Dropping a spoon in a bowl](https://freesound.org/people/freemaster2/sounds/487211/) | freemaster2 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |

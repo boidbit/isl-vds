@@ -93,3 +93,18 @@ and **silhouette** (robe shape, dog posture).
 4. **Camera stays close:** medium or closer for dialogue; wide shots only to open a new place or to end.
 5. **Hook in the first 2 seconds** with the character doing something (not a title card).
 6. **Characters below the vertical middle, captions below them** (9:16): faces never covered by text.
+
+## 2D look: our own, and free to change
+
+The first 2D films were built from a reference screenshot of another YouTube channel. That was a starting
+point, **not a style to copy forever**. Our look should be our own (better for the channel's identity, and it
+keeps us clear of copying another creator).
+
+- Per film, pick a look that fits the story and say it in one line in the film's tsx header, e.g.
+  "warm storybook, thick outline" / "soft painted, no outline, dusk palette" / "paper cut-out with texture".
+- Things that may change from film to film: palette and grade, outline weight (thick, thin, none), shading
+  (flat, 2-tone, soft gradient), textures (paper grain, paint strokes), sky and light style, proportions
+  (bigger heads for kids' stories, taller figures for serious ones), caption font and colour.
+- Things that stay: readable shapes at phone size, faces clear in close-ups, Islamic rules, captions at 75%
+  height, warm light for kindness and cold light for danger.
+- Reuse the same assets with a new look through props (colour/outline/texture) rather than new files when possible.
