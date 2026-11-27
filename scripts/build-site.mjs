@@ -12,6 +12,13 @@ for (const id of readdirSync(dir)) {
   const metaPath = join(dir, id, "meta.json");
   if (!existsSync(metaPath)) continue;
   const meta = JSON.parse(readFileSync(metaPath, "utf8"));
+  // the repo's film.json wins for things that change without a re-render (reference check, publish text)
+  const filmPath = join("films", id, "film.json");
+  if (existsSync(filmPath)) {
+    const film = JSON.parse(readFileSync(filmPath, "utf8"));
+    meta.verified = film.source?.verified ?? meta.verified;
+    for (const [lang, v] of Object.entries(meta.videos ?? {})) if (film.publish?.[lang]) v.publish = film.publish[lang];
+  }
   for (const [lang, v] of Object.entries(meta.videos ?? {})) {
     v.preview = existsSync(join(dir, id, v.preview)) ? `videos/${id}/${v.preview}` : null;
     v.poster = existsSync(join(dir, id, v.poster)) ? `videos/${id}/${v.poster}` : null;

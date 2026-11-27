@@ -5,7 +5,7 @@ name: Videos page
 on:
   workflow_dispatch:
   push:
-    paths: [site/**, scripts/build-site.mjs, .github/workflows/pages.yml]
+    paths: [site/**, scripts/build-site.mjs, .github/workflows/pages.yml, films/*/film.json]
 
 permissions:
   contents: read
