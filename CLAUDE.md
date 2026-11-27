@@ -31,7 +31,7 @@ laptop / phone browser only: never ask them to install tools or run commands loc
 - Show the reference on screen; `source.verified` stays false until the owner checks it.
 
 ## Sounds
-Real recordings only via `npm run fetch:sfx` (CC0 Freesound; licences that allow monetised YouTube). Never BBC
+Real recordings only via the `fetch-sfx.yml` workflow / `npm run fetch:sfx` (CC0 Freesound, secret FREESOUND_API_KEY; licences that allow monetised YouTube). Never BBC
 Sound Effects. Generated sounds only for abstract effects. Details: skill `film-sounds`.
 
 ## Testing
