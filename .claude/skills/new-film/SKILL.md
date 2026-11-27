@@ -36,12 +36,23 @@ Copy the shape of `films/gufa-ke-teen/film.json` (read it, it is the newest Shor
 - `assets`: every library name the film uses (characters, places, props, `sfx-*`).
 
 ## 3b. Publish text (shown on the videos page with copy buttons)
-`film.json` → `publish.ur` and `publish.en`, each `{ title, alts, description, hashtags }`:
-- `title` ≤ 70 chars, a hook: curiosity gap or emotion + 1 emoji ("Gufa band ho gayi… teen neki ne jaan bacha li! 😱").
-  True to the story, no fake claims. `alts`: 2 more hooks to test. Urdu = Roman Urdu; English = natural English.
-- `description`: 2-3 lines of story + lesson, then `Reference: <refs>`, then a subscribe line.
-- `hashtags`: 8-12, mix broad (`#Shorts #IslamicStories #Hadith`) + story-specific (`#Imaandari`, `#Honesty`);
-  English channel uses English tags (`#IslamicStory #ProphetsTeachings` only if accurate).
+`film.json` → `publish.ur` and `publish.en`, each `{ title, alts, description, hashtags }`. **Never reveal the
+ending** (no outcome, no moral answer) in title or description: open a loop the video closes.
+- `title` ≤ 70 chars: setup + twist + open question/ellipsis + 1 emoji. Formula: "<shocking situation>… <why/what
+  next?>". E.g. "Zameen khodi to sone ka matka nikla… lekin dono ne lene se inkaar kyun kiya? 🤯". True to the story,
+  no fake claims. `alts`: 2 more hooks (stakes / "aakhir tak dekhna" / relatable question).
+- `description`: line 1-2 = cinematic setup + cliffhanger (first ~100 chars show in the feed), then a comment
+  question ("Aap hote to kya karte?"), then `📖 Reference: <refs>`, then `🔔` subscribe line.
+- `hashtags`: 8-12, `#Shorts` first, broad (`#IslamicStories #Hadith`) + story-specific; English channel uses English.
+- Urdu = Roman Urdu; English = natural English, same no-spoiler rules.
+- Never call the series "sachchi kahani": some films will add fictional parts. If a film adds fiction to a Hadith
+  story, say so in the description ("kahani mein kuch hisse tasawwur par mabni hain") and keep the Hadith part exact.
+
+## 3c. Thumbnail (`film.json` → `thumbnail`, rendered as `thumb-<id>` / `thumb-<id>-en`)
+Suspense, never the ending. `at` = nominal frame with a big emotional face (fear, shock, wonder) AND the mystery
+in view (pot, closed cave, dog). `text` = 2-4 BIG words that open a question ("Khazana mila… phir?" /
+"Gold found… then?"). `zoom` 1.2-1.6 on the face (`focus` 0..1), red `circle` or `arrow` on the mystery
+(output coordinates 0..1). Text sits on the top (default) away from faces. Check it in the contact sheet.
 
 ## 4. Assets: reuse first, build the rest → skill `film-assets`
 ## 5. Sounds: real recordings → skill `film-sounds`

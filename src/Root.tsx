@@ -6,7 +6,8 @@ import { STORIES } from "./stories";
 import { DEMO_2D_FRAMES, Demo2D } from "./two-d/Demo2D";
 import { FilmPlayer, loadFilmMetadata, type FilmPlayerProps } from "./two-d/film/FilmPlayer";
 import { FILMS } from "./two-d/films";
-import { compositionId } from "./two-d/film/schema";
+import { compositionId, thumbnailId } from "./two-d/film/schema";
+import { Thumbnail, thumbnailSize } from "./two-d/film/Thumbnail";
 import { MountainGallery } from "./two-d/library/MountainGallery";
 import { VillageGallery } from "./two-d/library/VillageGallery";
 
@@ -30,6 +31,13 @@ export const RemotionRoot: React.FC = () => (
         }}
       />
       )),
+    )}
+    {Object.entries(FILMS).flatMap(([id, { film }]) =>
+      film.thumbnail
+        ? film.languages.map((lang) => (
+            <Composition key={`thumb-${id}-${lang}`} id={thumbnailId(id, lang)} component={Thumbnail} durationInFrames={1} fps={30} {...thumbnailSize(id)} defaultProps={{ filmId: id, lang }} />
+          ))
+        : [],
     )}
     <Composition id="library-village" component={VillageGallery} durationInFrames={90} fps={30} width={1920} height={1080} />
     <Composition id="library-mountain" component={MountainGallery} durationInFrames={90} fps={30} width={1920} height={1080} />

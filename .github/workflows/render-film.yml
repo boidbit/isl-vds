@@ -65,6 +65,10 @@ jobs:
             ffmpeg -hide_banner -loglevel error -y -i "out/$N.mp4" -vf "scale=720:-2" -c:v libx264 -crf 28 -preset slow \
               -c:a aac -b:a 96k -movflags +faststart "out/$N-preview.mp4"
             ffmpeg -hide_banner -loglevel error -y -ss 1.2 -i "out/$N.mp4" -frames:v 1 -vf "scale=480:-2" "out/$N.jpg"
+            if node -e "process.exit(require('./films/$FILM/film.json').thumbnail ? 0 : 1)"; then
+              T="thumb-$FILM"; [ "$L" = ur ] || T="thumb-$FILM-$L"
+              npx remotion still src/index.ts "$T" "out/$N-thumb.png"
+            fi
           done
           npx tsx scripts/film-meta.ts "$FILM" "$LANGS"
       - uses: actions/upload-artifact@v4
@@ -83,5 +87,5 @@ jobs:
             # keep the other language's entry when only one language was rendered
             node -e 'const f=require("fs");const o=JSON.parse(f.readFileSync("old/meta.json"));const n=JSON.parse(f.readFileSync("out/meta.json"));n.videos={...o.videos,...n.videos};f.writeFileSync("out/meta.json",JSON.stringify(n,null,2))'
           fi
-          gh release upload "$TAG" out/*.mp4 out/*.jpg out/meta.json --clobber
+          gh release upload "$TAG" out/*.mp4 out/*.jpg out/meta.json $(ls out/*-thumb.png 2>/dev/null) --clobber
           gh workflow run pages.yml --ref "${{ github.event.repository.default_branch }}" || echo "pages.yml not on the default branch yet"

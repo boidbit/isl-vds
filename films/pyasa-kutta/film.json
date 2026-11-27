@@ -12,7 +12,8 @@
     "enabled": true,
     "model": "gemini-3.8-flash-tts",
     "voice": "Sulafat",
-    "style": "warm, calm and gentle storyteller, speaking slowly"
+    "style": "warm, calm and gentle storyteller, speaking slowly",
+    "styleEn": "warm, calm and gentle storyteller in clear natural English, speaking slowly"
   },
   "assets": [
     "musafir",
@@ -39,57 +40,113 @@
   ],
   "publish": {
     "ur": {
-      "title": "Ek pyase kutte ko paani pilaya… aur gunah maaf ho gaye 😢",
+      "title": "Usne sirf ek kutte ko paani pilaya… phir jo hua, yakeen nahi hoga 😳",
       "alts": [
-        "Sirf paani pilane se jannat? Ye waqia sun lo",
-        "Is chhoti si neki ne sab badal diya"
+        "Ek joota, ek kuan, ek pyasa kutta… aur ek bada faisla",
+        "Ye chhoti si neki kitni badi thi? Aakhir tak dekhna"
       ],
-      "description": "Ek musafir ne kuen se apne joote mein paani bhar kar ek pyase kutte ko pilaya, aur Allah ne uske gunah maaf farma diye. Kisi bhi neki ko chhota mat samjho.\n\nReference: Sahih al-Bukhari 2363\n\nAisi aur kahaniyon ke liye subscribe karein.",
+      "description": "Tapta registan. Pyaas se behaal ek musafir. Aur kuen ke paas ek kutta jo zameen chaat raha tha…\nUs pal usne jo kiya, uska anjaam aapko hairaan kar dega.\n\n💬 Aap uski jagah hote to kya karte? Comment mein batayein.\n\n📖 Reference: Sahih al-Bukhari 2363\n🔔 Har hafte ek nayi Islamic kahani: subscribe karein.",
       "hashtags": [
+        "#Shorts",
         "#IslamicStories",
         "#Hadith",
         "#Bukhari",
-        "#Neki",
         "#IslamicShorts",
-        "#AnimalKindness",
+        "#Neki",
         "#Rehmat",
-        "#Shorts",
+        "#AnimalKindness",
         "#IslamicCartoon",
-        "#UrduKahani"
+        "#UrduKahani",
+        "#IslamicKahani"
+      ]
+    },
+    "en": {
+      "title": "He only gave a thirsty dog some water… what happened next is unbelievable 😳",
+      "alts": [
+        "One well, one shoe, one thirsty dog… and one huge reward",
+        "How big can a tiny good deed be? Watch till the end"
+      ],
+      "description": "A burning desert. A traveller dying of thirst. And by the well, a dog licking the wet sand…\nWhat he did in that moment, and what it led to, will surprise you.\n\n💬 What would you have done in his place? Tell us in the comments.\n\n📖 Reference: Sahih al-Bukhari 2363\n🔔 A new Islamic story every week: subscribe.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#IslamicShorts",
+        "#Kindness",
+        "#AnimalKindness",
+        "#Mercy",
+        "#IslamicCartoon",
+        "#IslamicKidsStories"
       ]
     }
+  },
+  "thumbnail": {
+    "at": 330,
+    "text": {
+      "ur": "Sirf paani?",
+      "en": "Just water?"
+    },
+    "zoom": 1.6,
+    "focus": [
+      0.36,
+      0.58
+    ],
+    "textAt": "bottom"
   },
   "scenes": [
     {
       "id": "s1-tapta-registan",
       "narration": "Ek baar ek musafir pyaas se behaal tha. Use ek kuan mila.",
-      "voiceText": "एक बार एक मुसाफ़िर प्यास से बेहाल था। उसे एक कुआँ मिला।"
+      "voiceText": "एक बार एक मुसाफ़िर प्यास से बेहाल था। उसे एक कुआँ मिला।",
+      "en": {
+        "text": "Once, a traveller was suffering from terrible thirst. Then he found a well."
+      }
     },
     {
       "id": "s2-paani-ki-talaash",
       "narration": "Woh neeche utra aur paani peekar bahar aaya.",
-      "voiceText": "वह नीचे उतरा, और पानी पीकर बाहर आया।"
+      "voiceText": "वह नीचे उतरा, और पानी पीकर बाहर आया।",
+      "en": {
+        "text": "He climbed down, drank the water and came back up."
+      }
     },
     {
       "id": "s3-pyasa-kutta",
       "narration": "Wahan ek kutta pyaas se tadapkar geeli mitti chaat raha tha.",
-      "voiceText": "वहाँ एक कुत्ता प्यास से तड़पकर, गीली मिट्टी चाट रहा था।"
+      "voiceText": "वहाँ एक कुत्ता प्यास से तड़पकर, गीली मिट्टी चाट रहा था।",
+      "en": {
+        "text": "There he saw a dog, panting with thirst and licking the wet mud."
+      }
     },
     {
       "id": "s4-rehamdili",
       "narration": "Usne dobara kuen mein utarkar apne joote mein paani bhara.",
-      "voiceText": "उसने दोबारा कुएँ में उतरकर, अपने जूते में पानी भरा।"
+      "voiceText": "उसने दोबारा कुएँ में उतरकर, अपने जूते में पानी भरा।",
+      "en": {
+        "text": "He went down the well again and filled his leather sock with water."
+      }
     },
     {
       "id": "s5-neki",
       "narration": "Aur us bejubaan kutte ko paani pilaya.",
-      "voiceText": "और उस बेज़ुबान कुत्ते को पानी पिलाया।"
+      "voiceText": "और उस बेज़ुबान कुत्ते को पानी पिलाया।",
+      "en": {
+        "text": "And he gave that voiceless dog water to drink."
+      }
     },
     {
       "id": "s6-anjaam",
       "narration": "Allah ko uski ye neki itni pasand aayi ki uske gunah maaf farma diye.",
       "voiceText": "अल्लाह को उसकी यह नेकी इतनी पसंद आई, कि उसके गुनाह माफ़ फ़रमा दिए।",
-      "subtitleMax": 0.5
+      "subtitleMax": 0.5,
+      "en": {
+        "text": "Allah loved this good deed so much that He forgave his sins."
+      }
     }
+  ],
+  "languages": [
+    "ur",
+    "en"
   ]
 }

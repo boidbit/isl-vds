@@ -4,6 +4,8 @@
 
 import React from "react";
 import { AbsoluteFill, Easing, interpolate } from "remotion";
+import { tr } from "../film/types";
+import type { Lang } from "../film/schema";
 import type { FilmVisuals, SceneCtx } from "../film/types";
 import { blink, clamp01, easeBack, kf, layerTransform, mix, shake, VH, VW, type Cam } from "../kit";
 import { Camel, Cow, CropRows, Fence, GreenField, WagePouch } from "../library/Farm";
@@ -851,7 +853,7 @@ const SFX: FilmVisuals["sfx"] = [
 // ------------------------------------------------------------------ hook, chapter tags, transitions, end text
 const fade = (f: number, a: number, b: number, c: number, d: number) => interpolate(f, [a, b, c, d], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-const Overlay: React.FC<{ f: number }> = ({ f }) => {
+const Overlay: React.FC<{ f: number; lang: Lang }> = ({ f, lang }) => {
   const big = { fontFamily: "'DejaVu Sans', Inter, sans-serif", fontWeight: 900, WebkitTextStroke: "10px #1d120a", paintOrder: "stroke fill", textAlign: "center" as const };
   const hook = fade(f, S1 + 2, S1 + 8, S1 + 70, S1 + 78);
   const hookPop = interpolate(f, [S1 + 2, S1 + 10], [0.6, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeBack });
@@ -859,16 +861,16 @@ const Overlay: React.FC<{ f: number }> = ({ f }) => {
   const flashes = [S3, S3 + 300, S4, S4 + 270, S5, S6].map((at) => Math.max(0, 1 - Math.abs(f - at) / 6));
   const flash = Math.max(...flashes);
   const tags: [number, string][] = [
-    [S3, "Pehli neki"],
-    [S4, "Doosri neki"],
-    [S5, "Teesri neki"],
+    [S3, tr(lang, { ur: "Pehli neki", en: "First deed" })],
+    [S4, tr(lang, { ur: "Doosri neki", en: "Second deed" })],
+    [S5, tr(lang, { ur: "Teesri neki", en: "Third deed" })],
   ];
   const end1 = interpolate(f, [END - 105, END - 90], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const end2 = interpolate(f, [END - 80, END - 66], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
     <>
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 220, opacity: hook }}>
-        <div style={{ ...big, fontSize: 92, color: "#ffd34d", transform: `scale(${hookPop}) rotate(-2deg)`, lineHeight: 1.1, padding: "0 40px" }}>MAUT SE KAISE BACHE YE TEEN INSAAN?</div>
+        <div style={{ ...big, fontSize: 92, color: "#ffd34d", transform: `scale(${hookPop}) rotate(-2deg)`, lineHeight: 1.1, padding: "0 40px" }}>{tr(lang, { ur: "MAUT SE KAISE BACHE YE TEEN INSAAN?", en: "HOW DID THESE THREE ESCAPE DEATH?" })}</div>
       </AbsoluteFill>
       {tags.map(([at, label]) => {
         const o = fade(f, at + 4, at + 12, at + 70, at + 80);
@@ -880,7 +882,7 @@ const Overlay: React.FC<{ f: number }> = ({ f }) => {
       })}
       <AbsoluteFill style={{ background: "#fff3dc", opacity: flash * 0.85 }} />
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 230 }}>
-        <div style={{ ...big, fontSize: 64, color: "#ffe9b0", opacity: end1, lineHeight: 1.18, padding: "0 60px" }}>Tumhari neki mushkil waqt mein tumhare kaam aa sakti hai.</div>
+        <div style={{ ...big, fontSize: 64, color: "#ffe9b0", opacity: end1, lineHeight: 1.18, padding: "0 60px" }}>{tr(lang, { ur: "Tumhari neki mushkil waqt mein tumhare kaam aa sakti hai.", en: "Your good deeds can save you in your hardest moment." })}</div>
         <div style={{ fontFamily: "'DejaVu Sans', sans-serif", fontWeight: 700, fontSize: 38, color: "#fff6e0", opacity: end2, marginTop: 28, textShadow: "0 2px 8px #000" }}>Sahih al-Bukhari 2272</div>
       </AbsoluteFill>
     </>
@@ -898,5 +900,5 @@ export const gufaKeTeenVisuals: FilmVisuals = {
     "s7-ending": { nominal: [S7, END], render: (f, ctx) => <Scene7 f={f} ctx={ctx} /> },
   },
   sfx: SFX,
-  overlay: (f) => <Overlay f={f} />,
+  overlay: (f, lang) => <Overlay f={f} lang={lang} />,
 };

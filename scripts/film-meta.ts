@@ -17,7 +17,7 @@ const meta = {
   ref: process.env.GITHUB_REF_NAME ?? "",
   renderedAt: new Date().toISOString(),
   videos: Object.fromEntries(
-    rendered.map((l) => [l, { full: `${file(l)}.mp4`, preview: `${file(l)}-preview.mp4`, poster: `${file(l)}.jpg`, publish: film.publish[l as "ur" | "en"] ?? null }]),
+    rendered.map((l) => [l, { full: `${file(l)}.mp4`, preview: `${file(l)}-preview.mp4`, poster: `${file(l)}.jpg`, thumb: film.thumbnail ? `${file(l)}-thumb.png` : null, publish: film.publish[l as "ur" | "en"] ?? null }]),
   ),
 };
 mkdirSync(join(root, "out"), { recursive: true });

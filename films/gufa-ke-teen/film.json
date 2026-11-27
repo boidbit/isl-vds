@@ -17,7 +17,8 @@
     "speakers": {
       "narrator": {
         "voice": "Fenrir",
-        "style": "natural, conversational Hindi storyteller speaking fast and energetic like a gripping YouTube Short; no long pauses, tight pace, suspense in the voice at the start, warm and emotional at the end, never slow or robotic"
+        "style": "natural, conversational Hindi storyteller speaking fast and energetic like a gripping YouTube Short; no long pauses, tight pace, suspense in the voice at the start, warm and emotional at the end, never slow or robotic",
+        "styleEn": "natural, conversational English storyteller, fast and energetic like a gripping YouTube Short; suspense at the start, warm and emotional at the end"
       }
     }
   },
@@ -80,25 +81,58 @@
   ],
   "publish": {
     "ur": {
-      "title": "Gufa band ho gayi… teen neki ne jaan bacha li! 😱",
+      "title": "Gufa band… bahar nikalne ka koi raasta nahi 😱 phir teeno ne ye kiya",
       "alts": [
-        "Maut se kaise bache ye teen insaan?",
-        "Pathar ne gufa band kar di, phir ye hua…"
+        "Pathar ne gufa band kar di… kya ye zinda bach payenge?",
+        "Teen aadmi, ek band gufa, aur sirf ek ummeed"
       ],
-      "description": "Baarish se bachne teen aadmi gufa mein gaye aur ek bada pathar raasta band kar gaya. Har ek ne apni sabse sachchi neki ka waseela de kar dua ki, aur pathar hat gaya.\n\nReference: Sahih al-Bukhari 2272\n\nAisi aur kahaniyon ke liye subscribe karein.",
+      "description": "Toofani raat. Teen musafir ek gufa mein panah lete hain… aur ek bhari pathar unka raasta hamesha ke liye band kar deta hai.\nNa koi awaaz sunega, na koi madad aayegi. Phir unhone ek aakhri koshish ki…\n\n💬 Aapki zindagi ki woh neki kaunsi hai jo aap mushkil waqt mein yaad karenge?\n\n📖 Reference: Sahih al-Bukhari 2272\n🔔 Har hafte ek nayi Islamic kahani: subscribe karein.",
       "hashtags": [
+        "#Shorts",
         "#IslamicStories",
         "#Hadith",
         "#Bukhari",
         "#Dua",
-        "#Neki",
         "#IslamicShorts",
-        "#Shorts",
+        "#Neki",
         "#IslamicCartoon",
         "#UrduKahani",
-        "#SachchiKahani"
+        "#Suspense",
+        "#IslamicKahani"
+      ]
+    },
+    "en": {
+      "title": "Trapped in a cave… no way out 😱 then all three did this",
+      "alts": [
+        "A rock sealed the cave… will they survive?",
+        "Three men, one sealed cave, and one last hope"
+      ],
+      "description": "A stormy night. Three travellers take shelter in a cave… and a giant rock seals it shut.\nNo one will hear them. No help is coming. Then they tried one last thing…\n\n💬 Which good deed would you remember in your hardest moment?\n\n📖 Reference: Sahih al-Bukhari 2272\n🔔 A new Islamic story every week: subscribe.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Dua",
+        "#IslamicShorts",
+        "#GoodDeeds",
+        "#IslamicCartoon",
+        "#IslamicKidsStories",
+        "#Suspense"
       ]
     }
+  },
+  "thumbnail": {
+    "at": 110,
+    "text": {
+      "ur": "Gufa band! Ab kya?",
+      "en": "Trapped! Now what?"
+    },
+    "zoom": 1.6,
+    "focus": [
+      0.3,
+      0.64
+    ]
   },
   "scenes": [
     {
@@ -106,7 +140,10 @@
       "lines": [
         {
           "text": "Teen insaan ek gufa mein phans gaye. Ek vishal chattan ne bahar nikalne ka raasta band kar diya!",
-          "voiceText": "तीन इंसान एक गुफ़ा में फँस गए। एक विशाल चट्टान ने बाहर निकलने का रास्ता बंद कर दिया!"
+          "voiceText": "तीन इंसान एक गुफ़ा में फँस गए। एक विशाल चट्टान ने बाहर निकलने का रास्ता बंद कर दिया!",
+          "en": {
+            "text": "Three men were trapped in a cave. A huge rock had sealed the only way out!"
+          }
         }
       ]
     },
@@ -115,7 +152,10 @@
       "lines": [
         {
           "text": "Jab koi raasta nahi bacha, teeno ne apne nek aamaal ka zikr karke Allah se madad maangi.",
-          "voiceText": "जब कोई रास्ता नहीं बचा, तीनों ने अपने नेक आमाल का ज़िक्र करके अल्लाह से मदद माँगी।"
+          "voiceText": "जब कोई रास्ता नहीं बचा, तीनों ने अपने नेक आमाल का ज़िक्र करके अल्लाह से मदद माँगी।",
+          "en": {
+            "text": "With no way left, all three called upon Allah through their good deeds."
+          }
         }
       ]
     },
@@ -124,7 +164,10 @@
       "lines": [
         {
           "text": "Pehle ne kaha, Ya Allah! Maine apne maa-baap ki khatir poori raat doodh lekar intezar kiya tha.",
-          "voiceText": "पहले ने कहा, या अल्लाह! मैंने अपने माँ-बाप की ख़ातिर पूरी रात दूध लेकर इंतज़ार किया था।"
+          "voiceText": "पहले ने कहा, या अल्लाह! मैंने अपने माँ-बाप की ख़ातिर पूरी रात दूध लेकर इंतज़ार किया था।",
+          "en": {
+            "text": "The first said: O Allah! I waited the whole night with milk for my parents."
+          }
         }
       ]
     },
@@ -133,7 +176,10 @@
       "lines": [
         {
           "text": "Doosre ne kaha, Ya Allah! Jab mujhe gunah karne ka mauka mila, toh main tere khauf se ruk gaya aur maal bhi chhod diya.",
-          "voiceText": "दूसरे ने कहा, या अल्लाह! जब मुझे गुनाह करने का मौक़ा मिला, तो मैं तेरे ख़ौफ़ से रुक गया और माल भी छोड़ दिया।"
+          "voiceText": "दूसरे ने कहा, या अल्लाह! जब मुझे गुनाह करने का मौक़ा मिला, तो मैं तेरे ख़ौफ़ से रुक गया और माल भी छोड़ दिया।",
+          "en": {
+            "text": "The second said: O Allah! When I had the chance to sin, I stopped out of fear of You and left the money too."
+          }
         }
       ]
     },
@@ -142,7 +188,10 @@
       "lines": [
         {
           "text": "Teesre ne kaha, Ya Allah! Maine ek mazdoor ki mazdoori se maal badhaya aur jab woh lauta, toh sab kuch use de diya.",
-          "voiceText": "तीसरे ने कहा, या अल्लाह! मैंने एक मज़दूर की मज़दूरी से माल बढ़ाया और जब वह लौटा, तो सब कुछ उसे दे दिया।"
+          "voiceText": "तीसरे ने कहा, या अल्लाह! मैंने एक मज़दूर की मज़दूरी से माल बढ़ाया और जब वह लौटा, तो सब कुछ उसे दे दिया।",
+          "en": {
+            "text": "The third said: O Allah! I grew a worker's wages, and when he returned, I gave him all of it."
+          }
         }
       ]
     },
@@ -151,7 +200,10 @@
       "lines": [
         {
           "text": "Allah ne unki dua qubool farmaayi. Chattan hat gayi aur teeno zinda bahar nikal aaye!",
-          "voiceText": "अल्लाह ने उनकी दुआ क़ुबूल फ़रमाई। चट्टान हट गई और तीनों ज़िंदा बाहर निकल आए!"
+          "voiceText": "अल्लाह ने उनकी दुआ क़ुबूल फ़रमाई। चट्टान हट गई और तीनों ज़िंदा बाहर निकल आए!",
+          "en": {
+            "text": "Allah answered their prayer. The rock moved, and all three walked out alive!"
+          }
         }
       ]
     },
@@ -161,9 +213,16 @@
       "lines": [
         {
           "text": "Allah ki raza ke liye ki gayi neki kabhi zaya nahi hoti.",
-          "voiceText": "अल्लाह की रज़ा के लिए की गई नेकी कभी ज़ाया नहीं होती।"
+          "voiceText": "अल्लाह की रज़ा के लिए की गई नेकी कभी ज़ाया नहीं होती।",
+          "en": {
+            "text": "A good deed done for Allah is never wasted."
+          }
         }
       ]
     }
+  ],
+  "languages": [
+    "ur",
+    "en"
   ]
 }

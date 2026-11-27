@@ -41,7 +41,26 @@ const PublishSchema = z.object({
   hashtags: z.array(z.string()).default([]),
 });
 
-const SpeakerSchema = z.object({ voice: z.string(), style: z.string().default("") });
+const Pt = z.tuple([z.number(), z.number()]);
+/** Suspense thumbnail: one frame of the film + big hook text + red circle/arrow on the mystery. Coordinates 0..1. */
+const ThumbnailSchema = z.object({
+  /** Nominal frame of the film visuals to use (pick a strong emotion + the mystery, never the ending). */
+  at: z.number(),
+  /** 2-4 BIG words. */
+  text: z.object({ ur: z.string(), en: z.string().optional() }),
+  /** Zoom into the frame (1 = none) around `focus`. */
+  zoom: z.number().min(1).max(4).default(1),
+  focus: Pt.default([0.5, 0.5]),
+  /** Red circle around the mystery: [x, y], radius as a fraction of the width. */
+  circle: z.object({ at: Pt, r: z.number() }).optional(),
+  /** Red arrow pointing at [x, y] from direction `from` (degrees, 0 = from the right). */
+  arrow: z.object({ at: Pt, from: z.number().default(-40) }).optional(),
+  /** Text block at the top (default) or bottom. */
+  textAt: z.enum(["top", "bottom"]).default("top"),
+});
+
+/** `styleEn`: style prompt for the English track (else `style` is used). */
+const SpeakerSchema = z.object({ voice: z.string(), style: z.string().default(""), styleEn: z.string().optional() });
 
 export const FilmSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/, "use lowercase-kebab-case"),
@@ -60,12 +79,16 @@ export const FilmSchema = z.object({
       model: z.string().default("gemini-3.8-flash-tts"),
       voice: z.string().default("Sulafat"),
       style: z.string().default(""),
+      styleEn: z.string().optional(),
       speakers: z.record(SpeakerSchema).default({}),
     })
     .default({}),
   assets: z.array(z.string()).default([]),
   /** Title / description / hashtags per channel. */
   publish: z.object({ ur: PublishSchema.optional(), en: PublishSchema.optional() }).default({}),
+  thumbnail: ThumbnailSchema.optional(),
+  /** Shorts: the last frames blend into the first frame so the video loops seamlessly (more replays). */
+  loopEnding: z.boolean().default(true),
   scenes: z.array(FilmSceneSchema).min(1),
 });
 
@@ -85,14 +108,19 @@ export const localLine = (line: FilmLine, lang: Lang = "ur") => {
 /** Where the voice of a language lives (under public/). "ur" keeps the original folder. */
 export const voiceDir = (filmId: string, lang: Lang = "ur") => (lang === "ur" ? `voice/${filmId}` : `voice/${filmId}-${lang}`);
 
+/** Remotion composition id of a film's thumbnail in one language. */
+export const thumbnailId = (filmId: string, lang: Lang = "ur") => (lang === "ur" ? `thumb-${filmId}` : `thumb-${filmId}-${lang}`);
+
 /** Remotion composition id of a film in one language. */
 export const compositionId = (filmId: string, lang: Lang = "ur") => (lang === "ur" ? `film-${filmId}` : `film-${filmId}-${lang}`);
 
 export const lineKey = (sceneId: string, i: number) => `${sceneId}#${i}`;
 
 /** Voice + style for a speaker (narrator falls back to voice.voice / voice.style). */
-export const speakerVoice = (film: Film, speaker: string) =>
-  film.voice.speakers[speaker] ?? { voice: film.voice.voice, style: film.voice.style };
+export const speakerVoice = (film: Film, speaker: string, lang: Lang = "ur") => {
+  const sv = film.voice.speakers[speaker] ?? { voice: film.voice.voice, style: film.voice.style, styleEn: film.voice.styleEn };
+  return { voice: sv.voice, style: lang === "en" && sv.styleEn ? sv.styleEn : sv.style };
+};
 
 /** Written by scripts/voice.ts into public/voice/<id>/timing.json */
 export const TimingSchema = z.object({
