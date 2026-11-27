@@ -38,7 +38,14 @@ export const trim = (pcm: Pcm) => {
 };
 
 /** Weight of a text for timing (pauses in "…" and punctuation count too). */
-const weight = (text: string) => text.replace(/<[^>]+>/g, "").length + (text.match(/…|\.\.\./g)?.length ?? 0) * 6 + (text.match(/[,।!?—]/g)?.length ?? 0) * 3;
+const weight = (text: string) => {
+  const t = text.replace(/<[^>]+>/g, "").trim();
+  const ellipses = t.match(/…|\.\.\./g)?.length ?? 0;
+  const commas = t.match(/[,—]/g)?.length ?? 0;
+  // a sentence ending inside the line ("Time went by. The poor cat…") gets a long, dramatic pause
+  const innerStops = t.replace(/…|\.\.\./g, "").match(/[.!?।](?=\s)/g)?.length ?? 0;
+  return t.length + ellipses * 6 + commas * 3 + innerStops * 14;
+};
 
 /**
  * Choose n-1 cut points among the inner silences with dynamic programming:
@@ -64,15 +71,22 @@ export const splitAligned = (pcm: Pcm, texts: string[]): Pcm[] | null => {
   }
   const mid = cands.map(([a, b]) => (a + b) / 2);
   const len = cands.map(([a, b]) => (b - a) / SR);
-  const cost = (k: number, c: number) => Math.abs(mid[c] - expected[k]) / SR - 1.2 * len[c];
+  // Score whole segments (cut to cut), not absolute positions: a dramatic pause inside one line
+  // ("Time went by. …") then cannot drag every later cut off its line.
+  const expLen = w.map((x) => ((s1 - s0) * x) / total);
+  const seg = (k: number, from: number, to: number) => {
+    const e = expLen[k];
+    return (2 * Math.abs(to - from - e)) / e;
+  };
+  const bonus = (c: number) => 0.8 * Math.min(len[c], 1.2);
   const M = cands.length;
   const dp: number[][] = Array.from({ length: n - 1 }, () => Array(M).fill(Infinity));
   const prev: number[][] = Array.from({ length: n - 1 }, () => Array(M).fill(-1));
-  for (let c = 0; c < M; c++) dp[0][c] = cost(0, c);
+  for (let c = 0; c < M; c++) dp[0][c] = seg(0, s0, mid[c]) - bonus(c);
   for (let k = 1; k < n - 1; k++) {
     for (let c = k; c < M; c++) {
       for (let p = k - 1; p < c; p++) {
-        const v = dp[k - 1][p] + cost(k, c);
+        const v = dp[k - 1][p] + seg(k, mid[p], mid[c]) - bonus(c);
         if (v < dp[k][c]) {
           dp[k][c] = v;
           prev[k][c] = p;
@@ -81,8 +95,9 @@ export const splitAligned = (pcm: Pcm, texts: string[]): Pcm[] | null => {
     }
   }
   let best = -1;
-  for (let c = n - 2; c < M; c++) if (best < 0 || dp[n - 2][c] < dp[n - 2][best]) best = c;
-  if (best < 0 || !isFinite(dp[n - 2][best])) return null;
+  const finalCost = (c: number) => dp[n - 2][c] + seg(n - 1, mid[c], s1);
+  for (let c = n - 2; c < M; c++) if (isFinite(dp[n - 2][c]) && (best < 0 || finalCost(c) < finalCost(best))) best = c;
+  if (best < 0) return null;
   const chosen: number[] = [];
   for (let k = n - 2, c = best; k >= 0; k--) {
     chosen.unshift(c);
