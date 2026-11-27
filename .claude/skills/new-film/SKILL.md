@@ -17,7 +17,8 @@ Ask only if something truly blocks you (e.g. the reference is missing). Budget i
 `films/<id>/script.md` = the script exactly as pasted (add a 1-line title header only).
 
 ## 2. Islamic check (before any code)
-- Never depict Allah, Prophets, angels, named Companions. A possible Prophet = only from behind/silhouette; say why.
+- Never depict Allah, Prophets, angels, named Companions in any form (no back view, silhouette, shadow or hand).
+  A possible Prophet is not shown at all: narration, place or other people's reactions only. Flag it in the drift list.
 - Dialogue only from the source; animals never speak. List every place the script drifts from the Hadith/ayat
   and propose the fix in one short list. Keep `source.verified: false`.
 - The reference is shown on screen (end card).

@@ -25,8 +25,9 @@ laptop / phone browser only: never ask them to install tools or run commands loc
 - The old 3D engine (`src/engine`, `src/library` except `src/two-d`, `stories/`) is abandoned; do not extend it.
 
 ## Islamic content rules (non-negotiable)
-- Never depict Allah, Prophets, angels or named Companions. A figure who might be a Prophet: only from behind /
-  silhouette, and say why.
+- Never depict Allah, Prophets, angels or named Companions in any form: not from behind, not as a silhouette, no
+  shadow, hand or voice acting. A figure who might be a Prophet is not shown at all; tell it through narration,
+  the place, or other people's reactions.
 - Dialogue only from the source; animals do not speak. Point out where a script drifts from the Hadith.
 - Show the reference on screen; `source.verified` stays false until the owner checks it.
 
