@@ -3,7 +3,9 @@
   "title": "Pyase Kutte Ki Kahani",
   "fps": 30,
   "source": {
-    "references": ["Sahih al-Bukhari 2363"],
+    "references": [
+      "Sahih al-Bukhari 2363"
+    ],
     "verified": false
   },
   "voice": {
@@ -35,6 +37,28 @@
     "sfx-scrape",
     "sfx-wind"
   ],
+  "publish": {
+    "ur": {
+      "title": "Ek pyase kutte ko paani pilaya… aur gunah maaf ho gaye 😢",
+      "alts": [
+        "Sirf paani pilane se jannat? Ye waqia sun lo",
+        "Is chhoti si neki ne sab badal diya"
+      ],
+      "description": "Ek musafir ne kuen se apne joote mein paani bhar kar ek pyase kutte ko pilaya, aur Allah ne uske gunah maaf farma diye. Kisi bhi neki ko chhota mat samjho.\n\nReference: Sahih al-Bukhari 2363\n\nAisi aur kahaniyon ke liye subscribe karein.",
+      "hashtags": [
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Neki",
+        "#IslamicShorts",
+        "#AnimalKindness",
+        "#Rehmat",
+        "#Shorts",
+        "#IslamicCartoon",
+        "#UrduKahani"
+      ]
+    }
+  },
   "scenes": [
     {
       "id": "s1-tapta-registan",

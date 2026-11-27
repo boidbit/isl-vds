@@ -31,6 +31,16 @@ export const FilmSceneSchema = z.object({
   subtitleMax: z.number().min(0.1).max(1).optional(),
 });
 
+/** YouTube upload text for one channel (shown on the site with copy buttons). */
+const PublishSchema = z.object({
+  /** Main hook title (under ~70 chars, curiosity + emotion, no clickbait lies). */
+  title: z.string(),
+  /** 2-3 alternative titles to A/B test. */
+  alts: z.array(z.string()).default([]),
+  description: z.string(),
+  hashtags: z.array(z.string()).default([]),
+});
+
 const SpeakerSchema = z.object({ voice: z.string(), style: z.string().default("") });
 
 export const FilmSchema = z.object({
@@ -54,6 +64,8 @@ export const FilmSchema = z.object({
     })
     .default({}),
   assets: z.array(z.string()).default([]),
+  /** Title / description / hashtags per channel. */
+  publish: z.object({ ur: PublishSchema.optional(), en: PublishSchema.optional() }).default({}),
   scenes: z.array(FilmSceneSchema).min(1),
 });
 

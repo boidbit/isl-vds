@@ -5,26 +5,96 @@
   "format": "short",
   "motionBlur": 5,
   "source": {
-    "references": ["Sahih al-Bukhari 3472", "Sahih Muslim 1721"],
+    "references": [
+      "Sahih al-Bukhari 3472",
+      "Sahih Muslim 1721"
+    ],
     "verified": false
   },
   "voice": {
     "enabled": true,
     "model": "gemini-3.8-flash-tts",
     "speakers": {
-      "narrator": { "voice": "Gacrux", "style": "deep, warm, emotional storyteller, gripping pace" },
-      "kharidar": { "voice": "Achird", "style": "humble and sincere" },
-      "malik": { "voice": "Orus", "style": "calm, kind and firm" },
-      "buzurg": { "voice": "Algenib", "style": "old, wise and gentle, speaking slowly" }
+      "narrator": {
+        "voice": "Gacrux",
+        "style": "deep, warm, emotional storyteller, gripping pace"
+      },
+      "kharidar": {
+        "voice": "Achird",
+        "style": "humble and sincere"
+      },
+      "malik": {
+        "voice": "Orus",
+        "style": "calm, kind and firm"
+      },
+      "buzurg": {
+        "voice": "Algenib",
+        "style": "old, wise and gentle, speaking slowly"
+      }
     }
   },
   "assets": [
-    "kharidar", "malik", "buzurg-back", "village-sky", "hills", "farm-ground", "mud-house", "mud-wall",
-    "door", "goat", "charpai", "clay-pots", "birds", "bush", "stone", "green-tree", "matka", "gold-inside",
-    "dig-topdown", "hoe-strike", "hand-grip", "hoe", "seat-mat", "light-rays",
-    "sfx-dig", "sfx-tak", "sfx-lid", "sfx-shimmer", "sfx-whoosh", "sfx-impact", "sfx-riser", "sfx-door",
-    "sfx-knock", "sfx-birds", "sfx-chime", "sfx-pad", "sfx-village-ambience", "sfx-step"
+    "kharidar",
+    "malik",
+    "buzurg-back",
+    "village-sky",
+    "hills",
+    "farm-ground",
+    "mud-house",
+    "mud-wall",
+    "door",
+    "goat",
+    "charpai",
+    "clay-pots",
+    "birds",
+    "bush",
+    "stone",
+    "green-tree",
+    "matka",
+    "gold-inside",
+    "dig-topdown",
+    "hoe-strike",
+    "hand-grip",
+    "hoe",
+    "seat-mat",
+    "light-rays",
+    "sfx-dig",
+    "sfx-tak",
+    "sfx-lid",
+    "sfx-shimmer",
+    "sfx-whoosh",
+    "sfx-impact",
+    "sfx-riser",
+    "sfx-door",
+    "sfx-knock",
+    "sfx-birds",
+    "sfx-chime",
+    "sfx-pad",
+    "sfx-village-ambience",
+    "sfx-step"
   ],
+  "publish": {
+    "ur": {
+      "title": "Zameen se sone ka matka nikla… dono ne lene se mana kar diya! 🤯",
+      "alts": [
+        "Imaandari ka sabse khoobsurat waqia",
+        "Khazana mila, phir bhi kisi ne nahi liya — kyun?"
+      ],
+      "description": "Ek aadmi ne zameen khareedi aur usme sone se bhara matka nikla. Khareedar kehta hai ye bechne wale ka hai, bechne wala kehta hai khareedar ka. Faisla kya hua? Imaandari ki misaal.\n\nReference: Sahih al-Bukhari 3472 · Sahih Muslim 1721\n\nAisi aur kahaniyon ke liye subscribe karein.",
+      "hashtags": [
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Imaandari",
+        "#Honesty",
+        "#IslamicShorts",
+        "#Shorts",
+        "#IslamicCartoon",
+        "#UrduKahani",
+        "#Khazana"
+      ]
+    }
+  },
   "scenes": [
     {
       "id": "s1-khazana",
@@ -37,20 +107,39 @@
     },
     {
       "id": "s2-matka-khulta-hai",
-      "lines": [{ "text": "Matke ke andar… sona hi sona tha!", "voiceText": "मटके के अंदर… सोना ही सोना था!" }]
+      "lines": [
+        {
+          "text": "Matke ke andar… sona hi sona tha!",
+          "voiceText": "मटके के अंदर… सोना ही सोना था!"
+        }
+      ]
     },
     {
       "id": "s3-imaandari",
       "lines": [
-        { "text": "Lekin usne socha…", "voiceText": "लेकिन उसने सोचा…" },
-        { "speaker": "kharidar", "text": "Maine aapse zameen khareedi thi, khazana nahi. Ye sona aapka hai.", "voiceText": "मैंने आपसे ज़मीन ख़रीदी थी, ख़ज़ाना नहीं। यह सोना आपका है।" }
+        {
+          "text": "Lekin usne socha…",
+          "voiceText": "लेकिन उसने सोचा…"
+        },
+        {
+          "speaker": "kharidar",
+          "text": "Maine aapse zameen khareedi thi, khazana nahi. Ye sona aapka hai.",
+          "voiceText": "मैंने आपसे ज़मीन ख़रीदी थी, ख़ज़ाना नहीं। यह सोना आपका है।"
+        }
       ]
     },
     {
       "id": "s4-pehla-malik",
       "lines": [
-        { "text": "Magar pehle malik ne kaha…", "voiceText": "मगर पहले मालिक ने कहा…" },
-        { "speaker": "malik", "text": "Maine tumhe zameen bech di thi. Ab jo kuch usme nikla, wo tumhara hai.", "voiceText": "मैंने तुम्हें ज़मीन बेच दी थी। अब जो कुछ उसमें निकला, वह तुम्हारा है।" }
+        {
+          "text": "Magar pehle malik ne kaha…",
+          "voiceText": "मगर पहले मालिक ने कहा…"
+        },
+        {
+          "speaker": "malik",
+          "text": "Maine tumhe zameen bech di thi. Ab jo kuch usme nikla, wo tumhara hai.",
+          "voiceText": "मैंने तुम्हें ज़मीन बेच दी थी। अब जो कुछ उसमें निकला, वह तुम्हारा है।"
+        }
       ]
     },
     {
@@ -66,15 +155,34 @@
       "id": "s6-faisla",
       "subtitleMax": 0.78,
       "lines": [
-        { "speaker": "buzurg", "text": "Kya tumhara koi beta hai?", "voiceText": "क्या तुम्हारा कोई बेटा है?" },
-        { "speaker": "kharidar", "text": "Haan, hai.", "voiceText": "हाँ, है।" },
-        { "speaker": "buzurg", "text": "Aur tumhari koi beti?", "voiceText": "और तुम्हारी कोई बेटी?" },
-        { "speaker": "malik", "text": "Haan.", "voiceText": "हाँ।" },
+        {
+          "speaker": "buzurg",
+          "text": "Kya tumhara koi beta hai?",
+          "voiceText": "क्या तुम्हारा कोई बेटा है?"
+        },
+        {
+          "speaker": "kharidar",
+          "text": "Haan, hai.",
+          "voiceText": "हाँ, है।"
+        },
+        {
+          "speaker": "buzurg",
+          "text": "Aur tumhari koi beti?",
+          "voiceText": "और तुम्हारी कोई बेटी?"
+        },
+        {
+          "speaker": "malik",
+          "text": "Haan.",
+          "voiceText": "हाँ।"
+        },
         {
           "text": "Tab faisla hua — ek ke bete aur doosre ki beti ki shaadi kar di jaye… aur khazana unhe de diya jaye.",
           "voiceText": "तब फ़ैसला हुआ — एक के बेटे और दूसरे की बेटी की शादी कर दी जाए… और ख़ज़ाना उन्हें दे दिया जाए।"
         },
-        { "text": "Aisi hoti hai asli imaandari.", "voiceText": "ऐसी होती है असली ईमानदारी।" }
+        {
+          "text": "Aisi hoti hai asli imaandari.",
+          "voiceText": "ऐसी होती है असली ईमानदारी।"
+        }
       ]
     }
   ]

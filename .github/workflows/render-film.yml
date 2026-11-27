@@ -1,6 +1,7 @@
 name: Render film
 
-# Actions tab > "Render film" > Run workflow. Downloads appear under the run's "Artifacts".
+# Actions tab > "Render film" > Run workflow, or open an issue titled "render: <film-id> both" (see issue-command.yml),
+# or the "Render" button on the videos page. Videos go to the release "film-<id>" and the videos page is rebuilt.
 on:
   workflow_dispatch:
     inputs:
@@ -17,16 +18,29 @@ on:
         description: "Generate narration with Gemini"
         type: boolean
         default: true
+  workflow_call:
+    inputs:
+      film: { type: string, required: true }
+      lang: { type: string, default: both }
+      voice: { type: boolean, default: true }
+      ref: { type: string, default: "" }
+
+permissions:
+  contents: write
+  actions: write
 
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     env:
       FILM: ${{ inputs.film }}
       LANGS: ${{ inputs.lang == 'both' && 'ur en' || inputs.lang }}
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -43,17 +57,31 @@ jobs:
           # optional second key for the English track (own quota); falls back to GEMINI_API_KEY
           GEMINI_API_KEY_EN: ${{ secrets.GEMINI_API_KEY_EN }}
         run: for L in $LANGS; do npm run voice -- "$FILM" --lang "$L"; done
-      - name: Render video
+      - name: Render video (+ small preview and poster for the videos page)
         run: |
           for L in $LANGS; do
-            if [ "$L" = ur ]; then ID="film-$FILM"; OUT="out/$FILM.mp4"; else ID="film-$FILM-$L"; OUT="out/$FILM-$L.mp4"; fi
-            npx remotion render src/index.ts "$ID" "$OUT" --crf=18
+            if [ "$L" = ur ]; then ID="film-$FILM"; N="$FILM"; else ID="film-$FILM-$L"; N="$FILM-$L"; fi
+            npx remotion render src/index.ts "$ID" "out/$N.mp4" --crf=18
+            ffmpeg -hide_banner -loglevel error -y -i "out/$N.mp4" -vf "scale=720:-2" -c:v libx264 -crf 28 -preset slow \
+              -c:a aac -b:a 96k -movflags +faststart "out/$N-preview.mp4"
+            ffmpeg -hide_banner -loglevel error -y -ss 1.2 -i "out/$N.mp4" -frames:v 1 -vf "scale=480:-2" "out/$N.jpg"
           done
+          npx tsx scripts/film-meta.ts "$FILM" "$LANGS"
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.film }}-video
           path: |
-            out/*.mp4
+            out/
             public/voice/${{ inputs.film }}/
             public/voice/${{ inputs.film }}-en/
           retention-days: 14
+      - name: Publish to release film-<id> and rebuild the videos page
+        run: |
+          TAG="film-$FILM"
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "$FILM" --notes "Rendered videos of films/$FILM (Urdu + English). Videos page: https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/" --latest=false
+          if [ "$LANGS" != "ur en" ] && gh release download "$TAG" -p meta.json -D old 2>/dev/null; then
+            # keep the other language's entry when only one language was rendered
+            node -e 'const f=require("fs");const o=JSON.parse(f.readFileSync("old/meta.json"));const n=JSON.parse(f.readFileSync("out/meta.json"));n.videos={...o.videos,...n.videos};f.writeFileSync("out/meta.json",JSON.stringify(n,null,2))'
+          fi
+          gh release upload "$TAG" out/*.mp4 out/*.jpg out/meta.json --clobber
+          gh workflow run pages.yml --ref "${{ github.event.repository.default_branch }}" || echo "pages.yml not on the default branch yet"

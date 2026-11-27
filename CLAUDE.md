@@ -18,7 +18,10 @@ laptop / phone browser only: never ask them to install tools or run commands loc
 - Two videos per film: `film-<id>` (Urdu/Hindi channel) and `film-<id>-en` (English channel).
 - `scripts/voice.ts` Gemini TTS (`--lang ur|en`; en uses secret `GEMINI_API_KEY_EN` if set). No Urdu TTS in
   Gemini, so the Urdu track speaks Devanagari text with Urdu words.
-- `.github/workflows/render-film.yml`: inputs film id + lang (ur/en/both).
+- `.github/workflows/render-film.yml`: inputs film id + lang (ur/en/both); publishes to release `film-<id>`.
+- Videos page (GitHub Pages, `site/index.html` + `pages.yml`): https://boidbit.github.io/isl-vds/ shows every
+  rendered film in Urdu/English with title, description, hashtags (`film.json` → `publish`). Issues titled
+  `render: <id> <lang>` render a film (`issue-command.yml`); `film: <id>` issues hold a script for Claude.
 - The old 3D engine (`src/engine`, `src/library` except `src/two-d`, `stories/`) is abandoned; do not extend it.
 
 ## Islamic content rules (non-negotiable)

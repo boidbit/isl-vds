@@ -5,6 +5,12 @@ description: Use after a film is pushed, or when the owner asks to render, check
 
 # Render on GitHub and check
 
+## 0. How rendering is wired
+- `render-film.yml` renders, then uploads full MP4 + 720p preview + poster + `meta.json` to the release
+  `film-<id>` and starts `pages.yml`, which rebuilds the videos page (https://boidbit.github.io/isl-vds/) from all
+  `film-*` releases. The owner can also render from the page: it opens an issue `render: <id> <lang>` which
+  `issue-command.yml` runs (owner only), comments the result and closes the issue.
+
 ## 1. Trigger
 GitHub MCP `actions_run_trigger` on `boidbit/isl-vds`, workflow `render-film.yml`, ref = the pushed branch,
 inputs `{ film: "<id>", lang: "both", voice: "true" }` (lang: `ur`, `en` or `both`).

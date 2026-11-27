@@ -1,0 +1,67 @@
+name: Issue command
+
+# Commands from the videos page (or any issue the owner opens):
+#   title "render: <film-id> [ur|en|both]"  -> renders the film (finds the branch that has it) and comments the link
+#   title "film: <film-id>" + script in body -> stored for Claude: in a new chat say "issue #<n> wali script banao"
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  actions: write
+  issues: write
+
+jobs:
+  parse:
+    if: github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, 'render:')
+    runs-on: ubuntu-latest
+    outputs:
+      film: ${{ steps.p.outputs.film }}
+      lang: ${{ steps.p.outputs.lang }}
+      ref: ${{ steps.p.outputs.ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: p
+        env:
+          TITLE: ${{ github.event.issue.title }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -f; set -- ${TITLE#render:}
+          FILM="$1"; LANG="${2:-both}"
+          [[ "$FILM" =~ ^[a-z0-9-]+$ ]] || { gh issue comment ${{ github.event.issue.number }} -b "Film id samajh nahi aaya: \`$FILM\`"; exit 1; }
+          [[ "$LANG" =~ ^(ur|en|both)$ ]] || LANG=both
+          REF=""
+          for b in $(git branch -r --sort=-committerdate --format='%(refname:short)' | grep -v HEAD); do
+            if git cat-file -e "$b:films/$FILM/film.json" 2>/dev/null; then REF="${b#origin/}"; break; fi
+          done
+          [ -n "$REF" ] || { gh issue comment ${{ github.event.issue.number }} -b "Film \`$FILM\` kisi branch par nahi mili."; exit 1; }
+          echo "film=$FILM" >> "$GITHUB_OUTPUT"; echo "lang=$LANG" >> "$GITHUB_OUTPUT"; echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          gh issue comment ${{ github.event.issue.number }} -b "Render shuru: \`$FILM\` ($LANG) branch \`$REF\`. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+  render:
+    needs: parse
+    uses: ./.github/workflows/render-film.yml
+    with:
+      film: ${{ needs.parse.outputs.film }}
+      lang: ${{ needs.parse.outputs.lang }}
+      ref: ${{ needs.parse.outputs.ref }}
+      voice: true
+    secrets: inherit
+  done:
+    needs: [parse, render]
+    if: always() && needs.parse.result == 'success'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - run: |
+          N=${{ github.event.issue.number }}
+          if [ "${{ needs.render.result }}" = success ]; then
+            gh issue comment $N -b "Video ready ✅ Page: https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/ (2-3 min mein update hoga) · Release: ${{ github.server_url }}/${{ github.repository }}/releases/tag/film-${{ needs.parse.outputs.film }}"
+            gh issue close $N
+          else
+            gh issue comment $N -b "Render fail ❌ Run dekho: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} — Claude ko naye chat mein ye link do."
+          fi

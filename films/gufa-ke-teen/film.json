@@ -5,24 +5,101 @@
   "format": "short",
   "motionBlur": 5,
   "source": {
-    "references": ["Sahih al-Bukhari 2272", "Sahih al-Bukhari 2215 (baarish ka zikr)"],
+    "references": [
+      "Sahih al-Bukhari 2272",
+      "Sahih al-Bukhari 2215 (baarish ka zikr)"
+    ],
     "verified": false
   },
   "voice": {
     "enabled": true,
     "model": "gemini-3.8-flash-tts",
     "speakers": {
-      "narrator": { "voice": "Fenrir", "style": "natural, conversational Hindi storyteller speaking fast and energetic like a gripping YouTube Short; no long pauses, tight pace, suspense in the voice at the start, warm and emotional at the end, never slow or robotic" }
+      "narrator": {
+        "voice": "Fenrir",
+        "style": "natural, conversational Hindi storyteller speaking fast and energetic like a gripping YouTube Short; no long pauses, tight pace, suspense in the voice at the start, warm and emotional at the end, never slow or robotic"
+      }
     }
   },
   "assets": [
-    "musafir1", "musafir2", "musafir3", "pita", "maa", "aurat", "mazdoor",
-    "mountain-sky", "peaks", "lightning", "rain", "rain-splashes", "puddle", "rocky-ground", "cliff-cave", "boulder",
-    "cave-inside", "mud-room", "diya", "chatai", "sleeper", "milk-bowl", "gold-coins",
-    "green-field", "crop-rows", "fence", "cow", "camel", "wage-pouch", "goat", "village-tree", "village-sky", "birds",
-    "sfx-rain", "sfx-rain-muffled", "sfx-thunder", "sfx-rumble", "sfx-grind", "sfx-strain", "sfx-drip", "sfx-impact",
-    "sfx-whoosh", "sfx-step", "sfx-rock-impact", "sfx-breeze", "sfx-goat", "sfx-cow", "sfx-camel", "sfx-steps-mud", "sfx-cave-drips", "sfx-door", "sfx-birds", "sfx-wind", "sfx-chime", "sfx-shimmer"
+    "musafir1",
+    "musafir2",
+    "musafir3",
+    "pita",
+    "maa",
+    "aurat",
+    "mazdoor",
+    "mountain-sky",
+    "peaks",
+    "lightning",
+    "rain",
+    "rain-splashes",
+    "puddle",
+    "rocky-ground",
+    "cliff-cave",
+    "boulder",
+    "cave-inside",
+    "mud-room",
+    "diya",
+    "chatai",
+    "sleeper",
+    "milk-bowl",
+    "gold-coins",
+    "green-field",
+    "crop-rows",
+    "fence",
+    "cow",
+    "camel",
+    "wage-pouch",
+    "goat",
+    "village-tree",
+    "village-sky",
+    "birds",
+    "sfx-rain",
+    "sfx-rain-muffled",
+    "sfx-thunder",
+    "sfx-rumble",
+    "sfx-grind",
+    "sfx-strain",
+    "sfx-drip",
+    "sfx-impact",
+    "sfx-whoosh",
+    "sfx-step",
+    "sfx-rock-impact",
+    "sfx-breeze",
+    "sfx-goat",
+    "sfx-cow",
+    "sfx-camel",
+    "sfx-steps-mud",
+    "sfx-cave-drips",
+    "sfx-door",
+    "sfx-birds",
+    "sfx-wind",
+    "sfx-chime",
+    "sfx-shimmer"
   ],
+  "publish": {
+    "ur": {
+      "title": "Gufa band ho gayi… teen neki ne jaan bacha li! 😱",
+      "alts": [
+        "Maut se kaise bache ye teen insaan?",
+        "Pathar ne gufa band kar di, phir ye hua…"
+      ],
+      "description": "Baarish se bachne teen aadmi gufa mein gaye aur ek bada pathar raasta band kar gaya. Har ek ne apni sabse sachchi neki ka waseela de kar dua ki, aur pathar hat gaya.\n\nReference: Sahih al-Bukhari 2272\n\nAisi aur kahaniyon ke liye subscribe karein.",
+      "hashtags": [
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Dua",
+        "#Neki",
+        "#IslamicShorts",
+        "#Shorts",
+        "#IslamicCartoon",
+        "#UrduKahani",
+        "#SachchiKahani"
+      ]
+    }
+  },
   "scenes": [
     {
       "id": "s1-chattan",
