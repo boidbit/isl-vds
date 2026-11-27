@@ -85,6 +85,9 @@ export const LOOKS: Record<string, Partial<Look>> = {
   "aurat-beige": { robe: "#7a2a35", robeShade: "#5e1f2a", sash: "#c9ac82", headwear: "scarf", turban: "#e3cfae", turbanShade: "#c8b08a", beard: "#3a2a1e", beardLength: 0, sandal: "#6a4026", skin: "#e6b088", skinShade: "#cc9670" },
   bachcha: { robe: "#4f9a6a", robeShade: "#3c7d54", sash: "#e0b04a", headwear: "cap", turban: "#fdf6e6", turbanShade: "#e6dcc4", beard: "#2e231b", beardLength: 0, skin: "#e8b48a", skinShade: "#cf9a70" },
   buzurg: { robe: "#f6f1e4", robeShade: "#ddd3bd", sash: "#a07a3c", turban: "#ffffff", turbanShade: "#e6e1d6", beard: "#efece6", skin: "#e4ad80", skinShade: "#c99268", beardLength: 1.5 },
+  // "Baadal Aur Baagh Ka Raaz" cast
+  "musafir-baadal": { robe: "#dcc08a", robeShade: "#bfa06a", sash: "#8a6a3c", turban: "#f1e8d4", turbanShade: "#d6cab0", shoulderCloth: "#3f78b8", beard: "#2e231b", beardLength: 0.55, skin: "#d99a66", skinShade: "#bd8150" },
+  "baagh-malik": { robe: "#7d8a4a", robeShade: "#64703a", sash: "#5a4a2a", turban: "#8c9198", turbanShade: "#6f747c", beard: "#4a3c30", beardLength: 0.8, skin: "#dba070", skinShade: "#bf8656" },
 };
 
 const stroke = { stroke: OUT, strokeWidth: LINE, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
@@ -333,7 +336,11 @@ export const Musafir: React.FC<{ x: number; y: number; flip?: boolean; scale?: n
           <rect x={-48} y={-12} width={96} height={20} rx={8} fill={C.sash} {...stroke} />
           <path d="M 30 6 L 36 40 L 22 40 Z" fill={C.sash} {...stroke} />
           {C.shoulderCloth && (
-            <path d="M -30 -132 Q 20 -142 46 -122 L 44 -50 Q 34 -38 26 -50 L 24 -108 Q -4 -112 -24 -118 Z" fill={C.shoulderCloth} {...stroke} />
+            <>
+              {/* loose end behind the shoulder, flutters in the wind */}
+              <path d={`M -26 -126 Q -60 -118 ${-84 + Math.sin(p.time * 6) * 8} ${-96 + Math.sin(p.time * 9) * 5} Q -60 -92 -30 -104 Z`} fill={C.shoulderCloth} {...stroke} />
+              <path d="M -30 -132 Q 20 -142 46 -122 L 44 -50 Q 34 -38 26 -50 L 24 -108 Q -4 -112 -24 -118 Z" fill={C.shoulderCloth} {...stroke} />
+            </>
           )}
           <g transform={`translate(6 -128) rotate(${p.headTilt})`}>
             {seenFromBehind ? <BackHead c={C} /> : <Head p={p} c={C} />}

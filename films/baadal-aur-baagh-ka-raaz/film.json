@@ -1,0 +1,262 @@
+{
+  "id": "baadal-aur-baagh-ka-raaz",
+  "title": "Baadal Aur Baagh Ka Raaz",
+  "fps": 30,
+  "format": "short",
+  "motionBlur": 5,
+  "source": {
+    "references": [
+      "Sahih Muslim 2984a"
+    ],
+    "verified": false
+  },
+  "voice": {
+    "enabled": true,
+    "model": "gemini-3.8-flash-tts",
+    "speakers": {
+      "narrator": {
+        "voice": "Fenrir",
+        "style": "natural, conversational Hindi storyteller for a YouTube Short; wonder and suspense at the start, quicker and curious while following the water, then soft, calm and warm at the end; no long pauses, never robotic",
+        "styleEn": "natural, conversational English storyteller for a YouTube Short; wonder and suspense at the start, quicker and curious while following the water, then soft, calm and warm at the end"
+      }
+    }
+  },
+  "assets": [
+    "musafir-baadal",
+    "baagh-malik",
+    "front-bust",
+    "mountain-sky",
+    "peaks",
+    "rocky-ground",
+    "rain",
+    "rain-splashes",
+    "rain-cloud",
+    "grass-tufts",
+    "water-channel",
+    "orchard-tree",
+    "harvest-basket",
+    "butterfly",
+    "soil-beds",
+    "chatai",
+    "perched-bird",
+    "dry-leaf",
+    "dust-motes",
+    "palm-shadow",
+    "light-rays",
+    "birds",
+    "sfx-breeze",
+    "sfx-gravel-step",
+    "sfx-rain",
+    "sfx-stream",
+    "sfx-hoe-dig",
+    "sfx-sparrow",
+    "sfx-birds",
+    "sfx-drip",
+    "sfx-whoosh",
+    "sfx-chime",
+    "sfx-shimmer",
+    "sfx-riser"
+  ],
+  "publish": {
+    "ur": {
+      "title": "Sunsaan maidan mein baadal se awaaz aayi… aur ek naam liya 😳",
+      "alts": [
+        "Baadal ne sirf ek baagh par paani kyun barsaya? Aakhir tak dekhna",
+        "Ek naam, ek baadal aur ek baagh ka raaz… kya hai woh raaz?"
+      ],
+      "description": "Sunsaan pathreela maidan. Ek musafir akela chal raha hai… achanak upar baadal se awaaz aati hai, aur ek shakhs ka naam!\nWoh baadal ke paani ke peeche chal padta hai… aur jo raaz milta hai, woh hairaan kar deta hai.\n\n💬 Aapke mohalle mein kis tarah ka sadaqa sabse zyada kaam aayega?\n\n📖 Reference: Sahih Muslim 2984a\nHadith ka matlab: Abu Huraira se riwayat hai ke Rasoolullah ﷺ ne farmaya ke ek aadmi sunsaan ilaake mein tha. Usne ek baadal mein awaaz suni, ‘Falan shakhs ke baagh ko paani do.’ Baadal ek taraf gaya aur pathreeli zameen par apna saara paani barsa diya. Wahan ki ek naali mein saara paani aa gaya. Aadmi paani ke peeche chala. Usne dekha ke ek aadmi apne baagh mein kudal se paani ka rukh badal raha tha. Usne poochha, ‘Allah ke bande, tumhara naam kya hai?’ Baagh ke maalik ne apna naam bataya. Yeh wahi naam tha jo usne baadal mein suna tha. Maalik ne poochha, ‘Allah ke bande, tum mera naam kyun poochhte ho?’ Usne kaha, ‘Jis baadal ka yeh paani hai, maine usmein awaaz suni ke falan shakhs ke baagh ko paani do. Wahi naam jo tumhara hai. Tum is baagh mein kya karte ho?’ Maalik ne kaha, ‘Jab tumne yeh baat batayi hai, toh suno. Main dekhta hoon is baagh se kitni paidawaar hoti hai. Uska ek tihai sadaqa kar deta hoon, ek tihai main aur mere ghar wale khaate hain, aur ek tihai main baagh mein wapas laga deta hoon.’\n\n(Kirdaron ki shakl, libaas aur kuch manzar animation ke liye tasawwur par mabni hain; Hadith ka hissa source ke mutabiq hai.)\n🔔 Har hafte ek nayi Islamic kahani: subscribe karein.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#SahihMuslim",
+        "#Sadaqa",
+        "#IslamicShorts",
+        "#IslamicCartoon",
+        "#UrduKahani",
+        "#IslamicKahani",
+        "#Barkat",
+        "#Baarish"
+      ]
+    },
+    "en": {
+      "title": "A voice spoke from a cloud in the desert… and said a name 😳",
+      "alts": [
+        "Why did the cloud rain on just one garden? Watch till the end",
+        "One name, one cloud and the secret of a garden… what was it?"
+      ],
+      "description": "An empty, stony plain. A traveller walks alone… then a voice comes from the cloud above, and it says a man's name!\nHe follows the cloud's water… and the secret he finds will surprise you.\n\n💬 What kind of charity would help your neighbourhood the most?\n\n📖 Reference: Sahih Muslim 2984a\nHadith meaning: Abu Huraira reported that the Prophet ﷺ said: A man was in an empty land when he heard a voice in a cloud: 'Water the garden of so-and-so.' The cloud moved aside and poured its water onto stony ground, and a channel there gathered all of that water. The man followed the water and found a man in his garden, turning the water with his spade. He asked him, 'O servant of Allah, what is your name?' He told him the name, the same name he had heard in the cloud. He asked, 'O servant of Allah, why do you ask my name?' He said, 'I heard a voice in the cloud whose water this is, saying: Water the garden of so-and-so, with your name. What do you do with it?' He said, 'Since you have said this: I look at what comes out of it, then I give a third of it in charity, my family and I eat a third, and I put a third back into it.'\n\n(The characters' looks and some scenery are imagined for the animation; the Hadith part follows the source.)\n🔔 A new Islamic story every week: subscribe.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#SahihMuslim",
+        "#Charity",
+        "#IslamicShorts",
+        "#IslamicCartoon",
+        "#IslamicKidsStories",
+        "#Sadaqah",
+        "#Blessings"
+      ]
+    }
+  },
+  "thumbnail": {
+    "at": 80,
+    "text": {
+      "ur": "Baadal se awaaz?!",
+      "en": "A voice in the cloud?!"
+    },
+    "zoom": 1.3,
+    "focus": [
+      0.5,
+      0.62
+    ],
+    "circle": {
+      "at": [
+        0.5,
+        0.17
+      ],
+      "r": 0.2
+    }
+  },
+  "scenes": [
+    {
+      "id": "s1-awaaz",
+      "lines": [
+        {
+          "text": "Baadal se awaaz aayi. Aur us awaaz mein ek naam tha.",
+          "voiceText": "बादल से आवाज़ आई। और उस आवाज़ में एक नाम था।",
+          "en": {
+            "text": "A voice came from a cloud. And in that voice… was a name."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2-baagh-ka-naam",
+      "lines": [
+        {
+          "text": "Socho, ek aadmi sunsaan ilaake mein tha. Tabhi use ek baadal se awaaz sunai di, “Falan shakhs ke baagh ko paani do.”",
+          "voiceText": "सोचो, एक आदमी सुनसान इलाक़े में था। तभी उसे एक बादल से आवाज़ सुनाई दी, “फ़लाँ शख़्स के बाग़ को पानी दो।”",
+          "en": {
+            "text": "Imagine a man alone in an empty land. Then he heard a voice from a cloud: “Water the garden of so-and-so.”"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s3-baarish-ka-rasta",
+      "lines": [
+        {
+          "text": "Phir baadal aage sarak gaya. Baarish pathreeli zameen par hui aur saara paani ek hi naali mein ja mila.",
+          "voiceText": "फिर बादल आगे सरक गया। बारिश पथरीली ज़मीन पर हुई और सारा पानी एक ही नाली में जा मिला।",
+          "en": {
+            "text": "Then the cloud moved on. Rain fell on the stony ground, and all of the water gathered in a single channel."
+          }
+        },
+        {
+          "text": "Aadmi us paani ke peeche chal pada.",
+          "voiceText": "आदमी उस पानी के पीछे चल पड़ा।",
+          "en": {
+            "text": "The man set off after that water."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s4-baagh-tak",
+      "lines": [
+        {
+          "text": "Aage ek baagh tha. Uska maalik kudal se paani ka rukh mod raha tha.",
+          "voiceText": "आगे एक बाग़ था। उसका मालिक कुदाल से पानी का रुख़ मोड़ रहा था।",
+          "en": {
+            "text": "Ahead was a garden. Its owner was turning the water with his spade."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s5-wahi-naam",
+      "lines": [
+        {
+          "text": "Aadmi ne uska naam poochha.",
+          "voiceText": "आदमी ने उसका नाम पूछा।",
+          "en": {
+            "text": "The man asked him his name."
+          }
+        },
+        {
+          "text": "Wahi naam… jo usne baadal se suna tha.",
+          "voiceText": "वही नाम… जो उसने बादल से सुना था।",
+          "en": {
+            "text": "The same name… he had heard from the cloud."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s6-teen-hisse",
+      "lines": [
+        {
+          "text": "Maalik ne poochha, “Tum mera naam kyun poochh rahe ho?”",
+          "voiceText": "मालिक ने पूछा, “तुम मेरा नाम क्यों पूछ रहे हो?”",
+          "en": {
+            "text": "The owner asked, “Why are you asking my name?”"
+          }
+        },
+        {
+          "text": "Aadmi ne kaha, “Jis baadal ka yeh paani hai, usi mein maine tumhara naam suna. Tum is baagh mein kya karte ho?”",
+          "voiceText": "आदमी ने कहा, “जिस बादल का यह पानी है, उसी में मैंने तुम्हारा नाम सुना। तुम इस बाग़ में क्या करते हो?”",
+          "en": {
+            "text": "The man said, “In the cloud this water came from, I heard your name. What do you do with this garden?”"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s7-seekh",
+      "subtitleMax": 0.62,
+      "lines": [
+        {
+          "text": "Rasoolullah (SAW) ne bataya ke maalik apni paidawaar ke teen hisse karta tha.",
+          "voiceText": "रसूलुल्लाह सल्लल्लाहु अलैहि वसल्लम ने बताया कि मालिक अपनी पैदावार के तीन हिस्से करता था।",
+          "en": {
+            "text": "The Prophet, peace be upon him, told us that the owner divided his harvest into three parts."
+          }
+        },
+        {
+          "text": "Ek tihai woh sadaqa kar deta tha.",
+          "voiceText": "एक तिहाई वह सदक़ा कर देता था।",
+          "en": {
+            "text": "A third he gave in charity."
+          }
+        },
+        {
+          "text": "Ek tihai woh aur uske ghar wale khaate the.",
+          "voiceText": "एक तिहाई वह और उसके घर वाले खाते थे।",
+          "en": {
+            "text": "A third he and his family ate."
+          }
+        },
+        {
+          "text": "Aur ek tihai woh baagh mein wapas laga deta tha.",
+          "voiceText": "और एक तिहाई वह बाग़ में वापस लगा देता था।",
+          "en": {
+            "text": "And a third he put back into the garden."
+          }
+        },
+        {
+          "text": "Jitna apne ghar ke liye rakhta tha… utna hi sadaqe mein de deta tha.",
+          "voiceText": "जितना अपने घर के लिए रखता था… उतना ही सदक़े में दे देता था।",
+          "en": {
+            "text": "As much as he kept for his home… he gave just as much in charity."
+          }
+        }
+      ]
+    }
+  ],
+  "languages": [
+    "ur",
+    "en"
+  ]
+}

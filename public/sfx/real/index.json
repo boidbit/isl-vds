@@ -22,5 +22,9 @@
   "children-play": "children-play.mp3",
   "donkey": "donkey.mp3",
   "cat-meow-weak": "cat-meow-weak.mp3",
-  "dishes": "dishes.mp3"
+  "dishes": "dishes.mp3",
+  "stream": "stream.mp3",
+  "gravel-step": "gravel-step.mp3",
+  "hoe-dig": "hoe-dig.mp3",
+  "sparrow": "sparrow.mp3"
 }

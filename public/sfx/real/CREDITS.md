@@ -28,3 +28,7 @@ All files below are from [Freesound](https://freesound.org), licence **CC0 1.0 (
 | `donkey.mp3` | [Donkey Bray](https://freesound.org/people/StarNinjas37/sounds/560692/) | StarNinjas37 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `cat-meow-weak.mp3` | [Cat meow 3](https://freesound.org/people/MBPL/sounds/668815/) (filtered: lowpass=f=2500,atempo=0.85) | MBPL | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `dishes.mp3` | [Dropping a spoon in a bowl](https://freesound.org/people/freemaster2/sounds/487211/) | freemaster2 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `stream.mp3` | [Stream Running Over Rocks 2](https://freesound.org/people/mhtaylor67/sounds/236977/) | mhtaylor67 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `gravel-step.mp3` | [Footsteps Gravel Running-Stop](https://freesound.org/people/KikeVilaplana/sounds/436525/) | KikeVilaplana | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `hoe-dig.mp3` | [Shovel in dirt (calm).wav](https://freesound.org/people/LiezelDippenaar/sounds/707536/) | LiezelDippenaar | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `sparrow.mp3` | [House sparrow.wav](https://freesound.org/people/straget/sounds/404663/) | straget | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
