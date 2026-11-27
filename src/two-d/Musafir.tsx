@@ -81,6 +81,9 @@ export const LOOKS: Record<string, Partial<Look>> = {
   maa: { robe: "#dcc6a2", robeShade: "#c2aa84", sash: "#a07a4c", headwear: "scarf", turban: "#7a4b2c", turbanShade: "#5e3820", beard: "#6a5a4a", beardLength: 0, skin: "#e2ad82", skinShade: "#c8936a" },
   aurat: { robe: "#7a2a35", robeShade: "#5e1f2a", sash: "#5e1f2a", headwear: "scarf", turban: "#6a2430", turbanShade: "#4e1a24", beard: "#3a2a1e", beardLength: 0, skin: "#e6b088", skinShade: "#cc9670" },
   mazdoor: { robe: "#8a6a4a", robeShade: "#6e523a", sash: "#5a4632", headwear: "cap", turban: "#d8c8a0", turbanShade: "#bfae84", shoulderCloth: "#d8c8a0", beard: "#2e231b", skin: "#c98a58", skinShade: "#a8703f" },
+  // "Billi aur Aurat" cast
+  "aurat-beige": { robe: "#7a2a35", robeShade: "#5e1f2a", sash: "#c9ac82", headwear: "scarf", turban: "#e3cfae", turbanShade: "#c8b08a", beard: "#3a2a1e", beardLength: 0, sandal: "#6a4026", skin: "#e6b088", skinShade: "#cc9670" },
+  bachcha: { robe: "#4f9a6a", robeShade: "#3c7d54", sash: "#e0b04a", headwear: "cap", turban: "#fdf6e6", turbanShade: "#e6dcc4", beard: "#2e231b", beardLength: 0, skin: "#e8b48a", skinShade: "#cf9a70" },
   buzurg: { robe: "#f6f1e4", robeShade: "#ddd3bd", sash: "#a07a3c", turban: "#ffffff", turbanShade: "#e6e1d6", beard: "#efece6", skin: "#e4ad80", skinShade: "#c99268", beardLength: 1.5 },
 };
 

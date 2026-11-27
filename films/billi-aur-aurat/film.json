@@ -1,0 +1,235 @@
+{
+  "id": "billi-aur-aurat",
+  "title": "Billi aur Aurat",
+  "fps": 30,
+  "format": "short",
+  "motionBlur": 5,
+  "source": {
+    "references": [
+      "Sahih al-Bukhari 2365"
+    ],
+    "verified": false
+  },
+  "voice": {
+    "enabled": true,
+    "model": "gemini-3.8-flash-tts",
+    "speakers": {
+      "narrator": {
+        "voice": "Fenrir",
+        "style": "natural, conversational Hindi storyteller like a gripping YouTube Short; tight pace, no long pauses; suspense and shock in the first line, soft and sad in the middle, gentle and heartfelt at the end, never slow or robotic",
+        "styleEn": "natural, conversational English storyteller like a gripping YouTube Short; suspense and shock at the start, soft and sad in the middle, gentle and heartfelt at the end"
+      }
+    }
+  },
+  "assets": [
+    "aurat-beige",
+    "bachcha",
+    "dukandaar",
+    "buzurg",
+    "maa",
+    "musafir1",
+    "cat",
+    "wood-cage",
+    "cat-bowl",
+    "laalten",
+    "chulha",
+    "roti-stack",
+    "fruit-basket",
+    "wood-chest",
+    "clothes-line",
+    "date-stall",
+    "donkey",
+    "perched-bird",
+    "dry-leaf",
+    "time-sky",
+    "court-wall",
+    "far-houses",
+    "dust-motes",
+    "low-table",
+    "palm-shadow",
+    "stone-floor",
+    "veranda",
+    "village-sky",
+    "village-tree",
+    "mud-house",
+    "mud-wall",
+    "clay-pots",
+    "matka",
+    "birds",
+    "goat",
+    "sfx-cat-meow",
+    "sfx-cat-meow-weak",
+    "sfx-latch",
+    "sfx-door",
+    "sfx-children-play",
+    "sfx-donkey",
+    "sfx-village-ambience",
+    "sfx-fire-crackle",
+    "sfx-dishes",
+    "sfx-crickets",
+    "sfx-breeze",
+    "sfx-wind",
+    "sfx-birds",
+    "sfx-step",
+    "sfx-lap",
+    "sfx-whoosh",
+    "sfx-pad",
+    "sfx-chime",
+    "sfx-impact",
+    "date-palm",
+    "dirt-ground"
+  ],
+  "publish": {
+    "ur": {
+      "title": "Ek billi ki wajah se jahannam?! 😢 Us aurat ne aisa kya kiya…",
+      "alts": [
+        "Pinjre mein band ek billi… aur ek aurat ka sabse bada gunah",
+        "Ek chhoti si billi, ek band pinjra… aakhir tak dekhna"
+      ],
+      "description": "Ek aangan. Ek lakdi ka pinjra. Andar ek chhoti si billi, jo baar baar bahar dekhti hai…\nAur ek aurat, jo roz uske saamne se guzar jaati hai. Phir kya hua?\n\n💬 Aapke ghar ya gali mein koi jaanwar hai jiska aap khayal rakhte hain?\n\n📖 Reference: Sahih al-Bukhari 2365\n(Kahani mein kuch hisse, jaise pinjra aur aakhri seekh wala manzar, tasawwur par mabni hain. Hadith ka hissa bilkul usi tarah hai.)\n🔔 Har hafte ek nayi Islamic kahani: subscribe karein.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#IslamicShorts",
+        "#JaanwaronParReham",
+        "#Billi",
+        "#IslamicCartoon",
+        "#UrduKahani",
+        "#IslamicKahani",
+        "#Reham"
+      ]
+    },
+    "en": {
+      "title": "Hell because of a cat?! 😢 What did this woman do…",
+      "alts": [
+        "A cat locked in a cage… and one woman's biggest sin",
+        "One small cat, one locked cage… watch till the end"
+      ],
+      "description": "A courtyard. A wooden cage. Inside, a little cat keeps looking out…\nAnd a woman walks past it every day. What happened next?\n\n💬 Is there an animal near your home that you look after?\n\n📖 Reference: Sahih al-Bukhari 2365\n(Some parts of the story, like the cage and the final lesson scene, are imagined. The Hadith part is told exactly.)\n🔔 A new Islamic story every week: subscribe.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#IslamicShorts",
+        "#KindnessToAnimals",
+        "#Cat",
+        "#IslamicCartoon",
+        "#IslamicKidsStories",
+        "#Mercy"
+      ]
+    }
+  },
+  "thumbnail": {
+    "at": 100,
+    "text": {
+      "ur": "Ek billi… jahannam?",
+      "en": "A cat… and Hell?"
+    },
+    "zoom": 1.4,
+    "focus": [
+      0.5,
+      0.6
+    ],
+    "circle": {
+      "at": [
+        0.5,
+        0.62
+      ],
+      "r": 0.26
+    }
+  },
+  "scenes": [
+    {
+      "id": "s1-hook",
+      "lines": [
+        {
+          "text": "Kya tum jaante ho? Ek billi ki wajah se ek aurat ko jahannam ki saza mili!",
+          "voiceText": "क्या तुम जानते हो? एक बिल्ली की वजह से एक औरत को जहन्नम की सज़ा मिली!",
+          "en": {
+            "text": "Did you know? Because of a cat, a woman was punished with Hell!"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2-qaid",
+      "lines": [
+        {
+          "text": "Ek aurat ne ek billi ko qaid kar diya, aur use azaad nahi kiya.",
+          "voiceText": "एक औरत ने एक बिल्ली को क़ैद कर दिया, और उसे आज़ाद नहीं किया।",
+          "en": {
+            "text": "A woman locked up a cat, and never set it free."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s3-bhookh",
+      "lines": [
+        {
+          "text": "Na usne billi ko khana diya, na paani... aur na use chhoda, ki woh zameen ke keede-makode kha leti.",
+          "voiceText": "न उसने बिल्ली को खाना दिया, न पानी... और न उसे छोड़ा, कि वह ज़मीन के कीड़े-मकोड़े खा लेती।",
+          "en": {
+            "text": "She gave it no food, no water... and she would not let it go to eat the small creatures of the earth."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s4-waqt",
+      "lines": [
+        {
+          "text": "Waqt guzarta gaya. Bechari billi bhookh aur pyaas se kamzor hoti gayi.",
+          "voiceText": "वक़्त गुज़रता गया। बेचारी बिल्ली भूख और प्यास से कमज़ोर होती गई।",
+          "en": {
+            "text": "Time went by. The poor cat grew weaker from hunger and thirst."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s5-anjaam",
+      "lines": [
+        {
+          "text": "Aakhirkar, woh bejubaan billi bhookh se mar gayi.",
+          "voiceText": "आख़िरकार, वह बेज़ुबान बिल्ली भूख से मर गई।",
+          "en": {
+            "text": "In the end, that helpless cat died of hunger."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s6-hadith",
+      "lines": [
+        {
+          "text": "Rasoolullah (SAW) ne bataya: isi wajah se woh aurat jahannam mein daakhil hui.",
+          "voiceText": "रसूलुल्लाह सल्लल्लाहु अलैहि वसल्लम ने बताया: इसी वजह से वह औरत जहन्नम में दाख़िल हुई।",
+          "en": {
+            "text": "The Prophet, peace be upon him, told us: because of this, that woman entered the Fire."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s7-seekh",
+      "subtitleMax": 0.6,
+      "lines": [
+        {
+          "text": "Yaad rakho, bejubaan jaanwaron par reham karna bhi hamari zimmedari hai.",
+          "voiceText": "याद रखो, बेज़ुबान जानवरों पर रहम करना भी हमारी ज़िम्मेदारी है।",
+          "en": {
+            "text": "Remember, showing mercy to animals who cannot speak is our duty too."
+          }
+        }
+      ]
+    }
+  ],
+  "languages": [
+    "ur",
+    "en"
+  ]
+}
