@@ -33,6 +33,30 @@ a layer is not done.
 - Loop: Shorts blend their last 14 frames into frame 0 (`loopEnding`, on by default), so the replay is seamless.
   Make the first frame strong (no black, no empty sky) and let the end card settle before the last 0.5 s.
 
+## Cinematic camera language (pick on purpose, per beat)
+Plan each scene as a mini shot list first: `beat → shot size + angle + move + transition in`.
+- **Shot sizes:** extreme close-up (eyes, hands, coin) for tension ≤1 s; close-up for emotion and dialogue;
+  medium for action; over-the-shoulder for two people talking; wide/establishing only to open a place or end.
+- **Angles carry meaning:** low angle = power, awe, danger (boulder, storm, rich man); high angle / top-down =
+  small, trapped, helpless (men in the cave, man in the well); eye level = honest, calm; dutch tilt (`rot` 4-8°)
+  = fear, panic; POV (what the character sees, then cut to his face) = curiosity, discovery.
+- **Moves:** slow push-in = realisation, emotion rising; pull-out = loneliness, ending, reveal of scale;
+  track/truck alongside a walk = journey; crane up (y moves, zoom out) = hope, prayer answered; crane down =
+  arrival into a place; orbit-feel = parallax of 3+ layers moving at different speeds while the subject stays;
+  dolly-zoom feel (zoom in while far layers scale the other way) = shock, once per film max; handheld (tiny
+  `shake` noise 2-4 px) = chaos, storm, chase.
+- **Focus:** rack focus only between one subject and an object (hand → pot). Two characters = both sharp.
+- **Grammar:** keep the 180° rule (a character who faces right keeps facing right across the cut); match
+  eyelines in a conversation; cut on action (cut in the middle of a gesture, continue it in the next shot);
+  reaction shot after every big line or reveal.
+- **Transitions:** hard cut on the beat (default); whip-pan for time/place jumps; match cut (round pot → round
+  sun, hand → hand); flash-white into a flashback, flash-cold back; push into darkness/out of it; L-cut/J-cut:
+  next scene's sound starts 0.3-0.5 s before the picture cut (sfx at an earlier nominal frame).
+- **Light & grade per mood:** warm gold = kindness, flashback, ending; cold blue-grey = danger, night, cave;
+  god rays (`LightRays`) when a prayer is answered; flicker (diya, lightning) for tension.
+- **Rhythm:** fast cuts (1-1.5 s) in the hook and tension; slower (3-4 s, still moving) at the emotional peak;
+  last shot holds while the end card settles, then loops.
+
 ## Motion craft (Remotion)
 - Everything is frame-driven: `interpolate`/`kf(frame, [[f, v], ...], easing)` with clamp. Never CSS animations
   or `Math.random()` (use seeds: `Math.sin(i * 12.9898)` style).
