@@ -59,6 +59,8 @@ in view (pot, closed cave, dog). `text` = 2-4 BIG words that open a question ("K
 
 ## 6. Visuals: `src/two-d/films/<PascalName>.tsx`, register in `src/two-d/films/index.ts`
 - Follow skill `lively-motion` (no flat or dead frames). It is the quality bar.
+- Pick this film's look (docs/ART_DIRECTION.md "2D look": palette, outline, shading, texture) and plan at
+  least 2 front-facing emotional close-ups; vary it from the last film for a fresh feel.
 - Pattern to copy: top of `src/two-d/films/GufaKeTeen.tsx` (imports, `L` layer helper, `pose`, scene constants) and
   one of its scenes. Read with offset/limit, not the whole file.
 - On-screen text (hook, labels, end card) goes through `tr(lang, { ur: "...", en: "..." })` from `../film/types`,
