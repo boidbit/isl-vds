@@ -17,10 +17,13 @@ Ask only if something truly blocks you (e.g. the reference is missing). Budget i
 `films/<id>/script.md` = the script exactly as pasted (add a 1-line title header only).
 
 ## 2. Islamic check (before any code)
-- Never depict Allah, Prophets, angels, named Companions. A possible Prophet = only from behind/silhouette; say why.
+- Never depict Allah, Prophets, angels, named Companions in any form (no back view, silhouette, shadow or hand).
+  A possible Prophet is not shown at all: narration, place or other people's reactions only. Flag it in the drift list.
 - Dialogue only from the source; animals never speak. List every place the script drifts from the Hadith/ayat
   and propose the fix in one short list. Keep `source.verified: false`.
-- The reference is shown on screen (end card).
+- The reference is shown on screen: small, under the end line. **No long Hadith text card** in the video: the
+  story ends, the narrator says the Hadith point in one line ("Rasoolullah ﷺ ne bataya…"), then the end card.
+  The Hadith meaning (translation) goes in the description instead.
 
 ## 3. film.json (both languages)
 Copy the shape of `films/gufa-ke-teen/film.json` (read it, it is the newest Short). Rules:
@@ -33,6 +36,18 @@ Copy the shape of `films/gufa-ke-teen/film.json` (read it, it is the newest Shor
     Hadith meaning; keep names (Allah, Bukhari); no slang. Add `en.voiceText` only if pronunciation needs help.
   - Speaker = `narrator` or a character id defined in `voice.speakers` (voice + style). Max 2 characters per Gemini call.
 - Hook line first (question / shock within 2 s). Total 45-60 s for a Short.
+- **Narration that sounds told, not read** (rewrite the script's lines if they are choppy):
+  - ~110-130 spoken words for 45-60 s (Urdu and English alike); 1-2 lines per scene, mix one long and one short.
+  - Talk to the viewer like a storyteller: "Socho…", "Aur phir…", "Lekin usne…", "Pata hai kya hua?". Connect
+    scenes ("Din guzre…", "Usi raat…"); no bare report sentences like "Waqt guzarta gaya." on their own.
+  - Use "…" for a breath before a reveal; at most one inner full stop per line (they become long pauses).
+  - The whole narration of a language is one Gemini call (`scripts/voice.ts`), cut at the pauses: keep every
+    line a complete thought so the cut points are clean. Do not split one sentence across two scenes.
+  - `voice.speakers.narrator.style` follows the mood of this film (e.g. "suspense at the start, soft and sad in
+    the middle, warm at the end"); never just "fast and energetic" for a sad story.
+- **End line every film:** the last scene ends with a 3-6 word memorable line on screen (like "Bejubaan hain,
+  bejaan nahi."), the reference small under it, and the narrator's last words lead to it. If the script has
+  none, write one and tell the owner. Put a matching comment question in the description.
 - `assets`: every library name the film uses (characters, places, props, `sfx-*`).
 
 ## 3b. Publish text (shown on the videos page with copy buttons)
@@ -42,7 +57,8 @@ ending** (no outcome, no moral answer) in title or description: open a loop the 
   next?>". E.g. "Zameen khodi to sone ka matka nikla… lekin dono ne lene se inkaar kyun kiya? 🤯". True to the story,
   no fake claims. `alts`: 2 more hooks (stakes / "aakhir tak dekhna" / relatable question).
 - `description`: line 1-2 = cinematic setup + cliffhanger (first ~100 chars show in the feed), then a comment
-  question ("Aap hote to kya karte?"), then `📖 Reference: <refs>`, then `🔔` subscribe line.
+  question ("Aap hote to kya karte?"), then `📖 Reference: <refs>` + one-line Hadith meaning (the video has no
+  Hadith text card), then `🔔` subscribe line.
 - `hashtags`: 8-12, `#Shorts` first, broad (`#IslamicStories #Hadith`) + story-specific; English channel uses English.
 - Urdu = Roman Urdu; English = natural English, same no-spoiler rules.
 - Never call the series "sachchi kahani": some films will add fictional parts. If a film adds fiction to a Hadith
