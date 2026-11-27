@@ -45,6 +45,14 @@ ending** (no outcome, no moral answer) in title or description: open a loop the 
   question ("Aap hote to kya karte?"), then `📖 Reference: <refs>`, then `🔔` subscribe line.
 - `hashtags`: 8-12, `#Shorts` first, broad (`#IslamicStories #Hadith`) + story-specific; English channel uses English.
 - Urdu = Roman Urdu; English = natural English, same no-spoiler rules.
+- Never call the series "sachchi kahani": some films will add fictional parts. If a film adds fiction to a Hadith
+  story, say so in the description ("kahani mein kuch hisse tasawwur par mabni hain") and keep the Hadith part exact.
+
+## 3c. Thumbnail (`film.json` → `thumbnail`, rendered as `thumb-<id>` / `thumb-<id>-en`)
+Suspense, never the ending. `at` = nominal frame with a big emotional face (fear, shock, wonder) AND the mystery
+in view (pot, closed cave, dog). `text` = 2-4 BIG words that open a question ("Khazana mila… phir?" /
+"Gold found… then?"). `zoom` 1.2-1.6 on the face (`focus` 0..1), red `circle` or `arrow` on the mystery
+(output coordinates 0..1). Text sits on the top (default) away from faces. Check it in the contact sheet.
 
 ## 4. Assets: reuse first, build the rest → skill `film-assets`
 ## 5. Sounds: real recordings → skill `film-sounds`

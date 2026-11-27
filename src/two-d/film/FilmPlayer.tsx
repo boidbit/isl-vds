@@ -1,6 +1,6 @@
 import { CameraMotionBlur } from "@remotion/motion-blur";
 import React, { useMemo } from "react";
-import { AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Audio, Easing, Sequence, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { FILMS } from "../films";
 import { H, VH, VW, W } from "../kit";
 import { BlurDefs } from "./BlurDefs";
@@ -35,8 +35,9 @@ const makeCtx = (scene: PlannedScene, local: number): SceneCtx => {
 };
 
 /** The picture only: rendered several times per frame when motion blur is on. */
-const Picture: React.FC<FilmPlayerProps & { w: number; h: number }> = ({ filmId, timing, lang, w, h }) => {
-  const frame = useCurrentFrame();
+const Picture: React.FC<FilmPlayerProps & { w: number; h: number; at?: number }> = ({ filmId, timing, lang, w, h, at }) => {
+  const current = useCurrentFrame();
+  const frame = at ?? current;
   const { visuals, plan } = usePlan(filmId, timing, lang);
   const scene = sceneAt(plan.scenes, frame);
   const local = frame - scene.start;
@@ -60,10 +61,16 @@ export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing, lang = "
   const local = frame - scene.start;
   const nominal = scene.nominal[0] + (local * (scene.nominal[1] - scene.nominal[0])) / scene.duration;
   const end = plan.totalFrames;
-  const black = Math.max(
-    interpolate(frame, [0, 8], [1, 0], { extrapolateRight: "clamp" }),
-    interpolate(frame, [end - 18, end], [0, 1], { extrapolateLeft: "clamp" }),
-  );
+  // Shorts loop: no black at the start/end; the last frames blend into frame 0 so the replay is seamless.
+  const loop = short && film.loopEnding;
+  const LOOP = 14;
+  const loopMix = loop ? interpolate(frame, [end - LOOP, end - 1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) }) : 0;
+  const black = loop
+    ? 0
+    : Math.max(
+        interpolate(frame, [0, 8], [1, 0], { extrapolateRight: "clamp" }),
+        interpolate(frame, [end - 18, end], [0, 1], { extrapolateLeft: "clamp" }),
+      );
   const dip = short ? 0 : plan.scenes.slice(1).reduce((m, s) => Math.max(m, 1 - Math.min(1, Math.abs(frame - s.start) / 4)), 0) * 0.55;
   const line = scene.lines.find((l) => local >= l.from && local < l.from + l.frames + 6);
   const chunk = line && short ? captionChunks(line).find((c) => local >= c.from && local < c.to + 4) : null;
@@ -124,6 +131,12 @@ export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing, lang = "
             {line.text}
           </div>
         </div>
+      )}
+      {loopMix > 0 && (
+        <AbsoluteFill style={{ opacity: loopMix }}>
+          <Picture filmId={filmId} timing={timing} lang={lang} w={w} h={h} at={0} />
+          {visuals.overlay?.(plan.scenes[0].nominal[0], lang)}
+        </AbsoluteFill>
       )}
       <AbsoluteFill style={{ background: "#000", opacity: Math.max(black, dip) }} />
     </AbsoluteFill>

@@ -3,6 +3,8 @@
 
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
+import { tr } from "../film/types";
+import type { Lang } from "../film/schema";
 import type { FilmVisuals } from "../film/types";
 import { Dog2D, type DogPose } from "../Dog2D";
 import { blink, clamp01, kf, layerTransform, mix, type Cam, W, H } from "../kit";
@@ -434,19 +436,19 @@ const SFX: FilmVisuals["sfx"] = [
 ];
 
 // ------------------------------------------------------------------ title + end card (nominal frames)
-const Overlay: React.FC<{ f: number }> = ({ f }) => {
+const Overlay: React.FC<{ f: number; lang: Lang }> = ({ f, lang }) => {
   const titleO = interpolate(f, [14, 32, 110, 135], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const moralO = interpolate(f, [852, 872], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
     <>
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 110, opacity: titleO }}>
         <div style={{ fontFamily: "'DejaVu Serif', Georgia, serif", fontWeight: 700, fontSize: 92, color: "#fff7e6", WebkitTextStroke: "3px #6b3a1c", textShadow: "0 6px 0 #8a4b22, 0 10px 24px rgba(0,0,0,0.35)" }}>
-          Pyase Kutte Ki Kahani
+          {tr(lang, { ur: "Pyase Kutte Ki Kahani", en: "The Thirsty Dog" })}
         </div>
       </AbsoluteFill>
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: moralO }}>
         <div style={{ textAlign: "center", background: "rgba(60,30,12,0.55)", padding: "36px 60px", borderRadius: 28, fontFamily: "'DejaVu Serif', Georgia, serif", color: "#fffaf0" }}>
-          <div style={{ fontSize: 66, fontWeight: 700 }}>Kisi bhi neki ko chhota mat samjho.</div>
+          <div style={{ fontSize: 66, fontWeight: 700 }}>{tr(lang, { ur: "Kisi bhi neki ko chhota mat samjho.", en: "Never think any good deed is small." })}</div>
           <div style={{ fontSize: 36, marginTop: 18, color: "#f6dcb0" }}>Sahih al-Bukhari — 2363</div>
         </div>
       </AbsoluteFill>
@@ -466,5 +468,5 @@ export const pyasaKuttaVisuals: FilmVisuals = {
   },
   ambience: { file: "sfx/desert-wind.mp3", volume: 0.32 },
   sfx: SFX,
-  overlay: (f) => <Overlay f={f} />,
+  overlay: (f, lang) => <Overlay f={f} lang={lang} />,
 };

@@ -15,6 +15,7 @@ for (const id of readdirSync(dir)) {
   for (const [lang, v] of Object.entries(meta.videos ?? {})) {
     v.preview = existsSync(join(dir, id, v.preview)) ? `videos/${id}/${v.preview}` : null;
     v.poster = existsSync(join(dir, id, v.poster)) ? `videos/${id}/${v.poster}` : null;
+    v.thumb = v.thumb && existsSync(join(dir, id, v.thumb)) ? `videos/${id}/${v.thumb}` : null;
     v.full = `https://github.com/${repo}/releases/download/film-${id}/${v.full}`;
     if (!v.preview) delete meta.videos[lang];
   }

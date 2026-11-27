@@ -80,7 +80,7 @@
         "Khazana mila… aur jhagda ye ki 'ye mera nahi, tumhara hai'",
         "Aaj ke zamane mein aisa koi karega? Aakhir tak dekhiye"
       ],
-      "description": "Ek aadmi ne zameen khareedi… aur khudai mein sone se bhara matka nikal aaya.\nLekin asli hairat to tab hui jab dono kehte rahe: \"Ye mera nahi hai!\" Faisla kaise hua? Aakhir tak dekhiye.\n\n💬 Aapko ye matka milta to aap kya karte? Sach batana 😄\n\n📖 Reference: Sahih al-Bukhari 3472 · Sahih Muslim 1721\n🔔 Har hafte ek nayi sachchi Islamic kahani: subscribe karein.",
+      "description": "Ek aadmi ne zameen khareedi… aur khudai mein sone se bhara matka nikal aaya.\nLekin asli hairat to tab hui jab dono kehte rahe: \"Ye mera nahi hai!\" Faisla kaise hua? Aakhir tak dekhiye.\n\n💬 Aapko ye matka milta to aap kya karte? Sach batana 😄\n\n📖 Reference: Sahih al-Bukhari 3472 · Sahih Muslim 1721\n🔔 Har hafte ek nayi Islamic kahani: subscribe karein.",
       "hashtags": [
         "#Shorts",
         "#IslamicStories",
@@ -92,8 +92,47 @@
         "#IslamicCartoon",
         "#UrduKahani",
         "#Khazana",
-        "#SachchiKahani"
+        "#IslamicKahani"
       ]
+    },
+    "en": {
+      "title": "He dug up a pot of gold… so why did BOTH men refuse it? 🤯",
+      "alts": [
+        "They found treasure… and argued 'it's not mine, it's yours!'",
+        "Would anyone do this today? Watch till the end"
+      ],
+      "description": "A man bought some land… and while digging, he found a pot full of gold.\nBut the real surprise came when both men kept saying: \"This isn't mine!\" How was it settled? Watch till the end.\n\n💬 If you found this pot, what would you do? Be honest 😄\n\n📖 Reference: Sahih al-Bukhari 3472 · Sahih Muslim 1721\n🔔 A new Islamic story every week: subscribe.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Honesty",
+        "#IslamicShorts",
+        "#Treasure",
+        "#IslamicCartoon",
+        "#IslamicKidsStories",
+        "#GoodDeeds"
+      ]
+    }
+  },
+  "thumbnail": {
+    "at": 150,
+    "text": {
+      "ur": "Khazana mila… phir?",
+      "en": "Gold found… then?"
+    },
+    "zoom": 1.3,
+    "focus": [
+      0.5,
+      0.62
+    ],
+    "circle": {
+      "at": [
+        0.83,
+        0.6
+      ],
+      "r": 0.2
     }
   },
   "scenes": [
@@ -102,7 +141,10 @@
       "lines": [
         {
           "text": "Ek aadmi ne zameen khareedi… lekin khodte waqt use kuch aisa mila, jise dekhkar uski saansein ruk gayin!",
-          "voiceText": "एक आदमी ने ज़मीन ख़रीदी… लेकिन खोदते वक़्त उसे कुछ ऐसा मिला, जिसे देखकर उसकी साँसें रुक गईं!"
+          "voiceText": "एक आदमी ने ज़मीन ख़रीदी… लेकिन खोदते वक़्त उसे कुछ ऐसा मिला, जिसे देखकर उसकी साँसें रुक गईं!",
+          "en": {
+            "text": "A man bought a piece of land… but while digging, he found something that took his breath away!"
+          }
         }
       ]
     },
@@ -111,7 +153,10 @@
       "lines": [
         {
           "text": "Matke ke andar… sona hi sona tha!",
-          "voiceText": "मटके के अंदर… सोना ही सोना था!"
+          "voiceText": "मटके के अंदर… सोना ही सोना था!",
+          "en": {
+            "text": "Inside the pot… was gold, nothing but gold!"
+          }
         }
       ]
     },
@@ -120,12 +165,18 @@
       "lines": [
         {
           "text": "Lekin usne socha…",
-          "voiceText": "लेकिन उसने सोचा…"
+          "voiceText": "लेकिन उसने सोचा…",
+          "en": {
+            "text": "But he thought…"
+          }
         },
         {
           "speaker": "kharidar",
           "text": "Maine aapse zameen khareedi thi, khazana nahi. Ye sona aapka hai.",
-          "voiceText": "मैंने आपसे ज़मीन ख़रीदी थी, ख़ज़ाना नहीं। यह सोना आपका है।"
+          "voiceText": "मैंने आपसे ज़मीन ख़रीदी थी, ख़ज़ाना नहीं। यह सोना आपका है।",
+          "en": {
+            "text": "I bought the land from you, not the treasure. This gold is yours."
+          }
         }
       ]
     },
@@ -134,12 +185,18 @@
       "lines": [
         {
           "text": "Magar pehle malik ne kaha…",
-          "voiceText": "मगर पहले मालिक ने कहा…"
+          "voiceText": "मगर पहले मालिक ने कहा…",
+          "en": {
+            "text": "But the first owner said…"
+          }
         },
         {
           "speaker": "malik",
           "text": "Maine tumhe zameen bech di thi. Ab jo kuch usme nikla, wo tumhara hai.",
-          "voiceText": "मैंने तुम्हें ज़मीन बेच दी थी। अब जो कुछ उसमें निकला, वह तुम्हारा है।"
+          "voiceText": "मैंने तुम्हें ज़मीन बेच दी थी। अब जो कुछ उसमें निकला, वह तुम्हारा है।",
+          "en": {
+            "text": "I sold you the land. Whatever was in it now belongs to you."
+          }
         }
       ]
     },
@@ -148,7 +205,10 @@
       "lines": [
         {
           "text": "Dono itne imaandaar the… ki sona rakhne ko koi tayyar hi nahi tha! Aakhir dono ek buzurg ke paas gaye.",
-          "voiceText": "दोनों इतने ईमानदार थे… कि सोना रखने को कोई तैयार ही नहीं था! आख़िर दोनों एक बुज़ुर्ग के पास गए।"
+          "voiceText": "दोनों इतने ईमानदार थे… कि सोना रखने को कोई तैयार ही नहीं था! आख़िर दोनों एक बुज़ुर्ग के पास गए।",
+          "en": {
+            "text": "Both were so honest… that no one was willing to keep the gold! So they went to a wise elder."
+          }
         }
       ]
     },
@@ -159,32 +219,54 @@
         {
           "speaker": "buzurg",
           "text": "Kya tumhara koi beta hai?",
-          "voiceText": "क्या तुम्हारा कोई बेटा है?"
+          "voiceText": "क्या तुम्हारा कोई बेटा है?",
+          "en": {
+            "text": "Do you have a son?"
+          }
         },
         {
           "speaker": "kharidar",
           "text": "Haan, hai.",
-          "voiceText": "हाँ, है।"
+          "voiceText": "हाँ, है।",
+          "en": {
+            "text": "Yes, I do."
+          }
         },
         {
           "speaker": "buzurg",
           "text": "Aur tumhari koi beti?",
-          "voiceText": "और तुम्हारी कोई बेटी?"
+          "voiceText": "और तुम्हारी कोई बेटी?",
+          "en": {
+            "text": "And do you have a daughter?"
+          }
         },
         {
           "speaker": "malik",
           "text": "Haan.",
-          "voiceText": "हाँ।"
+          "voiceText": "हाँ।",
+          "en": {
+            "text": "Yes."
+          }
         },
         {
           "text": "Tab faisla hua — ek ke bete aur doosre ki beti ki shaadi kar di jaye… aur khazana unhe de diya jaye.",
-          "voiceText": "तब फ़ैसला हुआ — एक के बेटे और दूसरे की बेटी की शादी कर दी जाए… और ख़ज़ाना उन्हें दे दिया जाए।"
+          "voiceText": "तब फ़ैसला हुआ — एक के बेटे और दूसरे की बेटी की शादी कर दी जाए… और ख़ज़ाना उन्हें दे दिया जाए।",
+          "en": {
+            "text": "So it was decided: one man's son would marry the other's daughter… and the treasure would be given to them."
+          }
         },
         {
           "text": "Aisi hoti hai asli imaandari.",
-          "voiceText": "ऐसी होती है असली ईमानदारी।"
+          "voiceText": "ऐसी होती है असली ईमानदारी।",
+          "en": {
+            "text": "That is true honesty."
+          }
         }
       ]
     }
+  ],
+  "languages": [
+    "ur",
+    "en"
   ]
 }

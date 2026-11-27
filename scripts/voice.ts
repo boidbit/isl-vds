@@ -112,7 +112,7 @@ const synth = async (turns: Turn[]): Promise<Pcm> => {
       {
         type: "user_input",
         content: turns.map((t) => {
-          const sv = speakerVoice(film, t.speaker);
+          const sv = speakerVoice(film, t.speaker, lang);
           const meta = { type: "speech_metadata", ...(multi ? { speaker: t.speaker } : {}), ...(sv.style ? { style: sv.style } : {}) };
           return { type: "text", text: t.text, ...(multi || sv.style ? { annotations: [meta] } : {}) };
         }),
@@ -121,8 +121,8 @@ const synth = async (turns: Turn[]): Promise<Pcm> => {
     response_format: { type: "audio" },
     generation_config: {
       speech_config: multi
-        ? { speakers: speakers.map((s) => ({ speaker: s, voice: speakerVoice(film, s).voice })) }
-        : [{ voice: speakerVoice(film, speakers[0]).voice }],
+        ? { speakers: speakers.map((s) => ({ speaker: s, voice: speakerVoice(film, s, lang).voice })) }
+        : [{ voice: speakerVoice(film, speakers[0], lang).voice }],
     },
   };
   for (let attempt = 1; attempt <= 6; attempt++) {
@@ -206,7 +206,7 @@ let calls = 0;
 for (const group of groups) {
   const lines = entries.filter((e) => group.includes(e.speaker));
   const hash = createHash("sha256")
-    .update(JSON.stringify([film.voice.model, lines.map((l) => [l.speaker, l.text]), group.map((s) => speakerVoice(film, s))]))
+    .update(JSON.stringify([film.voice.model, lines.map((l) => [l.speaker, l.text]), group.map((s) => speakerVoice(film, s, lang))]))
     .digest("hex")
     .slice(0, 16);
   const cached = lines.every((l) => previous?.lines[l.key]?.hash === hash && existsSync(join(root, "public", previous.lines[l.key].file)));

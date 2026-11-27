@@ -3,6 +3,8 @@
 
 import React from "react";
 import { AbsoluteFill, Easing, interpolate } from "remotion";
+import { tr } from "../film/types";
+import type { Lang } from "../film/schema";
 import type { FilmVisuals, SceneCtx } from "../film/types";
 import { blink, clamp01, easeBack, kf, layerTransform, mix, shake, VH, VW, type Cam } from "../kit";
 import { GreenTree } from "../library/Closeups";
@@ -498,7 +500,7 @@ const SFX: FilmVisuals["sfx"] = [
 ];
 
 // ------------------------------------------------------------------ hook + end text
-const Overlay: React.FC<{ f: number }> = ({ f }) => {
+const Overlay: React.FC<{ f: number; lang: Lang }> = ({ f, lang }) => {
   const hook = interpolate(f, [S1 + 62, S1 + 70, S2 - 6, S2], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const hookPop = interpolate(f, [S1 + 62, S1 + 70], [0.6, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeBack });
   const end1 = interpolate(f, [END - 110, END - 95], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -507,12 +509,12 @@ const Overlay: React.FC<{ f: number }> = ({ f }) => {
   return (
     <>
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 260, opacity: hook }}>
-        <div style={{ ...big, fontSize: 96, color: "#ffd34d", transform: `scale(${hookPop}) rotate(-3deg)`, lineHeight: 1.1, padding: "0 40px" }}>Zameen ke andar KHAZANA?!</div>
+        <div style={{ ...big, fontSize: 96, color: "#ffd34d", transform: `scale(${hookPop}) rotate(-3deg)`, lineHeight: 1.1, padding: "0 40px" }}>{tr(lang, { ur: "Zameen ke andar KHAZANA?!", en: "TREASURE under the ground?!" })}</div>
       </AbsoluteFill>
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 230 }}>
-        <div style={{ ...big, fontSize: 70, color: "#ffe9b0", opacity: end1, lineHeight: 1.15, padding: "0 50px" }}>Imaandari ka sabse khoobsurat waqia</div>
+        <div style={{ ...big, fontSize: 70, color: "#ffe9b0", opacity: end1, lineHeight: 1.15, padding: "0 50px" }}>{tr(lang, { ur: "Imaandari ka sabse khoobsurat waqia", en: "The most beautiful story of honesty" })}</div>
         <div style={{ ...big, fontSize: 52, color: "#ffffff", opacity: end2, marginTop: 30, lineHeight: 1.2, padding: "0 60px", WebkitTextStroke: "8px #1d120a" }}>
-          Apne liye nahi… sach ke liye jeena seekho.
+          {tr(lang, { ur: "Apne liye nahi… sach ke liye jeena seekho.", en: "Live not for yourself… but for the truth." })}
         </div>
         <div style={{ fontFamily: "'DejaVu Sans', sans-serif", fontWeight: 700, fontSize: 34, color: "#fff6e0", opacity: end2, marginTop: 24, textShadow: "0 2px 6px #000" }}>
           Sahih al-Bukhari 3472 · Sahih Muslim 1721
@@ -533,5 +535,5 @@ export const soneKaMatkaVisuals: FilmVisuals = {
   },
   ambience: { file: "sfx/village-ambience.mp3", volume: 0.35 },
   sfx: SFX,
-  overlay: (f) => <Overlay f={f} />,
+  overlay: (f, lang) => <Overlay f={f} lang={lang} />,
 };

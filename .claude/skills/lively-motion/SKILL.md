@@ -30,6 +30,8 @@ a layer is not done.
   action, flash/dip on a dramatic beat, push into a dark area and out of the next. Hard cuts on the beat are fine.
 - Emotional beats slow down (longer ease, smaller moves) but never stop.
 - End: slow pull-out, warm light, end card text with the reference, gentle sparkle/birds.
+- Loop: Shorts blend their last 14 frames into frame 0 (`loopEnding`, on by default), so the replay is seamless.
+  Make the first frame strong (no black, no empty sky) and let the end card settle before the last 0.5 s.
 
 ## Motion craft (Remotion)
 - Everything is frame-driven: `interpolate`/`kf(frame, [[f, v], ...], easing)` with clamp. Never CSS animations
