@@ -1,6 +1,13 @@
 // Film format for the 2D pipeline: films/<id>/film.json
 import { z } from "zod";
 
+/** Languages a film can be voiced in. "ur" = the main Hindustani track (Roman Urdu captions, Devanagari voice text). */
+export const LANGS = ["ur", "en"] as const;
+export type Lang = (typeof LANGS)[number];
+
+/** English version of a line: caption text + optional voice text (defaults to text). */
+const TranslationSchema = z.object({ text: z.string(), voiceText: z.string().optional() });
+
 export const LineSchema = z.object({
   /** Who speaks: "narrator" or a character id from voice.speakers. */
   speaker: z.string().default("narrator"),
@@ -8,6 +15,8 @@ export const LineSchema = z.object({
   text: z.string(),
   /** Text sent to the voice model (Devanagari reads best). Defaults to text. English tags like <sigh> allowed. */
   voiceText: z.string().optional(),
+  /** English track (needed when film.languages has "en"). */
+  en: TranslationSchema.optional(),
 });
 
 export const FilmSceneSchema = z.object({
@@ -15,6 +24,8 @@ export const FilmSceneSchema = z.object({
   /** Legacy single narration line (same as lines: [{speaker: "narrator", ...}]). */
   narration: z.string().optional(),
   voiceText: z.string().optional(),
+  /** English for the legacy narration line. */
+  en: TranslationSchema.optional(),
   lines: z.array(LineSchema).optional(),
   /** Max fraction of the scene the spoken lines may cover (leave room for an end card). */
   subtitleMax: z.number().min(0.1).max(1).optional(),
@@ -30,6 +41,8 @@ export const FilmSchema = z.object({
   format: z.enum(["landscape", "short"]).default("landscape"),
   /** Camera motion blur samples per frame (1 = off). Smoother motion, slower render. */
   motionBlur: z.number().int().min(1).max(10).default(1),
+  /** Voice/caption tracks to render: "ur" -> film-<id>, "en" -> film-<id>-en. */
+  languages: z.array(z.enum(LANGS)).min(1).default(["ur"]),
   source: z.object({ references: z.array(z.string()).min(1), verified: z.boolean() }),
   voice: z
     .object({
@@ -49,7 +62,19 @@ export type FilmLine = z.infer<typeof LineSchema>;
 
 /** All spoken lines of a scene (legacy narration folded in). */
 export const sceneLines = (scene: Film["scenes"][number]): FilmLine[] =>
-  scene.lines ?? (scene.narration ? [{ speaker: "narrator", text: scene.narration, voiceText: scene.voiceText }] : []);
+  scene.lines ?? (scene.narration ? [{ speaker: "narrator", text: scene.narration, voiceText: scene.voiceText, en: scene.en }] : []);
+
+/** A line in one language (English falls back to the main text if missing; the validator flags that). */
+export const localLine = (line: FilmLine, lang: Lang = "ur") => {
+  if (lang === "en" && line.en) return { speaker: line.speaker, text: line.en.text, voiceText: line.en.voiceText ?? line.en.text };
+  return { speaker: line.speaker, text: line.text, voiceText: line.voiceText ?? line.text };
+};
+
+/** Where the voice of a language lives (under public/). "ur" keeps the original folder. */
+export const voiceDir = (filmId: string, lang: Lang = "ur") => (lang === "ur" ? `voice/${filmId}` : `voice/${filmId}-${lang}`);
+
+/** Remotion composition id of a film in one language. */
+export const compositionId = (filmId: string, lang: Lang = "ur") => (lang === "ur" ? `film-${filmId}` : `film-${filmId}-${lang}`);
 
 export const lineKey = (sceneId: string, i: number) => `${sceneId}#${i}`;
 

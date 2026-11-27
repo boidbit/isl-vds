@@ -1,4 +1,5 @@
 import type React from "react";
+import type { Lang } from "./schema";
 
 /** What a scene's render function can ask about the current moment. */
 export type SceneCtx = {
@@ -23,6 +24,9 @@ export type FilmVisuals = {
   ambience?: { file: string; volume: number };
   /** One-shot sounds on the nominal timeline (moved with their scene). */
   sfx: { file: string; at: number; volume: number }[];
-  /** HTML overlays (title cards, end text) on the nominal timeline. */
-  overlay?: (nominalFrame: number) => React.ReactNode;
+  /** HTML overlays (title cards, end text) on the nominal timeline. Use `tr(lang, {ur, en})` for on-screen text. */
+  overlay?: (nominalFrame: number, lang: Lang) => React.ReactNode;
 };
+
+/** Pick on-screen text for the language being rendered (falls back to Urdu/Roman). */
+export const tr = (lang: Lang, t: { ur: string; en?: string }) => (lang === "en" && t.en ? t.en : t.ur);

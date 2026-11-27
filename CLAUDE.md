@@ -1,77 +1,40 @@
-# ISL-VDS: Islamic story videos (2D cartoon, YouTube Shorts)
+# ISL-VDS: Islamic story videos (2D cartoon, YouTube Shorts, Urdu + English)
 
-Read this first in every session. The owner writes in Hinglish (Roman Hindi/Urdu); reply in Hinglish, short and clear.
-The owner works from an office laptop / phone in the browser only: never ask them to install tools or run commands locally.
+The owner writes in Hinglish (Roman Hindi/Urdu); reply in Hinglish, short and clear. They work from an office
+laptop / phone browser only: never ask them to install tools or run commands locally.
 
-## What this project is
-A code-built 2D cartoon studio. The owner gives a detailed scene-by-scene script (environment, action, camera,
-narration, sound, Hadith/Quran reference). Claude turns it into a film; GitHub Actions adds the Gemini voice and
-renders the MP4. Current focus: fast-paced 9:16 YouTube Shorts.
+## What to do in a new chat
+- **Owner pastes a script (even with no other words) → use skill `new-film`** and run the whole pipeline.
+- Skills (in `.claude/skills/`): `new-film` (script → film.json → visuals → contact sheet), `film-assets`
+  (reuse/build/register assets), `lively-motion` (no flat/dead frames: quality bar for every scene),
+  `film-sounds` (real CC0 sounds), `render-and-check` (GitHub render in ur/en/both + checks).
+- Anything else: answer directly, read only the files you need.
 
-The old 3D engine (`src/engine`, `src/library` except `src/two-d`, `stories/`) is abandoned; do not extend it.
-
-## The 2D pipeline (use this)
-- `films/<id>/script.md`: the owner's script, saved as given.
-- `films/<id>/film.json`: format (`short` = 1080x1920), scenes with spoken `lines` (`speaker`: `narrator` or a
-  character id, `text` = Roman caption, `voiceText` = Devanagari Hindi for TTS), `voice.speakers` (Gemini voice +
-  style per speaker), `assets` the film needs, `motionBlur`.
-- `src/two-d/films/<Name>.tsx`: the scene visuals (camera, acting, props) on a nominal 30 fps timeline; register
-  it in `src/two-d/films/index.ts`. The player stretches each scene to its voice lines.
-- `src/two-d/library/`: reusable assets (puppets, places, props, close-ups) + `registry.ts` (every asset name a
-  film.json can list). New assets made for a script are added here and to the registry so later films reuse them.
-- `src/two-d/Musafir.tsx`: the human puppet (looks in `LOOKS`, poses, talk/lip-flap, back view, hoe, khuff).
-  `src/two-d/Dog2D.tsx`: dog puppet.
-- `scripts/voice.ts`: Gemini TTS (`gemini-3.8-flash-tts`, Interactions API). Narrator in one call, characters in
-  pairs (max 2 speakers per call); takes are cut into lines by `scripts/audio-split.ts`. Needs `GEMINI_API_KEY`
-  (GitHub secret, already set). Urdu is not supported by Gemini TTS, so voice text is Devanagari Hindi.
-- `scripts/validate-films.ts` (`npm run validate:films -- <id>`): fails with "Missing assets: ..." when a film
-  needs something the library does not have.
-- Sounds: real recordings live in `public/sfx/real/` (registered in `index.json`, sources in `CREDITS.md`) and
-  override the generated ones from `scripts/make-sfx.sh` of the same name. Only licences that allow monetised
-  YouTube use (Pixabay, YouTube Audio Library, Freesound CC0). Never BBC Sound Effects. See "Sound rule" below.
-
-## How a new video is made (owner's "Tareeka 1")
-1. Owner pastes a script and a film id.
-2. Claude: save `script.md`, write `film.json`, build missing assets (add to library + registry), get the real
-   sounds the script needs (see "Sound rule"), write the film visuals, render a few preview stills (`npx remotion still src/index.ts film-<id> ... --scale=0.4`), show a
-   contact sheet, then commit and push after the owner agrees.
-3. Render on GitHub: Actions > "Render film" (`.github/workflows/render-film.yml`), input = film id. Claude can
-   trigger it with the GitHub tools, then download the artifact and check it (line timings in timing.json).
-4. Owner reviews the MP4 and the reference, then publishes.
-
-## Sound rule (every new script)
-The owner wants real sounds; code-made sounds alone are not good enough for anything the viewer should recognise
-(animals, rain, thunder, rocks, doors, steps, birds, wind, water...).
-1. List every sound the script asks for (Sound lines + what is on screen: animals, weather, props).
-2. Reuse first: check `public/sfx/real/index.json` / `CREDITS.md` and the `sfx-*` entries in the registry.
-3. Missing ones: fetch a CC0 recording from Freesound with
-   `npm run fetch:sfx -- <name> "<search words>" --list` (look at the matches), then
-   `npm run fetch:sfx -- <name> "<search words>" [--id N] [--max S] [--loud L] [--filter F]`.
-   It only takes CC0, trims, fades, normalises loudness, writes `public/sfx/real/<name>.mp3`, registers it in
-   `index.json` + registry and adds the credit row. Never add a sound by hand outside this script.
-   Loudness: hits -14, one-shots/animals -18, beds (rain, birds, wind, drips) -22. One cue plays max 6 s, so long
-   beds are repeated as cues. The Freesound key is a network secret on the cloud environment (injected by the
-   proxy, never in code or chat); a 401 means the key needs updating in the environment settings.
-4. Keep the generated sounds only for abstract effects (whoosh, chime, riser, shimmer, pad).
-5. After the render, check levels (`volumedetect`, per-second peaks): sounds must not bury the narration or hit 0 dB.
-
-## Rules for every film (see docs/ART_DIRECTION.md)
-- Every shot shows a character; object-only inserts ~1 s max, followed by a face/reaction.
-- Two characters in one frame are both sharp (no rack-focus blur then). Camera close; wide only to open/close.
-- Hook in the first 2 seconds; captions below the characters; never cover faces.
-- Smooth motion: eased keyframes, anticipation/overshoot, motion blur on; render time is not a concern.
-- Rich surroundings: houses, trees, animals, props, birds, light; no empty frames.
+## Project map
+- `films/<id>/script.md` (owner's script) + `film.json` (scenes, spoken `lines` with `text` Roman caption,
+  `voiceText` Devanagari, `en.text` English; `languages: ["ur","en"]`; `voice.speakers`; `assets`).
+- `src/two-d/films/<Name>.tsx` scene visuals (registered in `index.ts`); `src/two-d/library/` reusable assets +
+  `registry.ts`; `src/two-d/Musafir.tsx` human puppet, `Dog2D.tsx`; `src/two-d/film/` player, schema, timeline.
+- Two videos per film: `film-<id>` (Urdu/Hindi channel) and `film-<id>-en` (English channel).
+- `scripts/voice.ts` Gemini TTS (`--lang ur|en`; en uses secret `GEMINI_API_KEY_EN` if set). No Urdu TTS in
+  Gemini, so the Urdu track speaks Devanagari text with Urdu words.
+- `.github/workflows/render-film.yml`: inputs film id + lang (ur/en/both).
+- The old 3D engine (`src/engine`, `src/library` except `src/two-d`, `stories/`) is abandoned; do not extend it.
 
 ## Islamic content rules (non-negotiable)
-- Never depict Allah, Prophets, angels or named Companions. When a figure might be a Prophet (e.g. the judge in
-  Bukhari 3472), show them only from behind/silhouette and say why.
+- Never depict Allah, Prophets, angels or named Companions. A figure who might be a Prophet: only from behind /
+  silhouette, and say why.
 - Dialogue only from the source; animals do not speak. Point out where a script drifts from the Hadith.
 - Show the reference on screen; `source.verified` stays false until the owner checks it.
 
+## Sounds
+Real recordings only via `npm run fetch:sfx` (CC0 Freesound; licences that allow monetised YouTube). Never BBC
+Sound Effects. Generated sounds only for abstract effects. Details: skill `film-sounds`.
+
 ## Testing
-`npm run typecheck`, `npm test`, `npm run validate:films`. Local renders need
-`REMOTION_BROWSER=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell`
-in the cloud container (GitHub Actions downloads its own browser).
+`npm run typecheck`, `npm test`, `npm run validate:films` (`npm ci` first if `tsx` is missing). Local renders need
+`REMOTION_BROWSER=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell`.
 
 ## Usage limits
-The owner is on a limited plan: keep previews to one contact sheet, avoid re-reading large files, batch fixes.
+The owner is on a limited plan: one contact sheet per film, no re-reading large files (use grep / offset),
+batch fixes, short replies.

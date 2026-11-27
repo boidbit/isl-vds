@@ -1,6 +1,6 @@
 // Scene lengths come from the voice: a scene is as long as its nominal design or as
 // long as its spoken lines need, whichever is longer.
-import { lineKey, sceneLines, type Film, type Timing } from "./schema";
+import { lineKey, localLine, sceneLines, type Film, type Lang, type Timing } from "./schema";
 import type { FilmVisuals } from "./types";
 
 export const LEAD_SECONDS = 0.3; // pause before the first line
@@ -20,7 +20,7 @@ export type PlannedScene = {
 /** Rough speaking time when there is no audio yet (keeps previews realistic). */
 const estimateSeconds = (text: string) => 0.4 + text.length / 14;
 
-export const planFilm = (film: Film, visuals: FilmVisuals, timing?: Timing | null) => {
+export const planFilm = (film: Film, visuals: FilmVisuals, timing?: Timing | null, lang: Lang = "ur") => {
   const fps = film.fps;
   let cursor = 0;
   const scenes: PlannedScene[] = film.scenes.map((sc) => {
@@ -28,7 +28,8 @@ export const planFilm = (film: Film, visuals: FilmVisuals, timing?: Timing | nul
     if (!vis) throw new Error(`Scene "${sc.id}" has no visuals`);
     const nominalLen = vis.nominal[1] - vis.nominal[0];
     let t = Math.round(LEAD_SECONDS * fps);
-    const lines: PlannedLine[] = sceneLines(sc).map((l, i) => {
+    const lines: PlannedLine[] = sceneLines(sc).map((raw, i) => {
+      const l = localLine(raw, lang);
       const v = film.voice.enabled ? timing?.lines[lineKey(sc.id, i)] : undefined;
       const frames = Math.ceil((v ? v.seconds : estimateSeconds(l.text)) * fps);
       const planned: PlannedLine = { speaker: l.speaker, text: l.text, from: t, frames, file: v?.file, env: v?.env ?? [] };

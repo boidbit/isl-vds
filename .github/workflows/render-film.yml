@@ -8,6 +8,11 @@ on:
         description: "Film id (folder name in /films)"
         required: true
         default: pyasa-kutta
+      lang:
+        description: "Language track: ur (Urdu/Hindi channel), en (English channel) or both"
+        type: choice
+        options: [ur, en, both]
+        default: ur
       voice:
         description: "Generate narration with Gemini"
         type: boolean
@@ -19,6 +24,7 @@ jobs:
     timeout-minutes: 90
     env:
       FILM: ${{ inputs.film }}
+      LANGS: ${{ inputs.lang == 'both' && 'ur en' || inputs.lang }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -34,13 +40,20 @@ jobs:
         if: inputs.voice
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: npm run voice -- "$FILM"
+          # optional second key for the English track (own quota); falls back to GEMINI_API_KEY
+          GEMINI_API_KEY_EN: ${{ secrets.GEMINI_API_KEY_EN }}
+        run: for L in $LANGS; do npm run voice -- "$FILM" --lang "$L"; done
       - name: Render video
-        run: npx remotion render src/index.ts "film-$FILM" "out/$FILM.mp4" --crf=18
+        run: |
+          for L in $LANGS; do
+            if [ "$L" = ur ]; then ID="film-$FILM"; OUT="out/$FILM.mp4"; else ID="film-$FILM-$L"; OUT="out/$FILM-$L.mp4"; fi
+            npx remotion render src/index.ts "$ID" "$OUT" --crf=18
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.film }}-video
           path: |
             out/*.mp4
             public/voice/${{ inputs.film }}/
+            public/voice/${{ inputs.film }}-en/
           retention-days: 14

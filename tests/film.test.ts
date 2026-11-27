@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import { FILMS } from "../src/two-d/films";
 import { nominalToActual, planFilm } from "../src/two-d/film/timeline";
 import { LIBRARY } from "../src/two-d/library/registry";
+import { compositionId, localLine, voiceDir } from "../src/two-d/film/schema";
 
 const { film, visuals } = FILMS["pyasa-kutta"];
 
@@ -29,5 +30,15 @@ describe("2D film timing", () => {
 
   it("every asset the film lists exists in the library", () => {
     assert.deepEqual(film.assets.filter((a) => !LIBRARY[a]), []);
+  });
+
+  it("uses the English text for the en track and keeps ur paths unchanged", () => {
+    const withEn = { ...film, scenes: film.scenes.map((sc) => ({ ...sc, en: { text: `EN ${sc.id}` } })) };
+    const plan = planFilm(withEn, visuals, null, "en");
+    assert.equal(plan.scenes[0].lines[0].text, `EN ${film.scenes[0].id}`);
+    assert.equal(localLine({ speaker: "narrator", text: "Roman", voiceText: "देव" }).voiceText, "देव");
+    assert.equal(voiceDir("x"), "voice/x");
+    assert.equal(voiceDir("x", "en"), "voice/x-en");
+    assert.equal(compositionId("x", "en"), "film-x-en");
   });
 });
