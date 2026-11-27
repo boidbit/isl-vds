@@ -1,6 +1,7 @@
 // Generate all voices of a film with Gemini TTS in as few calls as possible.
 //
-//   GEMINI_API_KEY=... npm run voice -- <film-id>
+//   GEMINI_API_KEY=... npm run voice -- <film-id> [--lang ur|en]
+//   (--lang en uses GEMINI_API_KEY_EN when it is set, so the English track has its own quota)
 //
 // 1. Lines are grouped: the narrator gets one call for the whole film; characters are
 //    paired (Gemini allows 2 speakers per call) and each pair gets one call.
@@ -14,13 +15,15 @@ import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { FilmSchema, TimingSchema, lineKey, sceneLines, speakerVoice, type Film, type Timing } from "../src/two-d/film/schema";
+import { FilmSchema, LANGS, TimingSchema, lineKey, localLine, sceneLines, speakerVoice, voiceDir, type Film, type Lang, type Timing } from "../src/two-d/film/schema";
 import { SR, splitAligned, trim, type Pcm } from "./audio-split";
 
 const root = join(import.meta.dirname, "..");
 const filmId = process.argv[2];
-if (!filmId) {
-  console.error("Usage: npm run voice -- <film-id>");
+const langArg = process.argv.indexOf("--lang");
+const lang = (langArg > 0 ? process.argv[langArg + 1] : "ur") as Lang;
+if (!filmId || !LANGS.includes(lang)) {
+  console.error("Usage: npm run voice -- <film-id> [--lang ur|en]");
   process.exit(1);
 }
 const film: Film = FilmSchema.parse(JSON.parse(readFileSync(join(root, "films", filmId, "film.json"), "utf8")));
@@ -28,13 +31,17 @@ if (!film.voice.enabled) {
   console.log("Voice disabled in film.json, nothing to do.");
   process.exit(0);
 }
-const key = process.env.GEMINI_API_KEY;
+if (!film.languages.includes(lang)) {
+  console.error(`film.json "languages" does not include "${lang}".`);
+  process.exit(1);
+}
+const key = (lang === "en" && process.env.GEMINI_API_KEY_EN) || process.env.GEMINI_API_KEY;
 if (!key) {
   console.error("GEMINI_API_KEY is not set. Add it as a GitHub secret (Settings > Secrets and variables > Actions).");
   process.exit(1);
 }
 
-const outDir = join(root, "public", "voice", filmId);
+const outDir = join(root, "public", voiceDir(filmId, lang));
 const rawDir = join(outDir, "raw");
 mkdirSync(rawDir, { recursive: true });
 const timingPath = join(outDir, "timing.json");
@@ -181,7 +188,10 @@ const envelope = (pcm: Pcm) => {
 type Entry = { key: string; speaker: string; text: string };
 const entries: Entry[] = [];
 film.scenes.forEach((sc) =>
-  sceneLines(sc).forEach((l, i) => entries.push({ key: lineKey(sc.id, i), speaker: l.speaker, text: (l.voiceText ?? l.text).trim() })),
+  sceneLines(sc).forEach((raw, i) => {
+    const l = localLine(raw, lang);
+    entries.push({ key: lineKey(sc.id, i), speaker: l.speaker, text: l.voiceText.trim() });
+  }),
 );
 const order = [...new Set(entries.map((e) => e.speaker))];
 const groups: string[][] = [];
@@ -190,6 +200,7 @@ const others = order.filter((s) => s !== "narrator");
 for (let i = 0; i < others.length; i += 2) groups.push(others.slice(i, i + 2));
 
 const timing: Timing = { film: filmId, lines: {} };
+console.log(`Voice track: ${lang}${lang === "en" && process.env.GEMINI_API_KEY_EN ? " (GEMINI_API_KEY_EN)" : ""}`);
 let calls = 0;
 
 for (const group of groups) {
@@ -220,7 +231,7 @@ for (const group of groups) {
   }
   lines.forEach((l, i) => {
     const pcm = treat(parts![i], l.speaker);
-    const file = `voice/${filmId}/${l.key.replace("#", "-")}.wav`;
+    const file = `${voiceDir(filmId, lang)}/${l.key.replace("#", "-")}.wav`;
     writeFileSync(join(root, "public", file), writeWav(pcm));
     timing.lines[l.key] = { file, seconds: pcm.length / SR, hash, env: envelope(pcm) };
     console.log(`  ✓ ${l.key} ${l.speaker} ${(pcm.length / SR).toFixed(2)}s`);

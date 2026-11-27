@@ -6,28 +6,31 @@ import { STORIES } from "./stories";
 import { DEMO_2D_FRAMES, Demo2D } from "./two-d/Demo2D";
 import { FilmPlayer, loadFilmMetadata, type FilmPlayerProps } from "./two-d/film/FilmPlayer";
 import { FILMS } from "./two-d/films";
+import { compositionId } from "./two-d/film/schema";
 import { MountainGallery } from "./two-d/library/MountainGallery";
 import { VillageGallery } from "./two-d/library/VillageGallery";
 
 // Each story gets two compositions: landscape for YouTube and portrait for Shorts.
 export const RemotionRoot: React.FC = () => (
   <>
-    {Object.keys(FILMS).map((id) => (
+    {Object.entries(FILMS).flatMap(([id, { film }]) =>
+      film.languages.map((lang) => (
       <Composition
-        key={id}
-        id={`film-${id}`}
+        key={`${id}-${lang}`}
+        id={compositionId(id, lang)}
         component={FilmPlayer}
         width={1920}
         height={1080}
         fps={30}
         durationInFrames={300}
-        defaultProps={{ filmId: id, timing: null }}
+        defaultProps={{ filmId: id, timing: null, lang }}
         calculateMetadata={async ({ props }: { props: FilmPlayerProps }) => {
-          const meta = await loadFilmMetadata(props.filmId);
+          const meta = await loadFilmMetadata(props.filmId, props.lang);
           return { durationInFrames: meta.durationInFrames, fps: meta.fps, width: meta.width, height: meta.height, props: { ...props, timing: meta.timing } };
         }}
       />
-    ))}
+      )),
+    )}
     <Composition id="library-village" component={VillageGallery} durationInFrames={90} fps={30} width={1920} height={1080} />
     <Composition id="library-mountain" component={MountainGallery} durationInFrames={90} fps={30} width={1920} height={1080} />
     <Composition id="demo-2d" component={Demo2D} durationInFrames={DEMO_2D_FRAMES} fps={30} width={1920} height={1080} />

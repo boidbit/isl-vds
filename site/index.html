@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISL-VDS Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf6ee; --panel:#ffffff; --ink:#2b1d12; --muted:#7a6553; --line:#eadfce;
+  --accent:#c2652f; --accent-ink:#ffffff; --gold:#e3a23b; --ok:#3f8f5a; --warn:#b5762a; --chip:#f4eadb;
+  --shadow:0 1px 2px rgba(60,35,15,.06),0 8px 24px rgba(60,35,15,.06);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17110c; --panel:#211912; --ink:#f4e9dc; --muted:#b19c88; --line:#3a2c20;
+  --accent:#e07f45; --accent-ink:#1b120b; --gold:#e8b04f; --ok:#6cc08a; --warn:#e0a052; --chip:#2e2319;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);}}
+:root[data-theme="dark"]{
+  --bg:#17110c; --panel:#211912; --ink:#f4e9dc; --muted:#b19c88; --line:#3a2c20;
+  --accent:#e07f45; --accent-ink:#1b120b; --gold:#e8b04f; --ok:#6cc08a; --warn:#e0a052; --chip:#2e2319;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 8px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{width:44px;height:44px;border-radius:12px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font:800 22px 'Baloo 2'}
+h1{font:800 28px/1 'Baloo 2',sans-serif;margin:0}
+.sub{color:var(--muted);font-size:14px}
+.spacer{flex:1}
+button,.btn{font:600 14px Inter,sans-serif;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+button:hover,.btn:hover{border-color:var(--accent)}
+.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}
+details.panel summary{cursor:pointer;font:800 19px 'Baloo 2';list-style:none;display:flex;align-items:center;gap:8px}
+details.panel summary::-webkit-details-marker{display:none}
+details.panel summary::after{content:"＋";margin-left:auto;color:var(--muted)}
+details[open].panel summary::after{content:"－"}
+label{font-weight:600;font-size:13px;color:var(--muted);display:block;margin:14px 0 6px}
+input,textarea,select{width:100%;font:14px Inter,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:170px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.hint{color:var(--muted);font-size:13px;margin-top:10px}
+.toolbar{display:flex;gap:10px;align-items:center;margin:26px 0 14px;flex-wrap:wrap}
+.toolbar h2{font:800 22px 'Baloo 2';margin:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;border-radius:0;padding:8px 14px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;padding-bottom:40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.media{display:flex;gap:12px;padding:14px 14px 0}
+video{width:150px;aspect-ratio:9/16;border-radius:12px;background:#000;object-fit:cover;flex:none}
+.meta{min-width:0;flex:1;display:flex;flex-direction:column;gap:6px}
+.fid{font:600 12px ui-monospace,monospace;color:var(--muted);word-break:break-all}
+.ttl{font:800 19px/1.2 'Baloo 2',sans-serif;margin:0}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--chip);color:var(--muted)}
+.badge.ok{color:var(--ok)} .badge.warn{color:var(--warn)}
+.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:10px}
+.block{border:1px solid var(--line);border-radius:12px;padding:10px 12px;position:relative}
+.block h4{margin:0 0 4px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.block p{margin:0;white-space:pre-wrap;word-break:break-word}
+.block .copy{position:absolute;top:6px;right:6px;padding:4px 9px;font-size:12px}
+.alts{margin:0;padding-left:18px;color:var(--muted);font-size:13px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:var(--chip);border-radius:99px;padding:3px 10px;font-size:13px;color:var(--accent)}
+.empty{grid-column:1/-1;text-align:center;padding:50px 16px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;transition:.25s;z-index:9}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media (max-width:520px){.grid{grid-template-columns:1fr} video{width:120px} h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">ق</div>
+    <div><h1>ISL-VDS Studio</h1><div class="sub" id="sub">Islamic kahaniyan · Urdu + English Shorts</div></div>
+    <div class="spacer"></div>
+    <button id="theme" title="Light / dark" aria-label="Light / dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+  </header>
+
+  <details class="panel" id="newPanel">
+    <summary>✍️ Nayi video banao</summary>
+    <label for="fid">Film id (chhote akshar, dash se: <code>neki-ka-badla</code>)</label>
+    <input id="fid" placeholder="neki-ka-badla">
+    <label for="script">Script (scene, narration, camera, sound, Hadith reference)</label>
+    <textarea id="script" placeholder="Scene 1: ..."></textarea>
+    <div class="row">
+      <button class="primary" id="sendIssue">GitHub issue mein save karo</button>
+      <button id="copyClaude">Copy karke Claude kholo</button>
+    </div>
+    <div class="hint">Issue save hone ke baad naye Claude chat mein likho: <b>"issue #N wali script banao"</b>, ya seedha script paste kar do. Preview dekhne ke baad Claude push karega, phir neeche "Render" dabao.</div>
+  </details>
+
+  <div class="toolbar">
+    <h2>Videos</h2>
+    <div class="spacer"></div>
+    <div class="seg" role="group" aria-label="Channel">
+      <button data-lang="ur" aria-pressed="true">اردو Urdu</button>
+      <button data-lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+  <div class="grid" id="grid"><div class="empty">Load ho raha hai…</div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+let DATA = { films: [], repo: "boidbit/isl-vds" };
+let lang = "ur";
+try { lang = localStorage.getItem("lang") || "ur"; } catch {}
+
+const toast = (msg) => { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 1600); };
+const copy = async (text, msg = "Copy ho gaya ✓") => {
+  try { await navigator.clipboard.writeText(text); }
+  catch { const a = document.createElement("textarea"); a.value = text; document.body.append(a); a.select(); document.execCommand("copy"); a.remove(); }
+  toast(msg);
+};
+const issueUrl = (title, body = "") => `https://github.com/${DATA.repo}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+const tagText = (tags) => (tags || []).map((t) => (t.startsWith("#") ? t : "#" + t)).join(" ");
+
+function card(f) {
+  const v = f.videos?.[lang];
+  const other = lang === "ur" ? "en" : "ur";
+  const p = v?.publish;
+  const refs = (f.references || []).join(" · ");
+  const head = `<div class="fid">${esc(f.id)}</div>
+    <h3 class="ttl">${esc(p?.title || f.title)}</h3>
+    <div class="badges">
+      <span class="badge">${esc(refs)}</span>
+      <span class="badge ${f.verified ? "ok" : "warn"}">${f.verified ? "✓ reference checked" : "⚠ reference check baaki"}</span>
+    </div>`;
+  if (!v) {
+    return `<article class="card"><div class="body">${head}
+      <div class="hint">${lang === "en" ? "English" : "Urdu"} video abhi nahi bani.${f.videos?.[other] ? "" : ""}</div>
+      <div class="row"><a class="btn primary" target="_blank" rel="noopener" href="${issueUrl(`render: ${f.id} ${lang}`, "Videos page se render command.")}">▶ ${lang === "en" ? "English" : "Urdu"} render karo</a></div>
+    </div></article>`;
+  }
+  const all = p ? `${p.title}\n\n${p.description}\n\n${tagText(p.hashtags)}` : "";
+  return `<article class="card">
+    <div class="media">
+      <video controls playsinline preload="metadata" ${v.poster ? `poster="${esc(v.poster)}"` : ""} src="${esc(v.preview)}"></video>
+      <div class="meta">${head}
+        <div class="row" style="margin-top:auto">
+          <a class="btn primary" href="${esc(v.full)}">⬇ MP4</a>
+          <a class="btn" target="_blank" rel="noopener" href="https://studio.youtube.com/">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      ${p ? `
+      <div class="block"><h4>Title</h4><p>${esc(p.title)}</p><button class="copy" data-copy="${esc(p.title)}">Copy</button>
+        ${p.alts?.length ? `<ul class="alts">${p.alts.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}</div>
+      <div class="block"><h4>Description</h4><p>${esc(p.description)}</p><button class="copy" data-copy="${esc(p.description)}">Copy</button></div>
+      <div class="block"><h4>Hashtags</h4><div class="tags">${(p.hashtags || []).map((t) => `<span class="tag">${esc(t.startsWith("#") ? t : "#" + t)}</span>`).join("")}</div>
+        <button class="copy" data-copy="${esc(tagText(p.hashtags))}">Copy</button></div>
+      <div class="row"><button class="primary" data-copy="${esc(all)}">Sab copy (title + description + tags)</button>
+        <a class="btn" target="_blank" rel="noopener" href="${issueUrl(`render: ${f.id} ${lang}`, "Videos page se dobara render.")}">↻ Dobara render</a></div>`
+      : `<div class="hint">Title / hashtags abhi film.json mein nahi hain. Claude se bolo: "${esc(f.id)} ka publish text bana do".</div>`}
+    </div>
+  </article>`;
+}
+
+function render() {
+  document.querySelectorAll(".seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  const g = $("#grid");
+  if (!DATA.films.length) {
+    g.innerHTML = `<div class="empty">Abhi koi video nahi.<br>Film render karo: issue ka title <code>render: &lt;film-id&gt; both</code>
+      <div class="row" style="justify-content:center"><a class="btn primary" target="_blank" rel="noopener" href="${issueUrl("render: pyasa-kutta ur")}">Pehli film render karo</a></div></div>`;
+    return;
+  }
+  g.innerHTML = DATA.films.map(card).join("");
+  const n = DATA.films.filter((f) => f.videos?.[lang]).length;
+  $("#sub").textContent = `${n} ${lang === "en" ? "English" : "Urdu"} video · ${DATA.films.length} film`;
+}
+
+document.addEventListener("click", (e) => {
+  const c = e.target.closest("[data-copy]");
+  if (c) copy(c.dataset.copy);
+  const l = e.target.closest("[data-lang]");
+  if (l) { lang = l.dataset.lang; try { localStorage.setItem("lang", lang); } catch {} document.querySelectorAll("video").forEach((v) => v.pause()); render(); }
+});
+document.addEventListener("play", (e) => document.querySelectorAll("video").forEach((v) => v !== e.target && v.pause()), true);
+
+const scriptBody = () => {
+  const id = $("#fid").value.trim().toLowerCase().replace(/[^a-z0-9-]+/g, "-");
+  const s = $("#script").value.trim();
+  return { id, s };
+};
+$("#sendIssue").onclick = async () => {
+  const { id, s } = scriptBody();
+  if (!s) return toast("Pehle script likho");
+  const title = `film: ${id || "naam-claude-dega"}`;
+  if (s.length > 5500) { await copy(s, "Script lambi hai: copy ho gayi, issue mein paste karo"); window.open(issueUrl(title, "(script yahan paste karo)"), "_blank"); }
+  else window.open(issueUrl(title, s), "_blank");
+};
+$("#copyClaude").onclick = async () => {
+  const { id, s } = scriptBody();
+  if (!s) return toast("Pehle script likho");
+  await copy((id ? `Film id: ${id}\n\n` : "") + s, "Copy ho gaya: Claude mein paste karo");
+  window.open("https://claude.ai/code", "_blank");
+};
+$("#theme").onclick = () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+  try { localStorage.setItem("theme", r.dataset.theme); } catch {}
+};
+try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch {}
+
+fetch("data.json", { cache: "no-store" })
+  .then((r) => (r.ok ? r.json() : { films: [] }))
+  .then((d) => { DATA = { repo: d.repo || DATA.repo, films: d.films || [] }; render(); })
+  .catch(() => render());
+</script>
+</body>
+</html>

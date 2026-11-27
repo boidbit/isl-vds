@@ -4,16 +4,16 @@ import { AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame
 import { FILMS } from "../films";
 import { H, VH, VW, W } from "../kit";
 import { BlurDefs } from "./BlurDefs";
-import type { Timing } from "./schema";
+import { voiceDir, type Lang, type Timing } from "./schema";
 import { sfxPath } from "./sfx";
 import { captionChunks, nominalToActual, planFilm, type PlannedScene } from "./timeline";
 import type { SceneCtx } from "./types";
 
-export type FilmPlayerProps = { filmId: string; timing: Timing | null };
+export type FilmPlayerProps = { filmId: string; timing: Timing | null; lang?: Lang };
 
-const usePlan = (filmId: string, timing: Timing | null) => {
+const usePlan = (filmId: string, timing: Timing | null, lang: Lang = "ur") => {
   const { film, visuals } = FILMS[filmId];
-  return useMemo(() => ({ film, visuals, plan: planFilm(film, visuals, timing) }), [film, visuals, timing]);
+  return useMemo(() => ({ film, visuals, plan: planFilm(film, visuals, timing, lang) }), [film, visuals, timing, lang]);
 };
 
 const sceneAt = (scenes: PlannedScene[], frame: number) => scenes.find((s) => frame >= s.start && frame < s.start + s.duration) ?? scenes[scenes.length - 1];
@@ -35,9 +35,9 @@ const makeCtx = (scene: PlannedScene, local: number): SceneCtx => {
 };
 
 /** The picture only: rendered several times per frame when motion blur is on. */
-const Picture: React.FC<FilmPlayerProps & { w: number; h: number }> = ({ filmId, timing, w, h }) => {
+const Picture: React.FC<FilmPlayerProps & { w: number; h: number }> = ({ filmId, timing, lang, w, h }) => {
   const frame = useCurrentFrame();
-  const { visuals, plan } = usePlan(filmId, timing);
+  const { visuals, plan } = usePlan(filmId, timing, lang);
   const scene = sceneAt(plan.scenes, frame);
   const local = frame - scene.start;
   const nominal = scene.nominal[0] + (local * (scene.nominal[1] - scene.nominal[0])) / scene.duration;
@@ -51,9 +51,9 @@ const Picture: React.FC<FilmPlayerProps & { w: number; h: number }> = ({ filmId,
   );
 };
 
-export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing }) => {
+export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing, lang = "ur" }) => {
   const frame = useCurrentFrame();
-  const { film, visuals, plan } = usePlan(filmId, timing);
+  const { film, visuals, plan } = usePlan(filmId, timing, lang);
   const short = film.format === "short";
   const [w, h] = short ? [VW, VH] : [W, H];
   const scene = sceneAt(plan.scenes, frame);
@@ -91,12 +91,12 @@ export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing }) => {
       )}
       {film.motionBlur > 1 ? (
         <CameraMotionBlur samples={film.motionBlur} shutterAngle={180}>
-          <Picture filmId={filmId} timing={timing} w={w} h={h} />
+          <Picture filmId={filmId} timing={timing} lang={lang} w={w} h={h} />
         </CameraMotionBlur>
       ) : (
-        <Picture filmId={filmId} timing={timing} w={w} h={h} />
+        <Picture filmId={filmId} timing={timing} lang={lang} w={w} h={h} />
       )}
-      {visuals.overlay?.(nominal)}
+      {visuals.overlay?.(nominal, lang)}
       {short && chunk && (
         <div style={{ position: "absolute", top: "75%", left: 0, right: 0, display: "flex", justifyContent: "center" }}>
           <div
@@ -131,12 +131,12 @@ export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing }) => {
 };
 
 /** Load voice timing (if the voice step ran) and size the composition to it. */
-export const loadFilmMetadata = async (filmId: string) => {
+export const loadFilmMetadata = async (filmId: string, lang: Lang = "ur") => {
   const { film, visuals } = FILMS[filmId];
   let timing: Timing | null = null;
   if (film.voice.enabled) {
     try {
-      const res = await fetch(staticFile(`voice/${filmId}/timing.json`));
+      const res = await fetch(staticFile(`${voiceDir(filmId, lang)}/timing.json`));
       if (res.ok) {
         const json = await res.json();
         timing = json && json.lines ? (json as Timing) : null;
@@ -148,7 +148,7 @@ export const loadFilmMetadata = async (filmId: string) => {
   const short = film.format === "short";
   return {
     timing,
-    durationInFrames: planFilm(film, visuals, timing).totalFrames,
+    durationInFrames: planFilm(film, visuals, timing, lang).totalFrames,
     fps: film.fps,
     width: short ? VW : W,
     height: short ? VH : H,

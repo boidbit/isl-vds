@@ -38,6 +38,11 @@ for (const id of ids) {
         if (!film.scenes.some((s) => s.id === sid)) warnings.push(`Visual scene "${sid}" is not used in film.json`);
       });
     }
+    if (film.languages.includes("en"))
+      film.scenes.forEach((s) =>
+        sceneLines(s).forEach((l, i) => !l.en?.text && errors.push(`Scene "${s.id}" line ${i}: English text missing (film.languages has "en")`)),
+      );
+    film.languages.forEach((l) => !film.publish[l] && warnings.push(`publish.${l} missing: no title/description/hashtags for the ${l} channel`));
     if (film.voice.enabled) film.scenes.forEach((s) => sceneLines(s).length === 0 && warnings.push(`Scene "${s.id}" has no spoken lines`));
     if (!film.source.verified) warnings.push("Religious source not verified yet: check the reference before publishing.");
   }
