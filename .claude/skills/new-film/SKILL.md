@@ -18,7 +18,7 @@ Ask only if something truly blocks you (e.g. the reference is missing). Budget i
 Hadith number / topic, write the script yourself with skill `story-craft` and save that.
 
 ## 1b. Story craft (always, before any code) → skill `story-craft`
-Read the full source, score the script (hook, open loop, heart, twist, ending from the source). Below 8/10, or the
+Fetch the source text (`npm run hadith -- <collection> <number> --film <id>`), read the full source, score the script (hook, open loop, heart, twist, ending from the source). Below 8/10, or the
 owner says it feels flat: rewrite the telling (keep the owner's scenes/ideas where they work) and show the owner
 the improved script + score in the first reply. Build from the improved version.
 

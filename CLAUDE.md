@@ -31,7 +31,8 @@ laptop / phone browser only: never ask them to install tools or run commands loc
   shadow, hand or voice acting. A figure who might be a Prophet is not shown at all; tell it through narration,
   the place, or other people's reactions.
 - Dialogue only from the source; animals do not speak. Point out where a script drifts from the Hadith.
-- Show the reference on screen; `source.verified` stays false until the owner checks it.
+- Show the reference on screen; `source.verified` stays false until the owner checks it (the sunnah.com link).
+- Source text from `npm run hadith -- <collection> <number>` (Bukhari/Muslim, or Sahih/Hasan graded only).
 
 ## Sounds
 Real recordings only via the `fetch-sfx.yml` workflow / `npm run fetch:sfx` (CC0 Freesound, secret FREESOUND_API_KEY; licences that allow monetised YouTube). Never BBC
