@@ -87,6 +87,9 @@ export const FilmSchema = z.object({
   /** Title / description / hashtags per channel. */
   publish: z.object({ ur: PublishSchema.optional(), en: PublishSchema.optional() }).default({}),
   thumbnail: ThumbnailSchema.optional(),
+  /** Film look preset (colour grade, grain, thumbnail colours) from src/two-d/film/looks.ts. Each film picks a
+   * different one so the channel's videos and thumbnails do not all look the same. */
+  look: z.string().optional(),
   /** Shorts: the last frames blend into the first frame so the video loops seamlessly (more replays). */
   loopEnding: z.boolean().default(true),
   scenes: z.array(FilmSceneSchema).min(1),

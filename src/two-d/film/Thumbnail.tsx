@@ -7,6 +7,7 @@ import { H, VH, VW, W } from "../kit";
 import { BlurDefs } from "./BlurDefs";
 import type { Lang } from "./schema";
 import type { SceneCtx } from "./types";
+import { LookGrade, lookOf } from "./looks";
 
 export type ThumbnailProps = { filmId: string; lang?: Lang };
 
@@ -36,13 +37,17 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({ filmId, lang = "ur" }) => 
   const arrow = t.arrow;
   const ang = ((arrow?.from ?? 0) * Math.PI) / 180;
   const alen = 0.2 * width;
+  const look = lookOf(film.look);
+  const tc = look?.thumb ?? { text: "#ffd83a", stroke: "#120a04", accent: "" };
 
   return (
     <AbsoluteFill style={{ background: "#000" }}>
-      <svg width={width} height={height} viewBox={`0 0 ${sw} ${sh}`} preserveAspectRatio="xMidYMid slice">
-        <BlurDefs />
-        <g transform={`translate(${tx} ${ty}) scale(${z})`}>{scene.render(t.at, ctx)}</g>
-      </svg>
+      <LookGrade look={look} frame={0} w={width} h={height}>
+        <svg width={width} height={height} viewBox={`0 0 ${sw} ${sh}`} preserveAspectRatio="xMidYMid slice">
+          <BlurDefs />
+          <g transform={`translate(${tx} ${ty}) scale(${z})`}>{scene.render(t.at, ctx)}</g>
+        </svg>
+      </LookGrade>
       {/* punchier colour + vignette + dark band behind the text */}
       <AbsoluteFill style={{ backdropFilter: "saturate(1.25) contrast(1.08)" }} />
       <AbsoluteFill style={{ background: "radial-gradient(ellipse at 50% 55%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.55) 100%)" }} />
@@ -78,6 +83,7 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({ filmId, lang = "ur" }) => 
           </g>
         )}
       </svg>
+      {tc.accent && <AbsoluteFill style={{ boxShadow: `inset 0 0 0 ${14 * k}px ${tc.accent}` }} />}
       <div
         style={{
           position: "absolute",
@@ -96,8 +102,8 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({ filmId, lang = "ur" }) => 
             fontWeight: 900,
             fontSize: (short ? 132 : 96) * k * (text.length > 16 ? 0.82 : 1),
             lineHeight: 1.02,
-            color: "#ffd83a",
-            WebkitTextStroke: `${16 * k}px #120a04`,
+            color: tc.text,
+            WebkitTextStroke: `${16 * k}px ${tc.stroke}`,
             paintOrder: "stroke fill",
             textShadow: `0 ${10 * k}px ${24 * k}px rgba(0,0,0,0.6)`,
             transform: "rotate(-3deg)",

@@ -24,8 +24,14 @@ repeat beds as cues every ~5.5 s or use `ambience` (loop). `--filter "lowpass=f=
 (Locally `npm run fetch:sfx -- ...` works too when FREESOUND_API_KEY is set.)
 
 ## 4. Generated sounds
-Only abstract effects (whoosh, chime, riser, shimmer, pad) from `scripts/make-sfx.sh`.
+Only abstract effects (whoosh, chime, riser, shimmer, pad, rewind, slowmo) from `scripts/make-sfx.sh`.
 
 ## 5. Place them
-In the film visuals: `sfx: [{ file: "<name>", at: <nominal frame>, volume }]` on the exact action frame, plus
-`ambience`. Volumes: bed 0.25-0.4, one-shot 0.5-0.8, hit 0.8-1. Voice must stay on top.
+In the film visuals: `sfx: [{ file: "<name>", at: <nominal frame>, volume, until? }]` on the exact action frame,
+plus `ambience`. Volumes: bed 0.25-0.4, one-shot 0.5-0.8, hit 0.8-1. Voice must stay on top.
+- A cue plays max 6 s. **Give `until: <nominal frame of the cut>`** to any cue longer than its shot (saw, chisel,
+  creak, waves, birds): it stops there with a 0.25 s fade (`dur` in seconds also works).
+- Long beds: one long CC0 recording (20-30 s, `--max 30`) as `ambience` (loops) instead of the same 6 s clip again
+  and again (the repeat is audible). Keep it low (0.1-0.18) and add scene-specific cues on top.
+- Real recordings are loud: after a render check peaks; any cue that hits > -1 dB gets its volume lowered
+  (saw/coins needed ~0.3-0.5).

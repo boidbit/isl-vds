@@ -372,8 +372,9 @@ export const KnotLog: React.FC<{
 };
 
 /** Top-down insert: the hollowed log on a flat stone; coins pour into the hollow (coins 0..1), the letter slides in
- * (letter 0..1), the plug closes it (plug 0..1). Size w x h, screen space. */
-export const HollowLogTop: React.FC<{ t: number; w: number; h: number; coins: number; letter: number; plug?: number; chips?: number }> = ({ t, w, h, coins, letter, plug = 0, chips = 1 }) => {
+ * (letter 0..1), the plug closes it (plug 0..1). Size w x h, screen space. bg=false: no stone (draw your own,
+ * e.g. TableTop). Letter position for a hand: x = mix(w/2 - 260, w/2 + 60, letter), y = mix(h*0.8, h*0.48 + 4, letter). */
+export const HollowLogTop: React.FC<{ t: number; w: number; h: number; coins: number; letter: number; plug?: number; chips?: number; bg?: boolean }> = ({ t, w, h, coins, letter, plug = 0, chips = 1, bg = true }) => {
   const cx = w / 2;
   const cy = h * 0.48;
   const pile = (n: number, ox: number, oy: number, k: number) =>
@@ -394,10 +395,14 @@ export const HollowLogTop: React.FC<{ t: number; w: number; h: number; coins: nu
     });
   return (
     <g>
-      <rect x={0} y={0} width={w} height={h} fill="#8d8a80" />
-      {/* flat stones */}
-      <path d={`M -40 ${h * 0.12} Q ${w * 0.4} ${h * 0.04} ${w + 40} ${h * 0.16} L ${w + 40} ${h * 0.86} Q ${w * 0.5} ${h * 0.94} -40 ${h * 0.82} Z`} fill="#b7ae9c" {...st} />
-      <path d={`M ${w * 0.1} ${h * 0.7} Q ${w * 0.3} ${h * 0.66} ${w * 0.42} ${h * 0.74}`} fill="none" stroke="#968e7c" strokeWidth={5} />
+      {bg && (
+        <>
+          <rect x={0} y={0} width={w} height={h} fill="#8d8a80" />
+          {/* flat stones */}
+          <path d={`M -40 ${h * 0.12} Q ${w * 0.4} ${h * 0.04} ${w + 40} ${h * 0.16} L ${w + 40} ${h * 0.86} Q ${w * 0.5} ${h * 0.94} -40 ${h * 0.82} Z`} fill="#b7ae9c" {...st} />
+          <path d={`M ${w * 0.1} ${h * 0.7} Q ${w * 0.3} ${h * 0.66} ${w * 0.42} ${h * 0.74}`} fill="none" stroke="#968e7c" strokeWidth={5} />
+        </>
+      )}
       {/* log from above */}
       <rect x={cx - 360} y={cy - 110} width={720} height={220} rx={110} fill="#8f6440" {...st} strokeWidth={6} />
       {[-60, -20, 30, 70].map((gy, i) => (
@@ -528,3 +533,155 @@ export const Woodpile: React.FC<{ x: number; y: number; s?: number }> = ({ x, y,
     ))}
   </g>
 );
+
+// ------------------------------------------------------------------ merchant ship (markab)
+/** Merchant sailing ship (waterline at y, bow to the right): long hull with painted band and oar ports, stern
+ * cabin, two masts with square sails that billow, rigging, flag, rowing oars, optional gangplank to the shore.
+ * `layer` back = masts/sails/cabin/far rail, front = hull side: draw people on deck (y - 210*s) between them.
+ * sail 0..1 (furled..full), row 0..1 (oars moving), plank 0..1 (gangplank swings down from upright, at the stern or
+ * the bow; plankAng = final angle in ship space, default 150 stern / 30 bow). Plank end (ship space):
+ * origin (-560|700, -300) + plankLen * (cos a, sin a). */
+export const Ship: React.FC<{ x: number; y: number; s?: number; t: number; flip?: boolean; layer?: "back" | "front" | "all"; rock?: number; sail?: number; row?: number; plank?: number; plankLen?: number; plankSide?: "stern" | "bow"; plankAng?: number }> = ({
+  x,
+  y,
+  s = 1,
+  t,
+  flip,
+  layer = "all",
+  rock = 1,
+  sail = 1,
+  row = 0,
+  plank = 0,
+  plankLen = 420,
+  plankSide = "stern",
+  plankAng,
+}) => {
+  const r = Math.sin(t * 1.1) * 1.6 * rock;
+  const bob = Math.sin(t * 1.1 + 0.6) * 10 * rock;
+  const fl = Math.sin(t * 2.4);
+  const SailSq: React.FC<{ mx: number; top: number; w: number; h: number; ph: number }> = ({ mx, top, w, h, ph }) => {
+    const hh = h * (0.25 + 0.75 * sail);
+    const belly = (30 + Math.sin(t * 2 + ph) * 10) * sail;
+    return (
+      <g>
+        <rect x={mx - w / 2 - 20} y={top - 8} width={w + 40} height={16} rx={8} fill="#6e4a2e" {...st} strokeWidth={3} />
+        <path d={`M ${mx - w / 2} ${top} L ${mx + w / 2} ${top} Q ${mx + w / 2 + belly} ${top + hh / 2} ${mx + w / 2 - 6} ${top + hh} L ${mx - w / 2 + 6} ${top + hh} Q ${mx - w / 2 + belly} ${top + hh / 2} ${mx - w / 2} ${top} Z`} fill="#efe2c4" {...st} />
+        {[0.33, 0.66].map((k, i) => (
+          <path key={i} d={`M ${mx - w / 2 + w * k} ${top + 4} Q ${mx - w / 2 + w * k + belly * 0.8} ${top + hh / 2} ${mx - w / 2 + w * k} ${top + hh - 4}`} fill="none" stroke="#d2c09a" strokeWidth={4} />
+        ))}
+        <path d={`M ${mx - w / 2 + 10} ${top + hh * 0.45} Q ${mx} ${top + hh * 0.45 + 10} ${mx + w / 2 - 10} ${top + hh * 0.45}`} fill="none" stroke="#b5552e" strokeWidth={14} opacity={0.85} />
+      </g>
+    );
+  };
+  const back = (
+    <>
+      {/* rigging */}
+      <path d="M 40 -1080 L -600 -330 M 40 -1080 L 640 -240 M 420 -820 L 760 -250 M 40 -1080 L 420 -820" stroke="#5a4632" strokeWidth={3} fill="none" />
+      {/* masts */}
+      <rect x={28} y={-1100} width={26} height={900} fill="#6e4a2e" {...st} />
+      <rect x={408} y={-840} width={22} height={640} fill="#6e4a2e" {...st} />
+      <rect x={20} y={-1120} width={42} height={30} rx={6} fill="#8a5a34" {...st} strokeWidth={3} />
+      {/* flag */}
+      <path d={`M 54 -1110 Q ${110 + fl * 8} ${-1124 + fl * 6} ${170 + fl * 14} -1100 Q ${120 + fl * 10} -1086 54 -1080 Z`} fill="#c8402e" {...st} strokeWidth={3} />
+      <SailSq mx={41} top={-1020} w={460} h={560} ph={0} />
+      <SailSq mx={419} top={-780} w={320} h={420} ph={1.3} />
+      {/* far rail + stern cabin */}
+      <path d="M -560 -230 Q 0 -250 620 -240" stroke="#5a3a22" strokeWidth={10} fill="none" />
+      <rect x={-580} y={-400} width={280} height={190} rx={10} fill="#a0703f" {...st} />
+      <path d="M -600 -400 L -280 -400 L -300 -440 L -580 -440 Z" fill="#7a4a2a" {...st} />
+      <rect x={-540} y={-360} width={60} height={60} rx={6} fill="#3a2614" {...st} strokeWidth={3} />
+      <rect x={-420} y={-370} width={70} height={160} rx={6} fill="#6e4426" {...st} strokeWidth={3} />
+    </>
+  );
+  const oars = Array.from({ length: 6 }).map((_, i) => {
+    const ox = -260 + i * 120;
+    const a = row > 0 ? Math.sin(t * 4 * row + i * 0.2) * 14 : 0;
+    return (
+      <g key={i} transform={`rotate(${30 + a} ${ox} -110)`}>
+        <rect x={ox - 5} y={-110} width={10} height={230} fill="#8a5a34" {...st} strokeWidth={2.5} />
+        <rect x={ox - 12} y={100} width={24} height={50} rx={8} fill="#8a5a34" {...st} strokeWidth={2.5} />
+      </g>
+    );
+  });
+  const front = (
+    <>
+      {oars}
+      {/* hull */}
+      <path d="M -640 -300 Q -660 -220 -620 -150 Q -520 60 -200 80 L 360 80 Q 600 40 700 -170 Q 740 -240 800 -300 L 760 -300 Q 700 -230 620 -210 Q 0 -190 -560 -220 Q -600 -250 -600 -300 Z" fill="#8a5a34" {...st} />
+      <path d="M -600 -150 Q 0 -120 690 -170" fill="none" stroke="#2f6f8a" strokeWidth={26} />
+      <path d="M -600 -150 Q 0 -120 690 -170" fill="none" stroke="#e8c46a" strokeWidth={6} strokeDasharray="30 22" />
+      {[-80, -30, 20].map((dy, i) => (
+        <path key={i} d={`M ${-560 + i * 20} ${dy} Q 0 ${dy + 34} ${620 - i * 40} ${dy - 60}`} fill="none" stroke="#6e4628" strokeWidth={4} />
+      ))}
+      {Array.from({ length: 6 }).map((_, i) => (
+        <circle key={i} cx={-260 + i * 120} cy={-110} r={11} fill="#2a1a0e" {...st} strokeWidth={3} />
+      ))}
+      <path d="M -610 -300 Q 0 -280 780 -300" fill="none" stroke="#c8925a" strokeWidth={12} strokeLinecap="round" />
+      {/* prow */}
+      <path d="M 760 -300 Q 830 -340 820 -400 Q 860 -360 820 -300 Z" fill="#8a5a34" {...st} />
+      <path d="M -200 80 Q 100 92 360 80" fill="none" stroke="#ffffff" strokeWidth={8} opacity={0.6} />
+    </>
+  );
+  const pk = Math.max(0, Math.min(1, plank));
+  const bow = plankSide === "bow";
+  const endAng = plankAng ?? (bow ? 30 : 150);
+  const plankEl = pk > 0 && (
+    <g transform={`translate(${bow ? 700 : -560} -300) rotate(${bow ? mix(-70, endAng, pk) : mix(250, endAng, pk)})`}>
+      <rect x={0} y={-14} width={plankLen} height={28} rx={6} fill="#b08458" {...st} strokeWidth={3} />
+      {Array.from({ length: Math.floor(plankLen / 50) }).map((_, i) => (
+        <path key={i} d={`M ${30 + i * 50} -14 L ${30 + i * 50} 14`} stroke="#7a5432" strokeWidth={3} />
+      ))}
+    </g>
+  );
+  return (
+    <g transform={`translate(${x} ${y + bob}) rotate(${r}) scale(${flip ? -s : s} ${s})`}>
+      {layer !== "front" && back}
+      {layer !== "back" && (
+        <>
+          {front}
+          {plankEl}
+        </>
+      )}
+    </g>
+  );
+};
+
+// ------------------------------------------------------------------ harbour life
+/** Pile of cargo: crates, sacks, clay jars and a coil of rope. */
+export const CargoPile: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) => (
+  <g transform={`translate(${x} ${y}) scale(${s})`}>
+    <rect x={-200} y={-140} width={150} height={140} fill="#a87a4e" {...st} />
+    <path d="M -200 -140 L -50 0 M -50 -140 L -200 0" stroke="#7a5432" strokeWidth={5} />
+    <rect x={-170} y={-250} width={110} height={110} fill="#b88a5a" {...st} />
+    <path d="M -170 -195 L -60 -195" stroke="#7a5432" strokeWidth={5} />
+    {[[-10, 0], [80, 0], [36, -70]].map(([sx, sy], i) => (
+      <g key={i}>
+        <path d={`M ${sx - 50} ${sy} Q ${sx - 60} ${sy - 70} ${sx - 20} ${sy - 86} L ${sx + 20} ${sy - 86} Q ${sx + 60} ${sy - 70} ${sx + 50} ${sy} Z`} fill="#d8c294" {...st} />
+        <path d={`M ${sx - 18} ${sy - 86} Q ${sx} ${sy - 104} ${sx + 18} ${sy - 86}`} fill="#c8b084" {...st} strokeWidth={3} />
+      </g>
+    ))}
+    {[150, 210].map((jx, i) => (
+      <g key={i}>
+        <path d={`M ${jx - 26} -10 Q ${jx - 44} -80 ${jx - 14} -120 L ${jx + 14} -120 Q ${jx + 44} -80 ${jx + 26} -10 Q ${jx} 6 ${jx - 26} -10 Z`} fill="#c0703e" {...st} />
+        <rect x={jx - 16} y={-138} width={32} height={20} rx={6} fill="#a65e32" {...st} strokeWidth={3} />
+      </g>
+    ))}
+    <g transform="translate(290 -14)">
+      {[34, 24, 14].map((rr, i) => (
+        <ellipse key={i} cx={0} cy={-i * 4} rx={rr + 16} ry={rr * 0.45 + 6} fill="none" stroke="#c8a46a" strokeWidth={9} />
+      ))}
+    </g>
+  </g>
+);
+
+/** Wooden mooring post with a slack rope trailing in the water (an empty berth). */
+export const MooringPost: React.FC<{ x: number; y: number; t: number; s?: number; waterY?: number }> = ({ x, y, t, s = 1, waterY = 140 }) => {
+  const sw = Math.sin(t * 1.3 + x) * 18;
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`}>
+      <rect x={-20} y={-120} width={40} height={140} rx={8} fill="#7a5232" {...st} />
+      <rect x={-24} y={-80} width={48} height={16} rx={6} fill="#c8a46a" {...st} strokeWidth={3} />
+      <path d={`M 0 -72 Q ${50 + sw} ${waterY * 0.5} ${120 + sw} ${waterY} Q ${170 + sw * 0.5} ${waterY + 10} ${220} ${waterY + 4}`} fill="none" stroke="#c8a46a" strokeWidth={8} strokeLinecap="round" />
+    </g>
+  );
+};

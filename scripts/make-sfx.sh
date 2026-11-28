@@ -27,6 +27,11 @@ gen -f lavfi -i "anoisesrc=color=brown:amplitude=1:duration=2.6:seed=46" -af "lo
 gen -f lavfi -i "anoisesrc=color=pink:amplitude=0.9:duration=1.8:seed=47" -af "bandpass=f=420:width_type=o:w=1.4,tremolo=f=16:d=0.7,afade=t=in:d=0.15,afade=t=out:st=1.2:d=0.6,volume=2.6" grind.wav
 # hands straining on rock (pushing)
 gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.7:duration=0.9:seed=48" -af "lowpass=f=400,tremolo=f=11:d=0.6,afade=t=in:d=0.2,afade=t=out:st=0.5:d=0.4,volume=1.8" strain.wav
+# --- samundar-mein-1000-dinar: abstract transition sounds
+# rewind (flashback): a fast rising, warbling sweep
+gen -f lavfi -i "aevalsrc=0.5*sin(2*PI*(200*t+900*t*t)*t)*(1+0.5*sin(2*PI*30*t)):d=0.7" -af "highpass=f=150,afade=t=in:d=0.05,afade=t=out:st=0.5:d=0.2,volume=0.9" rewind.wav
+# slow-motion: a deep falling swell
+gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.8:duration=1.4:seed=61" -af "lowpass=f=300,afade=t=in:d=0.6,afade=t=out:st=0.8:d=0.6,volume=1.8" slowmo.wav
 ls -la
 # ---- village / treasure set (sone-ka-matka) ----
 # hoe into dry soil
@@ -67,4 +72,9 @@ gen -f lavfi -i "anoisesrc=color=brown:amplitude=1:duration=2.6:seed=46" -af "lo
 gen -f lavfi -i "anoisesrc=color=pink:amplitude=0.9:duration=1.8:seed=47" -af "bandpass=f=420:width_type=o:w=1.4,tremolo=f=16:d=0.7,afade=t=in:d=0.15,afade=t=out:st=1.2:d=0.6,volume=2.6" grind.wav
 # hands straining on rock (pushing)
 gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.7:duration=0.9:seed=48" -af "lowpass=f=400,tremolo=f=11:d=0.6,afade=t=in:d=0.2,afade=t=out:st=0.5:d=0.4,volume=1.8" strain.wav
+# --- samundar-mein-1000-dinar: abstract transition sounds
+# rewind (flashback): a fast rising, warbling sweep
+gen -f lavfi -i "aevalsrc=0.5*sin(2*PI*(200*t+900*t*t)*t)*(1+0.5*sin(2*PI*30*t)):d=0.7" -af "highpass=f=150,afade=t=in:d=0.05,afade=t=out:st=0.5:d=0.2,volume=0.9" rewind.wav
+# slow-motion: a deep falling swell
+gen -f lavfi -i "anoisesrc=color=brown:amplitude=0.8:duration=1.4:seed=61" -af "lowpass=f=300,afade=t=in:d=0.6,afade=t=out:st=0.8:d=0.6,volume=1.8" slowmo.wav
 ls -la

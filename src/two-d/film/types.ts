@@ -17,13 +17,25 @@ export type SceneCtx = {
  * Every scene is designed on a "nominal" frame range; the player stretches it to the
  * real scene length, which comes from the narration audio.
  */
-export type SceneVisual = { nominal: [number, number]; render: (nominalFrame: number, ctx: SceneCtx) => React.ReactNode };
+export type SceneVisual = {
+  nominal: [number, number];
+  render: (nominalFrame: number, ctx: SceneCtx) => React.ReactNode;
+  /**
+   * Optional: nominal frame where each spoken line (by index) starts. The player then stretches the scene piece by
+   * piece so that a cut planned at that nominal frame lands exactly when the line starts (null = no anchor).
+   */
+  beats?: (number | null)[];
+};
+
+/** A sound cue. It plays up to 6 s; `until` (nominal frame, e.g. the shot's cut) or `dur` (seconds) stops it
+ * earlier with a short fade (`fade` seconds, default 0.25) so a sound never runs over the next shot. */
+export type SfxCue = { file: string; at: number; volume: number; until?: number; dur?: number; fade?: number };
 
 export type FilmVisuals = {
   scenes: Record<string, SceneVisual>;
   ambience?: { file: string; volume: number };
   /** One-shot sounds on the nominal timeline (moved with their scene). */
-  sfx: { file: string; at: number; volume: number }[];
+  sfx: SfxCue[];
   /** HTML overlays (title cards, end text) on the nominal timeline. Use `tr(lang, {ur, en})` for on-screen text. */
   overlay?: (nominalFrame: number, lang: Lang) => React.ReactNode;
 };
