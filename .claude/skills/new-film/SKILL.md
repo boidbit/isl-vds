@@ -1,6 +1,6 @@
 ---
 name: new-film
-description: Use whenever the owner pastes a story script, gives only a Hadith number / topic for a new Short, or says "issue #N wali script banao" (script is in that GitHub issue) (scenes, narration, camera, sound, Hadith/Quran reference) or asks for a new video/Short, even if they only paste the script with no other words. Runs the whole Tareeka 1 pipeline from script to preview contact sheet, in Urdu and English.
+description: Use whenever the owner pastes a story script, gives only a topic or Hadith number for a new Short, asks you to suggest the next story (story-craft step 0 first), or says "issue #N wali script banao" (script is in that GitHub issue) (scenes, narration, camera, sound, Hadith/Quran reference) or asks for a new video/Short, even if they only paste the script with no other words. Runs the whole Tareeka 1 pipeline from script to preview contact sheet, in Urdu and English.
 ---
 
 # New film from a pasted script (Tareeka 1)
