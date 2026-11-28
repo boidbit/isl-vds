@@ -10,7 +10,15 @@ phir yeh hua") is a report, not a story. Do this pass on every script (also the 
 owner the improved script + drift list before building. Reply in short Hinglish.
 
 ## 1. Read the whole source, not a summary
-Find the full text of the Hadith (Bukhari/Muslim number given; if only a topic, find the reference and say which).
+Get the full text first: `npm run hadith -- <bukhari|muslim|abudawud|tirmidhi|nasai|ibnmajah> <number> --film <id>`
+(English + Arabic + grades, saved as `films/<id>/source.md`, with the sunnah.com link). sunnah.com itself blocks
+automated clients; this open API has the same collections/translations. Rules:
+- Only Bukhari/Muslim, or another book when the grade is Sahih/Hasan with no Da'if grade. "DISPUTED" or "NOT
+  USABLE" = pick another Hadith (tell the owner why).
+- If the owner gave only a topic, find the reference, fetch it and check that the text really is that story.
+- The text is a translation: keep the meaning, write the Urdu/English narration in our own simple words, keep
+  quoted sentences faithful. Put the sunnah.com link in both descriptions (`📖 Reference: <ref> <link>`).
+- `source.verified` stays false: the owner's check is now one click (the link) to confirm the number and meaning.
 The best material hides in details that summaries (and GPT) drop. Answer these five every time:
 1. **Who tells it, and to whom?** (A frame: "she told Aisha (RA) this story years later" is a ready-made structure.)
 2. **Which sentence is repeated or quoted?** (A line someone kept saying = the hook AND the ending.)
@@ -76,14 +84,14 @@ Never show Allah, Prophets, angels or named Companions (not even voice). Angels 
 and blind man) are told by narration and the men's reactions only. Violence and private details are never shown.
 Say clearly which parts are tasawwur.
 
-## Story ideas with a built-in twist (owner checks each reference; done films are not listed)
+## Story ideas with a built-in twist (numbers checked with `npm run hadith`; the owner still confirms; done films not listed)
 | Idea | Reference | Hook / twist | Care |
 |---|---|---|---|
 | Laal patti aur cheel | Bukhari 439 | a thief that was not a person | woman shown modestly, no search details |
 | Sau qatl, phir tauba | Bukhari 3470, Muslim 2766 | the murderer who was forgiven, land measured | angels only by narration |
 | Kodhi, ganja aur andha | Bukhari 3464, Muslim 2964 | the same test, three answers | the angel never shown, as "a stranger" only by narration |
 | Teen ghalat haathon mein sadqa | Bukhari 1421, Muslim 1022 | charity to a thief, a sinner, a rich man… and all accepted | no sinful scenes |
-| Juraij aur bolne wala bachcha | Bukhari 3436, Muslim 2550 | a baby in the cradle speaks the truth | Juraij is not a Prophet; keep the accusation discreet |
+| Juraij aur bolne wala bachcha | Bukhari 3436, Muslim 2550 | a baby in the cradle speaks the truth | Juraij is not a Prophet; the Hadith also names Isa (AS): narration only, never shown; keep the accusation discreet |
 | Raakh bana do mujhe | Bukhari 3481 | a man who feared Allah so much he asked to be burnt | Allah not depicted; gathering told by narration |
 | Qarz maaf karne wala tajir | Bukhari 2078 | "forgive him" - and he was forgiven | simple, warm |
 | Ek khajoor, do betiyan | Muslim 2630 | a mother splits her last date | very short, emotional |

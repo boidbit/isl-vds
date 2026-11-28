@@ -14,7 +14,8 @@
     "validate:films": "tsx scripts/validate-films.ts",
     "voice": "tsx scripts/voice.ts",
     "sfx": "bash scripts/make-sfx.sh",
-    "fetch:sfx": "tsx scripts/fetch-sfx.ts"
+    "fetch:sfx": "tsx scripts/fetch-sfx.ts",
+    "hadith": "tsx scripts/hadith.ts"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.2",
