@@ -96,6 +96,20 @@ export const FILM_LOOKS: Record<string, FilmLook> = {
     grain: 0.06,
     thumb: { text: "#ffe2ea", stroke: "#2a0a1a", accent: "#ff5a8a" },
   },
+  "crimson-sand": {
+    about: "warm ochre sand, crimson accents, plum shadows, soft haze: Arab tribe / desert camp, a red object",
+    saturate: 1.12,
+    contrast: 1.1,
+    brightness: 1.01,
+    hi: "#ffd9a6",
+    hiK: 0.11,
+    lo: "#5a1a2e",
+    loK: 0.17,
+    vig: "#2a0612",
+    vigK: 0.5,
+    grain: 0.06,
+    thumb: { text: "#fff4e2", stroke: "#3a0610", accent: "#e0283a" },
+  },
 };
 
 export const lookOf = (name?: string): FilmLook | null => (name && FILM_LOOKS[name]) || null;

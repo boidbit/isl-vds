@@ -122,6 +122,7 @@ grade, split toning, vignette, grain and thumbnail text/stroke/frame colours). A
 | gufa-ke-teen | (none yet; suggest `storm-indigo`) | mountain cave | storm night -> dawn | yellow text |
 | billi-aur-aurat | (none yet; suggest `dusk-rose`) | courtyard | day -> night | yellow text |
 | samundar-mein-1000-dinar | `sea-teal` | sea: stone steps + far pier | warm sun vs grey | white text, teal frame |
+| laal-patti-aur-cheel | `crimson-sand` | Arab desert camp (black tents) + early Madinah masjid | golden afternoon vs cool morning | cream text, crimson frame |
 
 Older films get their preset on their next render (check one still first: their scene grades were tuned without it).
 Ideas still free: misty blue-green hills, night market with lamps, snowy north, golden harvest, rainy city.

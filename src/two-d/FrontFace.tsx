@@ -39,6 +39,8 @@ export type FrontPose = {
   hands?: "none" | "dua" | "letter" | "hold" | "chin";
   handsUp?: number; // 0..1 how far the hands are raised
   holdW?: number; // half width between the two fists for "hold"/"letter"
+  /** 0..1 a tear rolls down from the left eye to the jaw (0 = none); wet eyes while > 0. */
+  tear?: number;
 };
 
 export const FRONT_BASE: FrontPose = { eyeOpen: 1, lookX: 0, lookY: 0, brow: 0, wide: 0, mouth: "neutral", talk: 0, tilt: 0, turn: 0, t: 0, hands: "none", handsUp: 1, holdW: 120 };
@@ -189,6 +191,23 @@ export const MusafirFront: React.FC<{
       )}
       <Eye x={-44 + fx} y={-12} p={p} s={es} />
       <Eye x={44 + fx} y={-12} p={p} s={es} />
+      {(p.tear ?? 0) > 0 && (
+        <g>
+          {/* wet lower lids */}
+          <path d={`M ${-62 + fx} ${2} Q ${-44 + fx} ${10} ${-26 + fx} ${2} M ${26 + fx} ${2} Q ${44 + fx} ${10} ${62 + fx} ${2}`} fill="none" stroke="#bfe6ff" strokeWidth={4} opacity={Math.min(1, (p.tear ?? 0) * 3) * 0.8} strokeLinecap="round" />
+          {/* trail + drop */}
+          <path d={`M ${-50 + fx} ${8} Q ${-56 + fx} ${8 + (p.tear ?? 0) * 40} ${-54 + fx} ${8 + (p.tear ?? 0) * 86}`} fill="none" stroke="#d8f0ff" strokeWidth={5} opacity={0.45} strokeLinecap="round" />
+          <path
+            transform={`translate(${-54 + fx} ${14 + (p.tear ?? 0) * 86})`}
+            d="M 0 -14 Q 9 -2 8 5 Q 6 12 0 12 Q -6 12 -8 5 Q -9 -2 0 -14 Z"
+            fill="#cdeeff"
+            stroke="#5a8aa8"
+            strokeWidth={2}
+            opacity={(p.tear ?? 0) < 0.95 ? 1 : 0}
+          />
+          <circle cx={-56 + fx} cy={14 + (p.tear ?? 0) * 86} r={2.5} fill="#ffffff" opacity={(p.tear ?? 0) < 0.95 ? 1 : 0} />
+        </g>
+      )}
       <path d={`M ${-72 + fx} ${browY + 6} Q ${-48 + fx} ${browY - 8} ${-22 + fx} ${browY - browIn}`} fill="none" stroke={C.beard} strokeWidth={10 * bw} strokeLinecap="round" />
       <path d={`M ${72 + fx} ${browY + 6} Q ${48 + fx} ${browY - 8} ${22 + fx} ${browY - browIn}`} fill="none" stroke={C.beard} strokeWidth={10 * bw} strokeLinecap="round" />
       {(C.age ?? 0) > 0 && (

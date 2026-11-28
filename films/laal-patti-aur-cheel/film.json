@@ -1,0 +1,313 @@
+{
+  "id": "laal-patti-aur-cheel",
+  "title": "Laal Patti aur Cheel",
+  "fps": 30,
+  "format": "short",
+  "motionBlur": 5,
+  "look": "crimson-sand",
+  "source": {
+    "references": [
+      "Sahih al-Bukhari 439"
+    ],
+    "verified": false
+  },
+  "voice": {
+    "enabled": true,
+    "model": "gemini-3.8-flash-tts",
+    "speakers": {
+      "narrator": {
+        "voice": "Fenrir",
+        "style": "natural, conversational Hindi storyteller like a gripping YouTube Short; urgent suspense in the first line, curious when asking 'lekin kyun?', clear while telling the past, slow and heavy with sadness at 'poori be-izzati ke saath', amazed at 'gosht samjha tha', warm and gentle at the end, never robotic",
+        "styleEn": "natural, conversational English storyteller like a gripping YouTube Short; urgent suspense in the first line, curious at 'but why?', clear while telling the past, slow and heavy with sadness at 'the most humiliating way', amazed at 'mistaken the red leather for meat', warm and gentle at the end"
+      },
+      "khatoon": {
+        "voice": "Gacrux",
+        "style": "a mature woman remembering her own story, soft and sincere; quiet awe in 'hamare Rab ka ek ajooba tha', trembling and hurt when she swears 'Allah ki qasam', firm and dignified at 'main begunaah thi', peaceful and grateful in the last line; never theatrical",
+        "styleEn": "a mature woman remembering her own story, soft and sincere; quiet awe at 'one of the wonders of our Lord', trembling and hurt at 'By Allah', firm and dignified at 'I was innocent', peaceful and grateful in the last line; never theatrical"
+      }
+    }
+  },
+  "assets": [
+    "khatoon",
+    "khatoon-madinah",
+    "bachchi",
+    "qabeele-aurat",
+    "sardar",
+    "qabeele-jawan",
+    "musafir",
+    "musafir-front",
+    "cheel",
+    "red-sash",
+    "bedouin-tent",
+    "desert-dunes",
+    "sand-ground",
+    "sand-puff",
+    "masjid-court",
+    "masjid-gate",
+    "spindle",
+    "time-sky",
+    "date-palm",
+    "camel",
+    "goat",
+    "chulha",
+    "clothes-line",
+    "matka",
+    "chatai",
+    "perched-bird",
+    "birds",
+    "dust-motes",
+    "light-rays",
+    "hand-reach",
+    "fx-rewind",
+    "fx-flash",
+    "fx-whip",
+    "fx-light-leak",
+    "fx-lens-flare",
+    "sfx-desert-bed",
+    "sfx-kite-cry",
+    "sfx-wings",
+    "sfx-whoosh",
+    "sfx-tent-flap",
+    "sfx-heartbeat",
+    "sfx-gasp",
+    "sfx-step-sand",
+    "sfx-sand-thud",
+    "sfx-cloth",
+    "sfx-goat",
+    "sfx-camel",
+    "sfx-fire-crackle",
+    "sfx-children-play",
+    "sfx-pigeon",
+    "sfx-birds",
+    "sfx-breeze",
+    "sfx-rewind",
+    "sfx-slowmo",
+    "sfx-impact",
+    "sfx-chime",
+    "sfx-shimmer",
+    "sfx-pad"
+  ],
+  "publish": {
+    "ur": {
+      "title": "Laal patti gaayab… ilzaam ek begunaah par 😢 asli chor kaun tha?",
+      "alts": [
+        "Sab ne use chor samjha… phir aasmaan se kya gira? 😱",
+        "Begunaah thi, phir bhi har ungli usi par… aakhir tak dekhna"
+      ],
+      "description": "Registan ka ek qabeela. Ek bachchi ki laal chamde ki patti pal bhar mein gaayab ho gayi… aur sab ka shaq gaya ek akeli, azaad ki hui kaneez par.\nSaalon baad Madinah mein woh har baar ek hi baat kehti thi: \"Patti wala din hamare Rab ka ajooba tha.\" Aakhir kyun?\n\n💬 Kya kabhi aap par bhi bina saboot ilzaam laga hai?\n\n📖 Reference: Sahih al-Bukhari 439 https://sunnah.com/bukhari:439\nHazrat Aisha (RA) ek azaad ki hui kaneez ka waqiya bayan karti hain jis par ek qabeele ne laal patti churane ka ilzaam lagaya tha, aur jo baad mein Rasoolullah ﷺ ke paas aa kar Musalman hui.\nKahani ke kuch manzar tasawwur par mabni hain; Hadith ka hissa asal ke mutabiq hai.\n🔔 Har hafte ek nayi Islamic kahani: subscribe karein.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#IslamicShorts",
+        "#IslamicCartoon",
+        "#UrduKahani",
+        "#IslamicKahani",
+        "#Ilzaam",
+        "#Sabr",
+        "#Suspense"
+      ]
+    },
+    "en": {
+      "title": "A red sash vanished… they blamed an innocent woman 😢 Who took it?",
+      "alts": [
+        "Everyone called her a thief… then something fell from the sky 😱",
+        "She was innocent, yet every finger pointed at her… watch till the end"
+      ],
+      "description": "A desert tribe. A little girl's red leather sash vanishes in a moment… and every eye turns to one woman: a freed slave with no one on her side.\nYears later in Madinah, she kept saying the same strange words: \"The day of the sash was a wonder of our Lord.\" Why?\n\n💬 Have you ever been blamed without proof?\n\n📖 Reference: Sahih al-Bukhari 439 https://sunnah.com/bukhari:439\nAisha (RA) narrates the story of a freed slave woman whom a tribe accused of stealing a red sash, and who later came to the Messenger of Allah ﷺ and accepted Islam.\nSome scenes are imagined; the Hadith part follows the source.\n🔔 A new Islamic story every week: subscribe.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#IslamicShorts",
+        "#IslamicCartoon",
+        "#IslamicKidsStories",
+        "#Justice",
+        "#FalseAccusation",
+        "#Mystery"
+      ]
+    }
+  },
+  "thumbnail": {
+    "at": 100,
+    "text": {
+      "ur": "Chor kaun?",
+      "en": "Who's the thief?"
+    },
+    "zoom": 1.3,
+    "focus": [
+      0.5,
+      0.42
+    ],
+    "circle": {
+      "at": [
+        0.84,
+        0.35
+      ],
+      "r": 0.07
+    }
+  },
+  "scenes": [
+    {
+      "id": "s1-hook",
+      "lines": [
+        {
+          "text": "Ek laal patti gaayab hui… aur ilzaam laga ek begunaah par!",
+          "voiceText": "एक लाल पट्टी ग़ायब हुई… और इल्ज़ाम लगा एक बेगुनाह पर!",
+          "en": {
+            "text": "A red sash vanished… and the blame fell on an innocent woman!"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2-madinah",
+      "lines": [
+        {
+          "speaker": "khatoon",
+          "text": "Patti wala din… hamare Rab ka ek ajooba tha!",
+          "voiceText": "पट्टी वाला दिन… हमारे रब का एक अजूबा था!",
+          "en": {
+            "text": "The day of the sash… was one of the wonders of our Lord!"
+          }
+        },
+        {
+          "text": "Woh jab bhi Hazrat Aisha (RA) ke paas baithti, yahi kehti… lekin kyun?",
+          "voiceText": "वो जब भी हज़रत आइशा रज़ियल्लाहु अन्हा के पास बैठती, यही कहती… लेकिन क्यों?",
+          "en": {
+            "text": "Whenever she sat with Aisha (RA), she said this… but why?",
+            "voiceText": "Whenever she sat with Aisha, may Allah be pleased with her, she said this… but why?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s3-qabeela",
+      "lines": [
+        {
+          "text": "Woh kabhi ek Arab qabeele ki kaneez thi… azaad hui, magar unhi ke saath rahi.",
+          "voiceText": "वो कभी एक अरब क़बीले की कनीज़ थी… आज़ाद हुई, मगर उन्हीं के साथ रही।",
+          "en": {
+            "text": "She was once a slave girl of an Arab tribe… they freed her, but she stayed with them."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s4-patti",
+      "lines": [
+        {
+          "text": "Ek din qabeele ki ek bachchi, laal chamde ki patti pehne bahar nikli…",
+          "voiceText": "एक दिन क़बीले की एक बच्ची, लाल चमड़े की पट्टी पहने बाहर निकली…",
+          "en": {
+            "text": "One day, a little girl of the tribe came out wearing a red leather sash…"
+          }
+        },
+        {
+          "text": "Patti zameen par reh gayi… aur phir, gaayab!",
+          "voiceText": "पट्टी ज़मीन पर रह गई… और फिर, ग़ायब!",
+          "en": {
+            "text": "It was left lying on the ground… and then, it was gone!"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s5-ilzaam",
+      "lines": [
+        {
+          "text": "Sabne dhoonda, nahi mili… aur shaq gaya usi par.",
+          "voiceText": "सबने ढूँढा, नहीं मिली… और शक गया उसी पर।",
+          "en": {
+            "text": "They searched everywhere, nothing… and suspicion fell on her."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s6-talaashi",
+      "lines": [
+        {
+          "text": "Uski talaashi li gayi… poori be-izzati ke saath.",
+          "voiceText": "उसकी तलाशी ली गई… पूरी बे-इज़्ज़ती के साथ।",
+          "en": {
+            "text": "They searched her… in the most humiliating way."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s7-cheel",
+      "lines": [
+        {
+          "speaker": "khatoon",
+          "text": "Allah ki qasam! Main unke beech khadi thi… ke wahi cheel aayi, aur patti gira di!",
+          "voiceText": "अल्लाह की क़सम! मैं उनके बीच खड़ी थी… कि वही चील आई, और पट्टी गिरा दी!",
+          "en": {
+            "text": "By Allah! I was standing right among them… when that same kite came and dropped the sash!"
+          }
+        },
+        {
+          "text": "Usne laal chamde ko gosht samjha tha!",
+          "voiceText": "उसने लाल चमड़े को गोश्त समझा था!",
+          "en": {
+            "text": "It had mistaken the red leather for meat!"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s8-begunaah",
+      "lines": [
+        {
+          "speaker": "khatoon",
+          "text": "Yahi hai woh, jiska tumne mujh par ilzaam lagaya… main begunaah thi, aur yeh raha!",
+          "voiceText": "यही है वो, जिसका तुमने मुझ पर इल्ज़ाम लगाया… मैं बेगुनाह थी, और ये रहा!",
+          "en": {
+            "text": "This is what you accused me of… I was innocent, and here it is!"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s9-islam",
+      "lines": [
+        {
+          "text": "Phir woh Rasoolullah ﷺ ke paas aayi, aur Islam qubool kar liya.",
+          "voiceText": "फिर वो रसूलुल्लाह सल्लल्लाहु अलैहि वसल्लम के पास आई, और इस्लाम क़ुबूल कर लिया।",
+          "en": {
+            "text": "Then she came to the Messenger of Allah ﷺ, and accepted Islam.",
+            "voiceText": "Then she came to the Messenger of Allah, peace be upon him, and accepted Islam."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s10-ajooba",
+      "subtitleMax": 0.72,
+      "lines": [
+        {
+          "speaker": "khatoon",
+          "text": "Patti wala din hamare Rab ka ajooba tha… usi ne mujhe kufr ki basti se nijaat di!",
+          "voiceText": "पट्टी वाला दिन हमारे रब का अजूबा था… उसी ने मुझे कुफ़्र की बस्ती से निजात दी!",
+          "en": {
+            "text": "The day of the sash was a wonder of our Lord… He saved me from the land of disbelief!"
+          }
+        },
+        {
+          "text": "Ilzaam se pehle… saboot dekho.",
+          "voiceText": "इल्ज़ाम से पहले… सबूत देखो।",
+          "en": {
+            "text": "Before you blame… look for proof."
+          }
+        }
+      ]
+    }
+  ],
+  "languages": [
+    "ur",
+    "en"
+  ]
+}

@@ -99,7 +99,7 @@ Say clearly which parts are tasawwur.
 ## Story ideas with a built-in twist (numbers checked with `npm run hadith`; the owner still confirms; done films not listed)
 | Idea | Reference | Hook / twist | Care |
 |---|---|---|---|
-| Laal patti aur cheel | Bukhari 439 | a thief that was not a person | woman shown modestly, no search details |
+| Baadal ne naam pukaara | Muslim 2984 | a voice in a cloud names a stranger's garden… why him? | the voice is never shown or given a face: narration + rain only |
 | Sau qatl, phir tauba | Bukhari 3470, Muslim 2766 | the murderer who was forgiven, land measured | angels only by narration |
 | Kodhi, ganja aur andha | Bukhari 3464, Muslim 2964 | the same test, three answers | the angel never shown, as "a stranger" only by narration |
 | Teen ghalat haathon mein sadqa | Bukhari 1421, Muslim 1022 | charity to a thief, a sinner, a rich man… and all accepted | no sinful scenes |

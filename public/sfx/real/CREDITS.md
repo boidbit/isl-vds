@@ -37,3 +37,12 @@ All files below are from [Freesound](https://freesound.org), licence **CC0 1.0 (
 | `boat-creak.mp3` | [G27-08-Movie Boat Creak Scene.wav](https://freesound.org/people/craigsmith/sounds/438354/) | craigsmith | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `chisel.mp3` | [chisels-on-wood.aiff](https://freesound.org/people/Simsym23/sounds/256953/) | Simsym23 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `sea-bed.mp3` | [131018_WarnemuendeShorelineWide_R.wav](https://freesound.org/people/blaukreuz/sounds/212771/) | blaukreuz | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `kite-cry.mp3` | [a buzzard call](https://freesound.org/people/Jaturo/sounds/194678/) | Jaturo | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `wings.mp3` | [bird_flapping_1.wav](https://freesound.org/people/Clusman/sounds/543110/) | Clusman | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `tent-flap.mp3` | [Tent Fabric Blow in Light Wind.wav](https://freesound.org/people/bmacphail/sounds/569538/) | bmacphail | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `heartbeat.mp3` | [RWHeart.wav](https://freesound.org/people/bluejello13/sounds/232481/) | bluejello13 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `gasp.mp3` | [CRWDReac_Crowd Gasping In Surprise, Voiced 01_ShaneVincent_GSC24_XY-AKG214-96k.wav](https://freesound.org/people/ShangusBurger/sounds/763875/) | ShangusBurger | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `desert-bed.mp3` | [S41-20 Gusty desert wind.wav](https://freesound.org/people/craigsmith/sounds/675710/) | craigsmith | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `step-sand.mp3` | [Steps_Fine_Snow_Or_Sand_Strong_26](https://freesound.org/people/BlondPanda/sounds/778565/) | BlondPanda | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `sand-thud.mp3` | [Heavy sand impacts.wav](https://freesound.org/people/200221-WeanBekker/sounds/543699/) | 200221-WeanBekker | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `cloth.mp3` | [Jacket/Cloth Rustle 3](https://freesound.org/people/brandondelehoy/sounds/494789/) | brandondelehoy | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
