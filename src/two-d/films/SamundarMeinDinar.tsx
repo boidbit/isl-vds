@@ -559,36 +559,36 @@ const Wave: React.FC<{ k: number; t: number }> = ({ k, t }) => {
 const Scene5: React.FC<{ f: number }> = ({ f }) => {
   const t = f / 30;
   const l = f - S5;
-  if (l < 100) {
-    const cam: Cam = { x: kf(l, [[0, 900], [100, 1050]]), y: PR.deck - 280, zoom: kf(l, [[0, 1.25], [100, 1.4]]) };
+  if (l < 60) {
+    const cam: Cam = { x: kf(l, [[0, 900], [60, 1000]]), y: PR.deck - 280, zoom: kf(l, [[0, 1.25], [60, 1.35]]) };
     const shade = Math.sin(t * 2.2) > 0;
     return (
       <>
         <Pier cam={cam} f={f}>
           <Musafir x={1240} y={PR.deck - 30} look={BORROWER} pose={pose(f, { armF: shade ? [150, 40] : [20, 20], look: 0.9, brow: -0.5, headTilt: -6, lean: -3 }, 3)} />
         </Pier>
-        <Wave k={kf(l, [[80, 0], [100, 1]], Easing.in(Easing.quad))} t={t} />
+        <Wave k={kf(l, [[44, 0], [60, 1]], Easing.in(Easing.quad))} t={t} />
       </>
     );
   }
-  if (l < 170) {
+  if (l < 140) {
     // the lender comes down the steps and looks out to sea
-    const wx = kf(l, [[100, HS.stepsX + 80], [150, HS.stepsX + 560]], lin);
-    const walking = l < 150;
-    const cam: Cam = { x: kf(l, [[100, 900], [170, 980]]), y: 1300, zoom: 1.35 };
+    const wx = kf(l, [[60, HS.stepsX + 80], [115, HS.stepsX + 560]], lin);
+    const walking = l < 115;
+    const cam: Cam = { x: kf(l, [[60, 900], [140, 980]]), y: 1300, zoom: 1.35 };
     return (
       <>
         <HomeShore cam={cam} f={f} mood="warm">
-          <PerchedBird x={HS.stepsX + 700} y={stepY(HS.stepsX + 700)} t={t} s={1} fly={kf(l, [[118, 0], [150, 1]], Easing.in(Easing.quad))} dir={1} />
+          <PerchedBird x={HS.stepsX + 700} y={stepY(HS.stepsX + 700)} t={t} s={1} fly={kf(l, [[80, 0], [115, 1]], Easing.in(Easing.quad))} dir={1} />
           <Musafir x={wx} y={stepY(wx) + 4} look={LENDER} pose={pose(f, { walk: walking ? 1 : 0, step: wx / 36, look: 0.9, armF: walking ? [10, 10] : [150, 40], headTilt: walking ? 4 : -6 }, 6)} />
         </HomeShore>
-        <Wave k={kf(l, [[100, 1], [116, 0]], Easing.out(Easing.quad))} t={t} />
+        <Wave k={kf(l, [[60, 1], [76, 0]], Easing.out(Easing.quad))} t={t} />
       </>
     );
   }
   // his gaze: from the far water down to the knot bobbing at the steps; a wave turns it over
-  const k = kf(l, [[170, 0], [225, 1]]);
-  const flipK = kf(l, [[222, 0], [240, 1]], easeBack);
+  const k = kf(l, [[140, 0], [215, 1]]);
+  const flipK = kf(l, [[215, 0], [235, 1]], easeBack);
   const cam: Cam = { x: mix(1900, 1450, k), y: mix(HS.horizon + 60, HS.water - 20, k), zoom: mix(1.4, 2.6, k) };
   return (
     <HomeShore
@@ -750,7 +750,7 @@ const waves = (from: number, to: number, v = 0.3) => {
 };
 const SFX: FilmVisuals["sfx"] = [
   // 1 hook: saw, then sudden silence, shimmer on the glint
-  s("saw.wav", S1, 0.75),
+  s("saw.wav", S1, 0.5),
   s("shimmer.wav", S1 + 30, 0.4),
   s("impact.wav", S1 + 44, 0.25),
   // 2 the loan
@@ -760,7 +760,7 @@ const SFX: FilmVisuals["sfx"] = [
   s("breeze.wav", S2 + 90, 0.22),
   s("pigeon.wav", S2 + 120, 0.2),
   s("breeze.wav", S2 + 260, 0.2),
-  s("coins.wav", S2 + 340, 0.7),
+  s("coins.wav", S2 + 340, 0.45),
   // 3 the voyage, then the grey pier
   ...waves(S3, S3 + 140, 0.32),
   s("boat-creak.wav", S3 + 20, 0.35),
@@ -773,8 +773,8 @@ const SFX: FilmVisuals["sfx"] = [
   // 4 carving, coins, letter, prayer, splash
   ...waves(S4, S5, 0.26),
   ...[6, 20, 34, 48, 62].map((d) => s("chisel.wav", S4 + d, 0.45)),
-  s("coins.wav", S4 + 92, 0.7),
-  s("coins.wav", S4 + 118, 0.55),
+  s("coins.wav", S4 + 92, 0.45),
+  s("coins.wav", S4 + 118, 0.36),
   s("paper.wav", S4 + 140, 0.6),
   s("impact.wav", S4 + 196, 0.3),
   s("pad.wav", S4 + 215, 0.3),
@@ -784,15 +784,15 @@ const SFX: FilmVisuals["sfx"] = [
   // 5 two shores, waves carry across the cut
   ...waves(S5, S6, 0.34),
   s("breeze.wav", S5, 0.3),
-  s("whoosh.wav", S5 + 88, 0.3),
-  ...[104, 120, 136].map((d) => s("step.wav", S5 + d, 0.25)),
-  s("pigeon.wav", S5 + 118, 0.25),
-  s("splash.wav", S5 + 224, 0.35),
+  s("whoosh.wav", S5 + 50, 0.3),
+  ...[68, 84, 100].map((d) => s("step.wav", S5 + d, 0.25)),
+  s("pigeon.wav", S5 + 80, 0.25),
+  s("splash.wav", S5 + 218, 0.35),
   // 6 the log opens
   ...waves(S6, S6 + 70, 0.28),
   ...[24, 40, 56].map((d) => s("step.wav", S6 + d, 0.25)),
-  s("saw.wav", S6 + 72, 0.7),
-  s("coins.wav", S6 + 122, 0.75),
+  s("saw.wav", S6 + 72, 0.5),
+  s("coins.wav", S6 + 122, 0.49),
   s("shimmer.wav", S6 + 120, 0.35),
   s("paper.wav", S6 + 156, 0.7),
   s("pigeon.wav", S6 + 170, 0.2),
@@ -802,10 +802,10 @@ const SFX: FilmVisuals["sfx"] = [
   s("impact.wav", S7 + 50, 0.3),
   ...[70, 84, 98].map((d) => s("step.wav", S7 + d, 0.3)),
   s("breeze.wav", S7 + 110, 0.2),
-  s("coins.wav", S7 + 156, 0.75),
+  s("coins.wav", S7 + 156, 0.49),
   s("breeze.wav", S7 + 280, 0.18),
   // 8 the pouch slides back, birds, the far sea
-  s("coins.wav", S8 + 66, 0.45),
+  s("coins.wav", S8 + 66, 0.29),
   s("pad.wav", S8 + 110, 0.3),
   s("pigeon.wav", S8 + 250, 0.25),
   s("chime.wav", S8 + 260, 0.35),
@@ -837,7 +837,7 @@ const Overlay: React.FC<{ f: number; lang: Lang }> = ({ f, lang }) => {
       </AbsoluteFill>
       <Label o={fade(f, S2 + 4, S2 + 14, S2 + 80, S2 + 90)} text={tr(lang, { ur: "Bani Israil ka ek kinara", en: "A shore of Bani Israil" })} />
       <Label o={fade(f, S3 + 144, S3 + 154, S3 + 210, S3 + 218)} text={tr(lang, { ur: "Samundar ke us paar", en: "Across the sea" })} />
-      <Label o={fade(f, S5 + 104, S5 + 114, S5 + 160, S5 + 168)} text={tr(lang, { ur: "Udhar, doosra kinara", en: "Meanwhile, the other shore" })} />
+      <Label o={fade(f, S5 + 64, S5 + 74, S5 + 125, S5 + 133)} text={tr(lang, { ur: "Udhar, doosra kinara", en: "Meanwhile, the other shore" })} />
       <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", paddingTop: 230 }}>
         <div style={{ ...big, fontSize: 84, color: "#ffe9b0", opacity: end1, lineHeight: 1.15, padding: "0 60px", transform: `scale(${0.9 + 0.1 * end1})` }}>
           {tr(lang, { ur: "Bharosa Rakho, Koshish Jaari Rakho", en: "Trust Allah, Keep Trying" })}
