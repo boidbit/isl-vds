@@ -1,6 +1,6 @@
 ---
 name: new-film
-description: Use whenever the owner pastes a story script, or says "issue #N wali script banao" (script is in that GitHub issue) (scenes, narration, camera, sound, Hadith/Quran reference) or asks for a new video/Short, even if they only paste the script with no other words. Runs the whole Tareeka 1 pipeline from script to preview contact sheet, in Urdu and English.
+description: Use whenever the owner pastes a story script, gives only a Hadith number / topic for a new Short, or says "issue #N wali script banao" (script is in that GitHub issue) (scenes, narration, camera, sound, Hadith/Quran reference) or asks for a new video/Short, even if they only paste the script with no other words. Runs the whole Tareeka 1 pipeline from script to preview contact sheet, in Urdu and English.
 ---
 
 # New film from a pasted script (Tareeka 1)
@@ -14,7 +14,13 @@ Ask only if something truly blocks you (e.g. the reference is missing). Budget i
 - Branch: the session's development branch. Read nothing big up front.
 
 ## 1. Save the script
-`films/<id>/script.md` = the script exactly as pasted (add a 1-line title header only).
+`films/<id>/script.md` = the script exactly as pasted (add a 1-line title header only). If the owner gave only a
+Hadith number / topic, write the script yourself with skill `story-craft` and save that.
+
+## 1b. Story craft (always, before any code) → skill `story-craft`
+Read the full source, score the script (hook, open loop, heart, twist, ending from the source). Below 8/10, or the
+owner says it feels flat: rewrite the telling (keep the owner's scenes/ideas where they work) and show the owner
+the improved script + score in the first reply. Build from the improved version.
 
 ## 2. Islamic check (before any code)
 - Never depict Allah, Prophets, angels, named Companions in any form (no back view, silhouette, shadow or hand).
@@ -109,4 +115,5 @@ Put stills in the scratchpad dir, not the repo. One English still (`film-<id>-en
 Commit + push the branch. Then skill `render-and-check` (lang `both`).
 
 ## Reply to the owner (short)
-Film id, Hadith drift points (if any), new assets built, new sounds fetched, contact sheet, "push karun?".
+Film id, story score (+ what you changed in the telling), Hadith drift points (if any), new assets built, new
+sounds fetched, contact sheet, "push karun?".
