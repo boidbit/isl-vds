@@ -75,8 +75,13 @@ in view (pot, closed cave, dog). `text` = 2-4 BIG words that open a question ("K
 
 ## 6. Visuals: `src/two-d/films/<PascalName>.tsx`, register in `src/two-d/films/index.ts`
 - Follow skill `lively-motion` (no flat or dead frames). It is the quality bar.
-- Pick this film's look (docs/ART_DIRECTION.md "2D look": palette, outline, shading, texture) and plan at
-  least 2 front-facing emotional close-ups; vary it from the last film for a fresh feel.
+- **A look of its own (so the channel's thumbnails never look the same):** read the "Look table" in
+  docs/ART_DIRECTION.md, then pick for this film a `look` preset (`src/two-d/film/looks.tsx`, or add a new one),
+  a main location, time of day and palette that differ from the last 2 films; set `"look"` in film.json and add a
+  row to the table. The look also colours the thumbnail (text, stroke, frame).
+- Plan the shots with the lively-motion rules: 2-5 front close-ups (body out of the frame, 3/4 mix), OTS and hand
+  inserts between them, 4+ transitions/effects, props held in the fist, `beats` on cuts that match words,
+  `until` on long sounds, every man with his own face/build (`LOOKS` variety fields).
 - Pattern to copy: top of `src/two-d/films/GufaKeTeen.tsx` (imports, `L` layer helper, `pose`, scene constants) and
   one of its scenes. Read with offset/limit, not the whole file.
 - On-screen text (hook, labels, end card) goes through `tr(lang, { ur: "...", en: "..." })` from `../film/types`,

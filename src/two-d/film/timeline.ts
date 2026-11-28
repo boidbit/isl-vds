@@ -15,6 +15,46 @@ export type PlannedScene = {
   duration: number;
   nominal: [number, number];
   lines: PlannedLine[];
+  /** Piecewise-linear map (nominal frame, local frame), increasing in both; from the scene's `beats`. */
+  knots: [number, number][];
+};
+
+const makeKnots = (nominal: [number, number], duration: number, lines: PlannedLine[], beats?: (number | null)[]): [number, number][] => {
+  const knots: [number, number][] = [[nominal[0], 0]];
+  (beats ?? []).forEach((b, i) => {
+    const l = lines[i];
+    if (b === null || b === undefined || !l) return;
+    const [pn, pl] = knots[knots.length - 1];
+    if (b > pn && b < nominal[1] && l.from > pl && l.from < duration) knots.push([b, l.from]);
+  });
+  knots.push([nominal[1], duration]);
+  return knots;
+};
+
+/** Nominal frame (what the scene was designed on) for a local frame of the real scene. */
+export const localToNominal = (s: PlannedScene, local: number) => {
+  const k = s.knots;
+  for (let i = 1; i < k.length; i++) {
+    if (local < k[i][1] || i === k.length - 1) {
+      const [n0, l0] = k[i - 1];
+      const [n1, l1] = k[i];
+      return n0 + ((local - l0) * (n1 - n0)) / (l1 - l0);
+    }
+  }
+  return s.nominal[0];
+};
+
+/** Local frame of the real scene for a nominal frame. */
+export const nominalToLocal = (s: PlannedScene, nominal: number) => {
+  const k = s.knots;
+  for (let i = 1; i < k.length; i++) {
+    if (nominal < k[i][0] || i === k.length - 1) {
+      const [n0, l0] = k[i - 1];
+      const [n1, l1] = k[i];
+      return l0 + ((nominal - n0) * (l1 - l0)) / (n1 - n0);
+    }
+  }
+  return 0;
 };
 
 /** Rough speaking time when there is no audio yet (keeps previews realistic). */
@@ -38,7 +78,7 @@ export const planFilm = (film: Film, visuals: FilmVisuals, timing?: Timing | nul
     });
     const need = lines.length ? t + Math.round((TAIL_SECONDS - GAP_SECONDS) * fps) : 0;
     const duration = Math.max(nominalLen, Math.ceil(need / (sc.subtitleMax ?? 1)));
-    const planned: PlannedScene = { id: sc.id, start: cursor, duration, nominal: vis.nominal, lines };
+    const planned: PlannedScene = { id: sc.id, start: cursor, duration, nominal: vis.nominal, lines, knots: makeKnots(vis.nominal, duration, lines, vis.beats) };
     cursor += duration;
     return planned;
   });
@@ -49,7 +89,7 @@ export const planFilm = (film: Film, visuals: FilmVisuals, timing?: Timing | nul
 export const nominalToActual = (scenes: PlannedScene[], nominal: number) => {
   for (const s of scenes) {
     if (nominal >= s.nominal[0] && nominal < s.nominal[1]) {
-      return s.start + Math.round(((nominal - s.nominal[0]) * s.duration) / (s.nominal[1] - s.nominal[0]));
+      return s.start + Math.round(nominalToLocal(s, nominal));
     }
   }
   return null;

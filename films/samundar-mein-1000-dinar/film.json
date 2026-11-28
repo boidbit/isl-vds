@@ -1,0 +1,304 @@
+{
+  "id": "samundar-mein-1000-dinar",
+  "title": "Samundar Mein 1,000 Dinar",
+  "fps": 30,
+  "format": "short",
+  "motionBlur": 5,
+  "look": "sea-teal",
+  "source": {
+    "references": [
+      "Sahih al-Bukhari 2291"
+    ],
+    "verified": false
+  },
+  "voice": {
+    "enabled": true,
+    "model": "gemini-3.8-flash-tts",
+    "speakers": {
+      "narrator": {
+        "voice": "Fenrir",
+        "style": "natural, conversational Hindi storyteller like a gripping YouTube Short; amazement and wonder in the first line, clear and friendly while telling the journey, a little worried during the search for the boat, a short pause before 'aur saath wohi khat', soft and gentle in the final answer, never slow or robotic",
+        "styleEn": "natural, conversational English storyteller like a gripping YouTube Short; amazement in the first line, clear and friendly while telling the journey, a little worried during the search, a short pause before 'and with them, that same letter', soft and gentle in the final answer"
+      }
+    }
+  },
+  "assets": [
+    "qarzdar",
+    "qarz-dene-wala",
+    "musafir-front",
+    "mallah",
+    "hammal",
+    "machhera",
+    "raahgir",
+    "ship",
+    "cargo-pile",
+    "mooring-post",
+    "table-top",
+    "hand-reach",
+    "fx-rewind",
+    "fx-flash",
+    "fx-whip",
+    "fx-water-wipe",
+    "fx-light-leak",
+    "fx-lens-flare",
+    "fx-splash",
+    "sfx-rewind",
+    "sfx-slowmo",
+    "sfx-sea-bed",
+    "date-stall",
+    "mazdoor",
+    "sea-sky",
+    "sea",
+    "shore-foam",
+    "stone-steps",
+    "wood-pier",
+    "seagull",
+    "knot-log",
+    "hollow-log-top",
+    "folded-letter",
+    "hand-saw",
+    "sawdust",
+    "door-curtain",
+    "woodpile",
+    "mud-house",
+    "stone-floor",
+    "low-table",
+    "wage-pouch",
+    "clothes-line",
+    "palm-shadow",
+    "perched-bird",
+    "fruit-basket",
+    "dust-motes",
+    "birds",
+    "sfx-saw",
+    "sfx-chisel",
+    "sfx-coins",
+    "sfx-paper",
+    "sfx-sea-waves",
+    "sfx-seagulls",
+    "sfx-boat-creak",
+    "sfx-pigeon",
+    "sfx-step",
+    "sfx-splash",
+    "sfx-breeze",
+    "sfx-whoosh",
+    "sfx-shimmer",
+    "sfx-chime",
+    "sfx-pad"
+  ],
+  "publish": {
+    "ur": {
+      "title": "Jalane ki lakdi chiri… andar 1,000 dinar aur ek khat! 😳 Kisne bheja?",
+      "alts": [
+        "Na kashti, na gawah… phir samundar paar qarz kaise pahuncha? 🌊",
+        "1,000 dinar samundar mein phenk diye… aakhir tak dekhna"
+      ],
+      "description": "Ek aadmi ne jalane ke liye lakdi kaati… aur andar se hazaar dinar aur ek khat nikla!\nYe lakdi kisne bheji? Aur samundar ke us paar kya hua tha?\n\n💬 Lakdi bhejne ke baad bhi usne kashti ki talaash kyun jaari rakhi? Comment mein batao.\n\n📖 Reference: Sahih al-Bukhari 2291\nHadith ka matlab: Abu Huraira (RA) se riwayat hai ke Rasoolullah ﷺ ne Bani Israil ke ek aadmi ka zikr kiya jisne doosre se hazaar dinar qarz maange. Gawah aur zamaanat ke liye usne kaha ke Allah kaafi hai, aur qarz tay muddat ke liye mil gaya. Waqt par lautne ke liye kashti na mili to usne lakdi khokhli karke usmein hazaar dinar aur khat rakha, dua karke use Allah ke supurd kiya aur samundar mein daal diya. Qarz dene wale ko kinare par woh lakdi mili; ghar le jaa kar kaati to andar paise aur khat tha. Baad mein qarz lene wala khud hazaar dinar lekar aaya, to usne kaha: Allah ne tumhare bheje hue paise pahuncha diye, apne hazaar dinar le jao.\n(Kahani mein kuch hisse, jaise ghar, ghaat, kapde aur manzar, tasawwur par mabni hain. Hadith ka hissa waisa hi bataya gaya hai.)\n🔔 Har hafte ek nayi Islamic kahani: subscribe karein.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Tawakkul",
+        "#IslamicShorts",
+        "#Imaandari",
+        "#IslamicCartoon",
+        "#UrduKahani",
+        "#IslamicKahani",
+        "#Amanat"
+      ]
+    },
+    "en": {
+      "title": "He cut firewood… and found 1,000 dinars and a letter inside! 😳 Who sent it?",
+      "alts": [
+        "No boat, no witness… how did the money cross the sea? 🌊",
+        "1,000 gold coins thrown into the sea… watch till the end"
+      ],
+      "description": "A man cut a log for firewood… and out came a thousand dinars and a letter!\nWho sent this log? And what happened on the other side of the sea?\n\n💬 Why did he keep looking for a boat even after sending the log? Tell us in the comments.\n\n📖 Reference: Sahih al-Bukhari 2291\nMeaning of the Hadith: Abu Huraira (RA) narrated that the Prophet ﷺ mentioned a man from Bani Israil who asked another for a loan of a thousand dinars. For a witness and a guarantor he said, Allah is enough, and he got the loan for a fixed time. When he could not find a boat to return on time, he hollowed out a piece of wood, put the thousand dinars and a letter inside, prayed, entrusted it to Allah and threw it into the sea. The lender found the wood on the shore; at home he cut it and found the money and the letter. Later the borrower came himself with a thousand dinars, and the lender said: Allah has delivered what you sent in the wood, so take your thousand dinars back.\n(Some parts of the story, like the houses, the pier, the clothes and the settings, are imagined. The Hadith part is told as it is.)\n🔔 A new Islamic story every week: subscribe.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Tawakkul",
+        "#IslamicShorts",
+        "#Honesty",
+        "#TrustInAllah",
+        "#IslamicCartoon",
+        "#IslamicKidsStories"
+      ]
+    }
+  },
+  "thumbnail": {
+    "at": 70,
+    "text": {
+      "ur": "Lakdi mein dinar?!",
+      "en": "Gold inside a log?!"
+    },
+    "zoom": 1.25,
+    "focus": [
+      0.5,
+      0.55
+    ],
+    "circle": {
+      "at": [
+        0.54,
+        0.91
+      ],
+      "r": 0.11
+    }
+  },
+  "scenes": [
+    {
+      "id": "s1-aari",
+      "lines": [
+        {
+          "text": "Jalane ki lakdi chiri… aur andar hazaar dinar?",
+          "voiceText": "जलाने की लकड़ी चिरी… और अंदर हज़ार दीनार?",
+          "en": {
+            "text": "He sawed a log for firewood… and inside were a thousand dinars?"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2-qarz",
+      "lines": [
+        {
+          "text": "Qissa Bani Israil ka hai. Ek aadmi ne doosre se hazaar dinar udhaar maange.",
+          "voiceText": "क़िस्सा बनी इसराईल का है। एक आदमी ने दूसरे से हज़ार दीनार उधार माँगे।",
+          "en": {
+            "text": "This story is from Bani Israil. A man asked another to lend him a thousand dinars."
+          }
+        },
+        {
+          "text": "Gawah aur zamaanat ki baat aayi, toh usne kaha… dono ke liye Allah kaafi hai. Aur doosre ne qarz de diya.",
+          "voiceText": "गवाह और ज़मानत की बात आई, तो उसने कहा… दोनों के लिए अल्लाह काफ़ी है। और दूसरे ने क़र्ज़ दे दिया।",
+          "en": {
+            "text": "He was asked for a witness and a guarantor, and he said… Allah is enough for both. So the other man gave him the loan."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s3-kashti",
+      "lines": [
+        {
+          "text": "Phir woh apne kaam se samundar paar gaya. Kaam khatam hua, toh tay waqt par qarz lautane wapas aana tha.",
+          "voiceText": "फिर वो अपने काम से समुंदर पार गया। काम ख़त्म हुआ, तो तय वक़्त पर क़र्ज़ लौटाने वापस आना था।",
+          "en": {
+            "text": "Then he crossed the sea for his work. When the work was done, he had to get back in time to repay the loan."
+          }
+        },
+        {
+          "text": "Usne bahut dhoondha… lekin wapas jaane wali koi kashti nahi mili.",
+          "voiceText": "उसने बहुत ढूँढा… लेकिन वापस जाने वाली कोई कश्ती नहीं मिली।",
+          "en": {
+            "text": "He searched and searched… but there was no boat going back."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s4-khat",
+      "lines": [
+        {
+          "text": "Toh usne lakdi ka ek tukda khokhla kiya, aur andar hazaar dinar aur qarz dene wale ke naam ek khat rakha.",
+          "voiceText": "तो उसने लकड़ी का एक टुकड़ा खोखला किया, और अंदर हज़ार दीनार और क़र्ज़ देने वाले के नाम एक ख़त रखा।",
+          "en": {
+            "text": "So he hollowed out a piece of wood, and put a thousand dinars inside, with a letter to the lender."
+          }
+        },
+        {
+          "text": "Munh band kiya, dua mein paise Allah ke supurd kiye… aur lakdi samundar mein phenk di.",
+          "voiceText": "मुँह बंद किया, दुआ में पैसे अल्लाह के सुपुर्द किए… और लकड़ी समुंदर में फेंक दी।",
+          "en": {
+            "text": "He sealed it, entrusted the money to Allah in a prayer… and threw the wood into the sea."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s5-do-kinare",
+      "lines": [
+        {
+          "text": "Aur woh phir bhi kashti dhoondhta raha.",
+          "voiceText": "और वो फिर भी कश्ती ढूँढता रहा।",
+          "en": {
+            "text": "And still, he kept looking for a boat."
+          }
+        },
+        {
+          "text": "Udhar doosre kinaare par, qarz dene wala dekhne aaya ke shayad koi kashti uske paise le aayi ho.",
+          "voiceText": "उधर दूसरे किनारे पर, क़र्ज़ देने वाला देखने आया कि शायद कोई कश्ती उसके पैसे ले आई हो।",
+          "en": {
+            "text": "Across the sea, the lender came to the shore to see if a boat had brought his money."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s6-khulna",
+      "lines": [
+        {
+          "text": "Kashti nahi, ek lakdi mili. Woh use jalane ke liye ghar le gaya.",
+          "voiceText": "कश्ती नहीं, एक लकड़ी मिली। वो उसे जलाने के लिए घर ले गया।",
+          "en": {
+            "text": "No boat, just a piece of wood. He took it home for firewood."
+          }
+        },
+        {
+          "text": "Aari chali, toh andar dinar mile… aur saath wohi khat.",
+          "voiceText": "आरी चली, तो अंदर दीनार मिले… और साथ वही ख़त।",
+          "en": {
+            "text": "He sawed it open, and found the dinars… and with them, that same letter."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s7-wapsi",
+      "lines": [
+        {
+          "text": "Baad mein usko kashti mil gayi, aur woh khud bhi hazaar dinar lekar aa pahuncha.",
+          "voiceText": "बाद में उसको कश्ती मिल गई, और वो ख़ुद भी हज़ार दीनार लेकर आ पहुँचा।",
+          "en": {
+            "text": "Later he found a boat, and came himself with another thousand dinars."
+          }
+        },
+        {
+          "text": "Qarz dene wale ne poochha, kya tumne mere paas kuch bheja tha? Usne kaha, mujhe isse pehle koi kashti mili hi nahi.",
+          "voiceText": "क़र्ज़ देने वाले ने पूछा, क्या तुमने मेरे पास कुछ भेजा था? उसने कहा, मुझे इससे पहले कोई कश्ती मिली ही नहीं।",
+          "en": {
+            "text": "The lender asked, did you send me anything? He said, I could not find a boat before this one."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s8-seekh",
+      "subtitleMax": 0.75,
+      "lines": [
+        {
+          "text": "Rasoolullah ﷺ ne bataya, usne kaha: Allah ne lakdi mein bheje hue paise pahuncha diye… apne hazaar dinar le jao.",
+          "voiceText": "रसूलुल्लाह सल्लल्लाहु अलैहि वसल्लम ने बताया, उसने कहा: अल्लाह ने लकड़ी में भेजे हुए पैसे पहुँचा दिए… अपने हज़ार दीनार ले जाओ।",
+          "en": {
+            "text": "The Prophet ﷺ told us he said: Allah has delivered what you sent in the wood… take your thousand dinars back.",
+            "voiceText": "The Prophet, peace be upon him, told us he said: Allah has delivered what you sent in the wood… take your thousand dinars back."
+          }
+        },
+        {
+          "text": "Bharosa rakho… aur koshish jaari rakho.",
+          "voiceText": "भरोसा रखो… और कोशिश जारी रखो।",
+          "en": {
+            "text": "Trust Allah… and keep trying."
+          }
+        }
+      ]
+    }
+  ],
+  "languages": [
+    "ur",
+    "en"
+  ]
+}

@@ -20,7 +20,8 @@ a layer is not done.
    water ripples, cloth flutter, sparkles (`Sparkle`) on magic moments. Parallax: foreground layers move faster
    than background (depth in the `L` helper).
 4. **Sound marks the motion.** Steps, cloth, animal sounds, impacts land on the frame they happen (skill
-   `film-sounds`). Ambient bed under every scene.
+   `film-sounds`). Ambient bed under every scene. A sound stops with its shot: give tool/loop cues `until: <cut>`
+   (a saw must not keep sawing over the next close-up).
 
 ## Pace for Shorts
 - New shot/angle every 1.5-3 s (cut inside a scene by switching camera keys or framing). Never > 4 s same framing.
@@ -56,6 +57,40 @@ Plan each scene as a mini shot list first: `beat → shot size + angle + move + 
   god rays (`LightRays`) when a prayer is answered; flicker (diya, lightning) for tension.
 - **Rhythm:** fast cuts (1-1.5 s) in the hook and tension; slower (3-4 s, still moving) at the emotional peak;
   last shot holds while the end card settles, then loops.
+
+## Transitions and effects (library `src/two-d/library/Fx.tsx`, screen space, keyed with `k` 0..1)
+At least 4 different transitions/effects per Short, each chosen for its beat (never all hard cuts):
+- `RewindFx` (+ `rewind.wav`): hook -> flashback. `WhipFx` + camera x jump (+ `whoosh.wav`): time/place jump.
+- `WaterWipe`: cut between two shores/places across water. `IrisFx`: close on a detail. `FlashFx`: shock/reveal.
+- `LensFlare` on a glint of gold/sun, `LightLeak` warm and drifting for hope and the ending, `SplashFx` for impacts
+  in water. `slowmo(l, a, b, 0.35)` remaps a shot's time for a slow-motion beat (+ `slowmo.wav`).
+- Match cuts on shape/action, and an L-cut (next sound 0.3 s early) still count.
+
+## Shot variety (not only front close-ups)
+- Max ~5 front close-ups per Short; between them use over-the-shoulder (`OTS` pattern: the other man's back,
+  big and blurred, in the foreground), top-down hand inserts (`TableTop` + `HandReach` + props), POV, low angle.
+- The most emotional beat of the story gets the longest, slowest coverage: a hand insert, then the face, then a
+  reaction of the other person.
+
+## Close-ups must not look like a cut-out sticker
+- `MusafirFront`: place it so the body runs out of the bottom of the frame (y ~1450-1560 at s ~1.8-2.0). Never
+  show its bottom edge, a table or the floor under a bust.
+- Draw the set's grade over the bust too (the film's `Close` helper does it), give it `light="l"|"r"` from the
+  same side as the set's sun, a soft foreground element (log, table edge, blur3) helps depth.
+- Mix straight-on and 3/4 (`turn` ±0.3..0.4); hands come up from out of frame (`handsUp`) for dua/letter/hold.
+
+## Holding things (props must move WITH the hand)
+- Side puppet: `holdF` / `holdB` draw a prop in the hand (forearm space) and close the fist (`grip: true`).
+  Aim it with `aim(pose, screenDeg, flip, look)` from the film helpers (uses `foreAngle`), e.g. saw blade at the kerf.
+- Two-hand carry: both arms forward, prop in `holdF` turned level with `rotate(-foreAngle(p))`.
+- Never draw a prop separately "near" a hand; use `handPos(...)` only to aim or to hand it over to a free prop
+  (e.g. the moment a thrown log leaves the hands).
+- Inserts: `HandReach` (flat = touch/push, grip = take/carry, point) moves with the prop it touches.
+
+## Cuts land on the words
+`FilmVisuals.scenes[id].beats = [null, <nominal frame>]`: line 2 (index 1) of the scene starts exactly on that
+nominal frame (the scene is stretched piecewise). Use it for every cut that must match narration ("Udhar...",
+"Aari chali..."), else a cut can drift 1-2 s from its words.
 
 ## Not always from the side (front views)
 Side view is only the default because the puppets were drawn that way. Mix angles on purpose:

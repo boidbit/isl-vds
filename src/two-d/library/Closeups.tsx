@@ -1,7 +1,7 @@
 // Close-up and nature assets (library), reusable across stories.
 
 import React from "react";
-import { LINE, OUT } from "../kit";
+import { LINE, OUT, mix } from "../kit";
 import { VillageTree } from "./Village";
 
 const stroke = { stroke: OUT, strokeWidth: LINE, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
@@ -144,3 +144,70 @@ export const TopDownMan: React.FC<{ x: number; y: number; s: number; reach: numb
     <circle cx={0} cy={-8} r={20} fill="#e2ddd2" />
   </g>
 );
+
+// ------------------------------------------------------------------ hand inserts (top view), built for samundar-mein-1000-dinar
+const hst = { stroke: OUT, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
+
+/** Wooden table top seen from above, filling w x h (planks, grain, knots, warm light streak). */
+export const TableTop: React.FC<{ w: number; h: number; tone?: string }> = ({ w, h, tone = "#a87648" }) => (
+  <g>
+    <rect x={0} y={0} width={w} height={h} fill={tone} />
+    {Array.from({ length: Math.ceil(h / 220) }).map((_, i) => (
+      <g key={i}>
+        <path d={`M 0 ${i * 220} L ${w} ${i * 220}`} stroke="#5a3a22" strokeWidth={6} />
+        {[0, 1, 2].map((j) => (
+          <path key={j} d={`M -20 ${i * 220 + 50 + j * 50} Q ${w * 0.3} ${i * 220 + 40 + j * 50 + (i % 2 ? 14 : -10)} ${w * 0.6} ${i * 220 + 54 + j * 50} T ${w + 20} ${i * 220 + 48 + j * 50}`} fill="none" stroke="#8a5a34" strokeWidth={4} opacity={0.6} />
+        ))}
+      </g>
+    ))}
+    <ellipse cx={w * 0.78} cy={h * 0.32} rx={22} ry={12} fill="#6e4426" opacity={0.7} />
+  </g>
+);
+
+/** An arm reaching into the frame from `from` to `to` (screen coords), hand seen from above.
+ * mode: flat = palm down (pushing / touching), grip = closed on something, point = one finger. k 0..1 = how far in. */
+export const HandReach: React.FC<{ from: [number, number]; to: [number, number]; k?: number; skin?: string; sleeve?: string; mode?: "flat" | "grip" | "point"; s?: number }> = ({
+  from,
+  to,
+  k = 1,
+  skin = "#e0a370",
+  sleeve = "#6f7a3f",
+  mode = "flat",
+  s = 1,
+}) => {
+  const hx = mix(from[0], to[0], k);
+  const hy = mix(from[1], to[1], k);
+  const ang = (Math.atan2(to[1] - from[1], to[0] - from[0]) * 180) / Math.PI;
+  return (
+    <g>
+      <path d={`M ${from[0]} ${from[1]} L ${hx} ${hy}`} stroke={OUT} strokeWidth={150 * s} strokeLinecap="round" />
+      <path d={`M ${from[0]} ${from[1]} L ${hx} ${hy}`} stroke={sleeve} strokeWidth={138 * s} strokeLinecap="round" />
+      <g transform={`translate(${hx} ${hy}) rotate(${ang}) scale(${s})`}>
+        <ellipse cx={-30} cy={0} rx={60} ry={70} fill={sleeve} {...hst} strokeWidth={5} />
+        <path d="M -20 -36 Q 20 -46 50 -34 Q 70 -10 64 30 Q 40 44 -20 38 Z" fill={skin} {...hst} strokeWidth={5} />
+        {mode === "flat" && (
+          <g>
+            {/* fingers together (mitten) with three separations, nails at the tips */}
+            <path d="M 50 -40 L 112 -40 Q 134 -38 134 -8 L 134 6 Q 134 38 112 40 L 50 42 Z" fill={skin} {...hst} strokeWidth={5} />
+            {[-20, 0, 20].map((fy) => (
+              <path key={fy} d={`M 70 ${fy} L 132 ${fy}`} stroke={OUT} strokeWidth={3} />
+            ))}
+            {[-30, -10, 10, 30].map((fy) => (
+              <ellipse key={`n${fy}`} cx={124} cy={fy} rx={6} ry={5} fill="#f4c8a8" opacity={0.8} />
+            ))}
+          </g>
+        )}
+        {mode === "point" && (
+          <>
+            <path d="M 56 -24 L 140 -26" stroke={OUT} strokeWidth={24} strokeLinecap="round" />
+            <path d="M 56 -24 L 140 -26" stroke={skin} strokeWidth={16} strokeLinecap="round" />
+            <path d="M 50 -6 Q 80 6 60 30" fill={skin} {...hst} strokeWidth={5} />
+          </>
+        )}
+        {mode === "grip" && <path d="M 50 -36 Q 96 -30 90 4 Q 92 36 50 38 Z" fill={skin} {...hst} strokeWidth={5} />}
+        {mode !== "point" && <path d="M 0 -36 Q 30 -70 60 -58" stroke={OUT} strokeWidth={24} strokeLinecap="round" fill="none" />}
+        {mode !== "point" && <path d="M 0 -36 Q 30 -70 60 -58" stroke={skin} strokeWidth={16} strokeLinecap="round" fill="none" />}
+      </g>
+    </g>
+  );
+};

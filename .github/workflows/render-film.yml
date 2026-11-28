@@ -32,7 +32,7 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 200 # long Shorts with motion blur, cel shading and two languages take 1.5-2 h
     env:
       FILM: ${{ inputs.film }}
       LANGS: ${{ inputs.lang == 'both' && 'ur en' || inputs.lang }}

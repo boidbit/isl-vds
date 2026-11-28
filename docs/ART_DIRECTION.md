@@ -108,3 +108,20 @@ keeps us clear of copying another creator).
 - Things that stay: readable shapes at phone size, faces clear in close-ups, Islamic rules, captions at 75%
   height, warm light for kindness and cold light for danger.
 - Reuse the same assets with a new look through props (colour/outline/texture) rather than new files when possible.
+
+## Look table (keep every film different)
+
+New viewers judge the channel by a row of thumbnails: two films side by side must not share the same palette,
+place and time of day. Each film sets `"look": "<preset>"` in film.json (presets in `src/two-d/film/looks.tsx`:
+grade, split toning, vignette, grain and thumbnail text/stroke/frame colours). Add a row when a film is made.
+
+| Film | Look preset | Main place | Time / light | Thumbnail colours |
+|---|---|---|---|---|
+| pyasa-kutta | (none yet; suggest `desert-gold`) | desert well | hot noon | yellow text |
+| sone-ka-matka | (none yet; suggest `village-green`) | village farm | morning | yellow text |
+| gufa-ke-teen | (none yet; suggest `storm-indigo`) | mountain cave | storm night -> dawn | yellow text |
+| billi-aur-aurat | (none yet; suggest `dusk-rose`) | courtyard | day -> night | yellow text |
+| samundar-mein-1000-dinar | `sea-teal` | sea: stone steps + far pier | warm sun vs grey | white text, teal frame |
+
+Older films get their preset on their next render (check one still first: their scene grades were tuned without it).
+Ideas still free: misty blue-green hills, night market with lamps, snowy north, golden harvest, rainy city.

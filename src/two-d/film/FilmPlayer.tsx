@@ -6,7 +6,8 @@ import { H, VH, VW, W } from "../kit";
 import { BlurDefs } from "./BlurDefs";
 import { voiceDir, type Lang, type Timing } from "./schema";
 import { sfxPath } from "./sfx";
-import { captionChunks, nominalToActual, planFilm, type PlannedScene } from "./timeline";
+import { LookGrade, lookOf } from "./looks";
+import { captionChunks, localToNominal, nominalToActual, planFilm, type PlannedScene } from "./timeline";
 import type { SceneCtx } from "./types";
 
 export type FilmPlayerProps = { filmId: string; timing: Timing | null; lang?: Lang };
@@ -41,7 +42,7 @@ const Picture: React.FC<FilmPlayerProps & { w: number; h: number; at?: number }>
   const { visuals, plan } = usePlan(filmId, timing, lang);
   const scene = sceneAt(plan.scenes, frame);
   const local = frame - scene.start;
-  const nominal = scene.nominal[0] + (local * (scene.nominal[1] - scene.nominal[0])) / scene.duration;
+  const nominal = localToNominal(scene, local);
   return (
     <AbsoluteFill>
       <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
@@ -59,7 +60,8 @@ export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing, lang = "
   const [w, h] = short ? [VW, VH] : [W, H];
   const scene = sceneAt(plan.scenes, frame);
   const local = frame - scene.start;
-  const nominal = scene.nominal[0] + (local * (scene.nominal[1] - scene.nominal[0])) / scene.duration;
+  const nominal = localToNominal(scene, local);
+  const look = lookOf(film.look);
   const end = plan.totalFrames;
   // Shorts loop: no black at the start/end; the last frames blend into frame 0 so the replay is seamless.
   const loop = short && film.loopEnding;
@@ -81,9 +83,18 @@ export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing, lang = "
       {visuals.ambience && <Audio src={staticFile(sfxPath(visuals.ambience.file))} volume={visuals.ambience.volume} loop />}
       {visuals.sfx.map((s, i) => {
         const at = nominalToActual(plan.scenes, s.at);
-        return at === null ? null : (
-          <Sequence key={i} from={at} durationInFrames={Math.round(film.fps * 6)}>
-            <Audio src={staticFile(sfxPath(s.file))} volume={s.volume} />
+        if (at === null) return null;
+        const stop = s.until !== undefined ? nominalToActual(plan.scenes, s.until) : null;
+        const len = Math.max(2, Math.min(film.fps * 6, stop !== null ? stop - at : film.fps * (s.dur ?? 6)));
+        return (
+          <Sequence key={i} from={at} durationInFrames={Math.round(len)}>
+            <Audio
+              src={staticFile(sfxPath(s.file))}
+              volume={(f) => {
+                const fade = Math.max(1, film.fps * (s.fade ?? 0.25));
+                return s.volume * Math.max(0, Math.min(1, (len - f) / fade));
+              }}
+            />
           </Sequence>
         );
       })}
@@ -96,13 +107,15 @@ export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing, lang = "
           ) : null,
         ),
       )}
-      {film.motionBlur > 1 ? (
-        <CameraMotionBlur samples={film.motionBlur} shutterAngle={180}>
+      <LookGrade look={look} frame={frame} w={w} h={h}>
+        {film.motionBlur > 1 ? (
+          <CameraMotionBlur samples={film.motionBlur} shutterAngle={180}>
+            <Picture filmId={filmId} timing={timing} lang={lang} w={w} h={h} />
+          </CameraMotionBlur>
+        ) : (
           <Picture filmId={filmId} timing={timing} lang={lang} w={w} h={h} />
-        </CameraMotionBlur>
-      ) : (
-        <Picture filmId={filmId} timing={timing} lang={lang} w={w} h={h} />
-      )}
+        )}
+      </LookGrade>
       {visuals.overlay?.(nominal, lang)}
       {short && chunk && (
         <div style={{ position: "absolute", top: "75%", left: 0, right: 0, display: "flex", justifyContent: "center" }}>
@@ -134,7 +147,9 @@ export const FilmPlayer: React.FC<FilmPlayerProps> = ({ filmId, timing, lang = "
       )}
       {loopMix > 0 && (
         <AbsoluteFill style={{ opacity: loopMix }}>
-          <Picture filmId={filmId} timing={timing} lang={lang} w={w} h={h} at={0} />
+          <LookGrade look={look} frame={0} w={w} h={h}>
+            <Picture filmId={filmId} timing={timing} lang={lang} w={w} h={h} at={0} />
+          </LookGrade>
           {visuals.overlay?.(plan.scenes[0].nominal[0], lang)}
         </AbsoluteFill>
       )}

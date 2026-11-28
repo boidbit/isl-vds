@@ -28,3 +28,12 @@ All files below are from [Freesound](https://freesound.org), licence **CC0 1.0 (
 | `donkey.mp3` | [Donkey Bray](https://freesound.org/people/StarNinjas37/sounds/560692/) | StarNinjas37 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `cat-meow-weak.mp3` | [Cat meow 3](https://freesound.org/people/MBPL/sounds/668815/) (filtered: lowpass=f=2500,atempo=0.85) | MBPL | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `dishes.mp3` | [Dropping a spoon in a bowl](https://freesound.org/people/freemaster2/sounds/487211/) | freemaster2 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `saw.mp3` | [Hand Saw.wav](https://freesound.org/people/LiezelDippenaar/sounds/707527/) | LiezelDippenaar | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `sea-waves.mp3` | [Sea-waves splash gully-090714.wav](https://freesound.org/people/ra_gun/sounds/77469/) | ra_gun | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `seagulls.mp3` | [seagulls lake wind](https://freesound.org/people/jyka1rock/sounds/512099/) | jyka1rock | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `coins.mp3` | [coins - in cloth 09.wav](https://freesound.org/people/Anthousai/sounds/336580/) | Anthousai | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `paper.mp3` | [handle_paper_2.wav](https://freesound.org/people/jakobhandersen/sounds/181054/) | jakobhandersen | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `pigeon.mp3` | [pigeon territorial coo.wav](https://freesound.org/people/5ro4/sounds/649390/) | 5ro4 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `boat-creak.mp3` | [G27-08-Movie Boat Creak Scene.wav](https://freesound.org/people/craigsmith/sounds/438354/) | craigsmith | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `chisel.mp3` | [chisels-on-wood.aiff](https://freesound.org/people/Simsym23/sounds/256953/) | Simsym23 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `sea-bed.mp3` | [131018_WarnemuendeShorelineWide_R.wav](https://freesound.org/people/blaukreuz/sounds/212771/) | blaukreuz | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |

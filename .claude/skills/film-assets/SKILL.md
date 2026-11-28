@@ -9,8 +9,14 @@ description: Use when a film needs characters, places, props, animals or close-u
 - `src/two-d/library/registry.ts`: every asset name + description + tags. Grep it, do not read all library files:
   `grep -n "goat\|tree\|rain" src/two-d/library/registry.ts`
 - Exports per file: `grep -n "^export const" src/two-d/library/*.tsx src/two-d/Scenery.tsx`
-- Puppets: `src/two-d/Musafir.tsx` (human: `LOOKS`, `MusafirPose`, walk/kneel/talk/back view/props),
-  `src/two-d/Dog2D.tsx`. New people = a new entry in `LOOKS` (clothes/colours), not a new puppet.
+- Puppets: `src/two-d/Musafir.tsx` (human: `LOOKS`, `MusafirPose`, walk/kneel/talk/back view, `holdF`/`holdB`
+  props in the fist, `grip`, `light` cel shading, `handPos`/`foreAngle`), `src/two-d/FrontFace.tsx` (`MusafirFront`:
+  same looks from the front, chest up, hands dua/letter/hold/chin), `src/two-d/Dog2D.tsx`, `Cat2D.tsx`.
+- **New people = a new entry in `LOOKS` with its own face and body, never only new colours.** Set at least 3 of:
+  `face` (round/long/square), `nose` (small/big/hook), `eyes` (0.85-1.15), `brows` (0.8-1.5), `build` (0.85-1.22),
+  `height` (0.9-1.1), `age` (0-1 wrinkles), `beardStyle` (full/goatee), `beardLength`, `beardGrey`, `stoop`,
+  `headwear`, `vest`/`shawl`/`shoulderCloth`. Two main characters must differ in face shape AND build.
+- Effects/transitions: `src/two-d/library/Fx.tsx`. Hand inserts: `TableTop`, `HandReach` in `Closeups.tsx`.
 - Read only the props type + signature of a component you will use (Grep with -A 15).
 
 ## 2. Can an existing asset do it with a prop?
@@ -28,10 +34,11 @@ Prefer adding a prop (mood, colour, variant, pose) to an existing asset over a n
 - Animals and people: blink, breathe (1-2% scale on chest), idle weight shift.
 
 ## Views to build (wanted, not there yet)
-Puppets are side/3/4 only (`Musafir` also has `back`). When a film needs it, add a `view` prop instead of a new puppet:
+Done: `MusafirFront` (front chest-up, `turn` ±1 for 3/4). Still wanted, add as a prop instead of a new puppet:
 1. `Cat2D` / `Dog2D` `view="front"`: face to camera, big eyes, ears, sitting front body (cheap, big impact).
-2. `Musafir` front close-up (chest up): face to camera, both eyes, blink, lip-flap from `talk`, scarf/turban/cap.
-3. Head turn: a `turn` 0..1 prop (side -> 3/4 -> front) so a character can turn to the viewer in one shot.
+2. Side-puppet head turn side -> 3/4 -> front inside one shot.
+3. Real vehicles at the right scale: use `Ship` (markab, 2 masts, cabin, oars, gangplank) for any sea journey;
+   `Boat` only for a small rowing/fishing boat.
 Keep the look switchable by props (colour, outline weight, texture): see docs/ART_DIRECTION.md "2D look".
 
 ## 4. Register
