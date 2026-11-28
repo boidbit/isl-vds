@@ -4,8 +4,10 @@ The owner writes in Hinglish (Roman Hindi/Urdu); reply in Hinglish, short and cl
 laptop / phone browser only: never ask them to install tools or run commands locally.
 
 ## What to do in a new chat
-- **Owner pastes a script (even with no other words) → use skill `new-film`** and run the whole pipeline.
-- Skills (in `.claude/skills/`): `new-film` (script → film.json → visuals → contact sheet), `film-assets`
+- **Owner pastes a script (even with no other words), or gives only a Hadith number / topic → use skill
+  `new-film`** and run the whole pipeline; its first step is skill `story-craft` (engaging telling, scored).
+- Skills (in `.claude/skills/`): `new-film` (script → film.json → visuals → contact sheet), `story-craft` (hook,
+  structure, heart, reveal, ending from the source; story ideas list), `film-assets`
   (reuse/build/register assets), `lively-motion` (no flat/dead frames: quality bar for every scene),
   `film-sounds` (real CC0 sounds), `render-and-check` (GitHub render in ur/en/both + checks).
 - Anything else: answer directly, read only the files you need.
