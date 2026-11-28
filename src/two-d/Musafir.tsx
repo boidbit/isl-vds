@@ -50,6 +50,8 @@ export type Look = typeof C & {
   beardLength: number; // 0 = no beard or moustache
   vest?: string; // waistcoat over the kurta
   shoulderCloth?: string; // cloth over the front shoulder (labourer)
+  shawl?: string; // shawl over both shoulders (older man)
+  beardGrey?: boolean; // white streaks in the beard
 };
 
 const C = {
@@ -84,6 +86,9 @@ export const LOOKS: Record<string, Partial<Look>> = {
   // "Billi aur Aurat" cast
   "aurat-beige": { robe: "#7a2a35", robeShade: "#5e1f2a", sash: "#c9ac82", headwear: "scarf", turban: "#e3cfae", turbanShade: "#c8b08a", beard: "#3a2a1e", beardLength: 0, sandal: "#6a4026", skin: "#e6b088", skinShade: "#cc9670" },
   bachcha: { robe: "#4f9a6a", robeShade: "#3c7d54", sash: "#e0b04a", headwear: "cap", turban: "#fdf6e6", turbanShade: "#e6dcc4", beard: "#2e231b", beardLength: 0, skin: "#e8b48a", skinShade: "#cf9a70" },
+  // "Samundar mein 1,000 dinar" cast
+  qarzdar: { robe: "#dcc39a", robeShade: "#c2a77c", sash: "#8a6a44", shoulderCloth: "#3f6fa8", headwear: "cap", turban: "#efe6d2", turbanShade: "#d6cbb2", beard: "#2e2118", beardLength: 0.55, skin: "#d99a66", skinShade: "#bd8150" },
+  "qarz-dene-wala": { robe: "#6f7a3f", robeShade: "#596234", sash: "#4e3a26", shawl: "#8a6446", turban: "#f4efe4", turbanShade: "#dcd4c4", beard: "#4a3a2e", beardGrey: true, beardLength: 1.1, skin: "#e0a370", skinShade: "#c48756" },
   buzurg: { robe: "#f6f1e4", robeShade: "#ddd3bd", sash: "#a07a3c", turban: "#ffffff", turbanShade: "#e6e1d6", beard: "#efece6", skin: "#e4ad80", skinShade: "#c99268", beardLength: 1.5 },
 };
 
@@ -218,6 +223,7 @@ const Head: React.FC<{ p: MusafirPose; c: Look }> = ({ p, c: C }) => {
       {C.headwear !== "scarf" && <ellipse cx={-22} cy={-56} rx={9} ry={12} fill={C.skinShade} {...stroke} />}
       {/* beard + moustache */}
       {C.beardLength > 0 && <path transform={`translate(0 -44) scale(1 ${C.beardLength}) translate(0 44)`} d="M -28 -60 Q -30 -10 8 4 Q 46 8 58 -30 Q 56 -42 50 -44 Q 38 -18 20 -22 Q 0 -26 -6 -56 Z" fill={C.beard} {...stroke} />}
+      {C.beardGrey && C.beardLength > 0 && <path d="M 0 -30 Q 10 -8 24 -2 M 30 -14 Q 40 -6 48 -18" fill="none" stroke="#f1ece4" strokeWidth={4} strokeLinecap="round" />}
       {C.beardLength === 0 && <ellipse cx={44} cy={-48} rx={8} ry={5} fill="#e88a7a" opacity={0.35} />}
       {mouth()}
       {C.beardLength > 0 && <path d="M 22 -40 Q 36 -46 50 -38" fill="none" stroke={C.beard} strokeWidth={8} strokeLinecap="round" />}
@@ -328,6 +334,12 @@ export const Musafir: React.FC<{ x: number; y: number; flip?: boolean; scale?: n
               {[-100, -70, -40].map((by) => (
                 <circle key={by} cx={18} cy={by} r={4} fill="#d9b25a" stroke={OUT} strokeWidth={1.5} />
               ))}
+            </>
+          )}
+          {C.shawl && (
+            <>
+              <path d="M -48 -60 C -54 -90 -50 -114 -38 -128 Q 0 -142 42 -128 C 50 -112 52 -90 48 -60 Q 0 -44 -48 -60 Z" fill={C.shawl} {...stroke} />
+              <path d="M 30 -64 L 40 -10 Q 30 -2 20 -8 L 18 -60 Z" fill={C.shawl} {...stroke} />
             </>
           )}
           <rect x={-48} y={-12} width={96} height={20} rx={8} fill={C.sash} {...stroke} />
