@@ -5,6 +5,7 @@
 //
 //   npm run hadith -- bukhari 439
 //   npm run hadith -- muslim 2984a --film baadal-aur-baagh-ka-raaz   (also saves films/<id>/source.md)
+//   npm run hadith -- search "kite scarf"                          (find the number for a topic)
 //
 // Collections: bukhari, muslim (sahih by consensus), abudawud, tirmidhi, nasai, ibnmajah (use only with a Sahih/Hasan
 // grade), malik, nawawi (40 Hadith), qudsi. Needs curl.
@@ -27,6 +28,37 @@ const NAMES: Record<string, string> = {
 const SAHIH_BOOKS = new Set(["bukhari", "muslim"]);
 
 const args = process.argv.slice(2);
+
+/** "2984.01" (API) -> "2984a" (sunnah.com) for Muslim; other books use the plain number. */
+const sunnahNo = (c: string, h: { hadithnumber: number; arabicnumber?: number | string }) => {
+  if (c !== "muslim") return String(h.hadithnumber);
+  const [base, sub] = String(h.arabicnumber ?? h.hadithnumber).split(".");
+  return sub ? `${base}${String.fromCharCode(96 + Number(sub))}` : base;
+};
+
+// Search mode: find the reference for a topic (no number needed).
+//   npm run hadith -- search "kite scarf"            (Bukhari + Muslim)
+//   npm run hadith -- search "debtor forgive" bukhari
+if (args[0] === "search") {
+  const words = (args[1] ?? "").toLowerCase().split(/\s+/).filter(Boolean);
+  const cols = args[2] ? [args[2]] : ["bukhari", "muslim"];
+  if (!words.length || cols.some((c) => !NAMES[c])) {
+    console.log('Usage: npm run hadith -- search "<english words>" [collection]');
+    process.exit(1);
+  }
+  for (const c of cols) {
+    const all: { hadiths: { hadithnumber: number; arabicnumber?: number | string; text: string }[] } = JSON.parse(
+      execFileSync("curl", ["-sS", "--fail", "--max-time", "90", `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/eng-${c}.min.json`], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }),
+    );
+    const hits = all.hadiths
+      .map((h) => ({ h, score: words.filter((w) => h.text.toLowerCase().includes(w)).length }))
+      .filter((x) => x.score === words.length && x.h.text.length > 120)
+      .slice(0, 8);
+    for (const { h } of hits) console.log(`${NAMES[c]} ${sunnahNo(c, h)}  https://sunnah.com/${c}:${sunnahNo(c, h)}\n  ${h.text.slice(0, 220).replace(/\s+/g, " ")}…\n`);
+    if (!hits.length) console.log(`${NAMES[c]}: no match for "${words.join(" ")}" (try fewer / other English words)`);
+  }
+  process.exit(0);
+}
 const film = args.includes("--film") ? args[args.indexOf("--film") + 1] : undefined;
 const [col, num] = args.filter((a, i) => !a.startsWith("--") && args[i - 1] !== "--film");
 if (!col || !num || !NAMES[col] || !/^\d+[a-z]?$/.test(num)) {

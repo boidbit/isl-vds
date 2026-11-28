@@ -4,8 +4,11 @@ The owner writes in Hinglish (Roman Hindi/Urdu); reply in Hinglish, short and cl
 laptop / phone browser only: never ask them to install tools or run commands locally.
 
 ## What to do in a new chat
-- **Owner pastes a script (even with no other words), or gives only a Hadith number / topic → use skill
-  `new-film`** and run the whole pipeline; its first step is skill `story-craft` (engaging telling, scored).
+- **Owner pastes a script (even with no other words), or gives only a topic → use skill `new-film`** and run the
+  whole pipeline; its first step is skill `story-craft` (engaging telling, scored). The owner never needs to give a
+  Hadith number: find it with `npm run hadith -- search "<english words>"`.
+- **Owner says "suggest karo" / "agli kahani do" → skill `story-craft` step 0:** 3 picks (not made yet, varied),
+  then build the chosen one.
 - Skills (in `.claude/skills/`): `new-film` (script → film.json → visuals → contact sheet), `story-craft` (hook,
   structure, heart, reveal, ending from the source; story ideas list), `film-assets`
   (reuse/build/register assets), `lively-motion` (no flat/dead frames: quality bar for every scene),

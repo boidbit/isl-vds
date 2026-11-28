@@ -1,6 +1,6 @@
 ---
 name: story-craft
-description: Use for every new film BEFORE film.json, and whenever the owner gives only a Hadith number / topic / rough idea, a GPT-written script, or says the story feels flat ("jaan nahi hai", "engaging banao"). Turns a source into an engaging Short story (hook with an open question, structure, the heart character, reveal, ending on the source's own words) and scores it before any code. Also has a list of good story Hadith.
+description: Use for every new film BEFORE film.json, when the owner asks for a story suggestion ("suggest karo", "agli kahani do", "next Short kya banayein"), gives only a topic / rough idea / Hadith number, a GPT-written script, or says the story feels flat ("jaan nahi hai", "engaging banao"). Turns a source into an engaging Short story (hook with an open question, structure, the heart character, reveal, ending on the source's own words) and scores it before any code. Also has a list of good story Hadith.
 ---
 
 # Story craft: tell it, don't report it
@@ -8,6 +8,18 @@ description: Use for every new film BEFORE film.json, and whenever the owner giv
 A Short lives or dies in its telling. A summary of a Hadith turned into scenes ("ek aadmi tha, usne yeh kiya,
 phir yeh hua") is a report, not a story. Do this pass on every script (also the owner's own), then show the
 owner the improved script + drift list before building. Reply in short Hinglish.
+
+## 0. The owner asks "suggest karo" (no number, maybe no topic)
+The owner does not give Hadith numbers. You choose:
+1. `ls films/` = stories already made; skip them and anything with the same lesson as the last 2 films.
+2. Offer **3 picks** from the ideas list below (or a new one you found with `npm run hadith -- search "<english
+   words>"`), each different in feeling (e.g. mystery / mercy / courage) and in place/look from the last films:
+   `**Title**` (Roman Urdu) - hook line for the first 3 s - one-line story - reference - place + look.
+   Mark your favourite with "(meri pasand)". Ask one question: "Kaunsi banayein? 1, 2 ya 3".
+3. If the owner says "tum hi chuno" / "koi bhi", take your favourite and start `new-film` at once.
+4. Owner gives only a topic ("cheel wali kahani", "qarz wali"): find the reference with
+   `npm run hadith -- search "<english words>"` (Bukhari + Muslim), confirm the text is that story, go on.
+After a film is made, delete its row from the ideas list (and add 1-2 new good ones you found on the way).
 
 ## 1. Read the whole source, not a summary
 Get the full text first: `npm run hadith -- <bukhari|muslim|abudawud|tirmidhi|nasai|ibnmajah> <number> --film <id>`
