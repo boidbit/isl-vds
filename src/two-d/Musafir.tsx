@@ -47,7 +47,7 @@ export const BASE_POSE: MusafirPose = {
 };
 
 export type Look = typeof C & {
-  headwear: "turban" | "cap" | "scarf"; // "scarf" = woman's headscarf (hijab) framing the face
+  headwear: "turban" | "cap" | "scarf" | "none"; // "scarf" = woman's headscarf (hijab); "none" = bare head (see hair)
   beardLength: number; // 0 = no beard or moustache
   vest?: string; // waistcoat over the kurta
   shoulderCloth?: string; // cloth over the front shoulder (labourer)
@@ -63,6 +63,10 @@ export type Look = typeof C & {
   age?: number; // 0..1 wrinkles (forehead, eyes)
   beardStyle?: "full" | "goatee"; // goatee = chin beard only
   stoop?: number; // degrees of forward stoop (older men)
+  // Conditions (animate them by changing the value per frame: healing = going to 0 / hair to 1):
+  patches?: number; // 0..1 pale skin patches (leprosy, shown gently)
+  blind?: number; // 0..1 clouded eyes, no pupils
+  hair?: number; // 0..1 hair on a bare head (headwear "none"): 0 = bald with a shine, 1 = full hair
 };
 
 const C = {
@@ -104,6 +108,10 @@ export const LOOKS: Record<string, Partial<Look>> = {
   hammal: { robe: "#8a6a4a", robeShade: "#6e523a", sash: "#5a4632", headwear: "cap", turban: "#d8c8a0", turbanShade: "#bfae84", shoulderCloth: "#c8b48a", beard: "#1e1610", beardLength: 0.4, skin: "#b87a48", skinShade: "#9a6236", face: "square", nose: "big", build: 1.22, height: 1.02 },
   machhera: { robe: "#b8a27a", robeShade: "#9a865e", sash: "#4a6a8a", headwear: "turban", turban: "#e8e0cc", turbanShade: "#cfc4aa", beard: "#d8d2c8", beardLength: 1.3, skin: "#c88a5a", skinShade: "#aa6e40", face: "long", nose: "small", eyes: 0.85, age: 0.9, build: 0.88, stoop: 8 },
   raahgir: { robe: "#c9b08a", robeShade: "#ad9470", sash: "#7a3a2a", headwear: "turban", turban: "#e8c77a", turbanShade: "#cfa95a", beard: "#3a2a1e", beardLength: 0.9, skin: "#d99a66", skinShade: "#bd8150", face: "round", nose: "small", eyes: 1.15, build: 1.05, height: 0.94 },
+  // "Teen aadmi, ek imtihaan" cast (poor look; the film turns conditions off and dresses them rich)
+  kodhi: { robe: "#9a8a74", robeShade: "#7e705c", sash: "#5a4a3a", headwear: "cap", turban: "#cfc2a6", turbanShade: "#b3a688", beard: "#3a2a1e", beardLength: 0.7, skin: "#d29a6a", skinShade: "#b58052", face: "long", nose: "big", eyes: 0.95, build: 0.88, height: 1.04, patches: 1 },
+  ganja: { robe: "#8a7a62", robeShade: "#6e604c", sash: "#4a3a2a", headwear: "none", hair: 0, turban: "#ffffff", turbanShade: "#e2ddd2", beard: "#2a1e16", beardLength: 0.9, beardStyle: "goatee", skin: "#e0a370", skinShade: "#c48756", face: "round", nose: "small", eyes: 0.9, brows: 1.3, build: 1.14, height: 0.95 },
+  andha: { robe: "#b8a88a", robeShade: "#9a8a6e", sash: "#6a5a40", headwear: "turban", turban: "#e8dcc0", turbanShade: "#cfc2a6", beard: "#4a3426", beardLength: 1.1, skin: "#c98a58", skinShade: "#a8703f", face: "square", nose: "hook", eyes: 1.12, build: 1.0, height: 1.0, blind: 1 },
   buzurg: { robe: "#f6f1e4", robeShade: "#ddd3bd", sash: "#a07a3c", turban: "#ffffff", turbanShade: "#e6e1d6", beard: "#efece6", skin: "#e4ad80", skinShade: "#c99268", beardLength: 1.5 },
 };
 
@@ -168,13 +176,14 @@ const Arm: React.FC<{ x: number; y: number; a: [number, number]; back?: boolean;
   );
 };
 
-const Eye: React.FC<{ cx: number; cy: number; open: number; look: number; s?: number }> = ({ cx, cy, open, look, s = 1 }) => {
-  const ry = 11 * s * Math.max(0.08, open);
+const Eye: React.FC<{ cx: number; cy: number; open: number; look: number; s?: number; blind?: number }> = ({ cx, cy, open, look, s = 1, blind = 0 }) => {
+  const ry = 11 * s * Math.max(0.08, open) * (1 - blind * 0.35);
   return (
     <g>
       <ellipse cx={cx} cy={cy} rx={9.5 * s} ry={ry} fill="#fff" stroke={OUT} strokeWidth={2.5} />
-      {open > 0.25 && <circle cx={cx + 3 + look * 2.5} cy={cy + 1} r={Math.min(5.5, ry * 0.6)} fill="#2a1a12" />}
-      {open > 0.25 && <circle cx={cx + 4.5 + look * 2.5} cy={cy - 1.5} r={1.6} fill="#fff" />}
+      {open > 0.25 && <circle cx={cx + 3 + look * 2.5} cy={cy + 1} r={Math.min(5.5, ry * 0.6)} fill="#2a1a12" opacity={1 - blind} />}
+      {open > 0.25 && <circle cx={cx + 4.5 + look * 2.5} cy={cy - 1.5} r={1.6} fill="#fff" opacity={1 - blind} />}
+      {blind > 0.02 && <ellipse cx={cx} cy={cy} rx={8 * s} ry={Math.max(1, ry - 1)} fill="#d6dee6" opacity={blind * 0.9} />}
       {open < 0.7 && (
         // heavy upper lid for a tired look
         <path d={`M ${cx - 11} ${cy - ry + 1} Q ${cx} ${cy - ry - 3} ${cx + 11} ${cy - ry + 1}`} fill="none" stroke={OUT} strokeWidth={3} strokeLinecap="round" />
@@ -270,8 +279,16 @@ const Head: React.FC<{ p: MusafirPose; c: Look }> = ({ p, c: C }) => {
         {...stroke}
         strokeWidth={3}
       />
-      <Eye cx={22} cy={-66} open={p.eyeOpen} look={p.look} s={C.eyes ?? 1} />
-      <Eye cx={44} cy={-66} open={p.eyeOpen} look={p.look} s={C.eyes ?? 1} />
+      <Eye cx={22} cy={-66} open={p.eyeOpen} look={p.look} s={C.eyes ?? 1} blind={C.blind ?? 0} />
+      <Eye cx={44} cy={-66} open={p.eyeOpen} look={p.look} s={C.eyes ?? 1} blind={C.blind ?? 0} />
+      {(C.patches ?? 0) > 0.01 && (
+        <g opacity={C.patches} fill="#f3cdb8" stroke="#d9a58a" strokeWidth={1.5}>
+          <path d="M 26 -46 q 10 -8 18 0 q 4 10 -6 12 q -12 2 -12 -12 Z" />
+          <path d="M -6 -84 q 8 -10 18 -4 q 6 8 -4 12 q -12 2 -14 -8 Z" />
+          <path d="M 44 -92 q 6 -4 10 2 q 0 8 -8 6 Z" />
+          <path d="M -18 -40 q 8 -6 14 2 q 0 8 -8 8 q -8 -2 -6 -10 Z" />
+        </g>
+      )}
       <path d={browL(22, -84, -1)} fill="none" stroke={C.beard} strokeWidth={5 * (C.brows ?? 1)} strokeLinecap="round" />
       <path d={browL(44, -84, 1)} fill="none" stroke={C.beard} strokeWidth={5 * (C.brows ?? 1)} strokeLinecap="round" />
       {(C.age ?? 0) > 0 && (
@@ -289,6 +306,18 @@ const Head: React.FC<{ p: MusafirPose; c: Look }> = ({ p, c: C }) => {
           <path d="M -34 -96 Q -46 -60 -36 -16" fill="none" stroke={C.turbanShade} strokeWidth={5} strokeLinecap="round" />
           <path d="M 50 -94 Q 20 -96 2 -80" fill="none" stroke={C.turbanShade} strokeWidth={4} strokeLinecap="round" />
         </>
+      ) : C.headwear === "none" ? (
+        (C.hair ?? 0) > 0.02 ? (
+          <path
+            transform={`translate(10 -88) scale(1 ${0.35 + 0.65 * (C.hair ?? 0)}) translate(-10 88)`}
+            d="M -36 -78 Q -44 -120 8 -122 Q 56 -120 56 -82 Q 40 -96 14 -96 Q -12 -96 -36 -78 Z"
+            fill={C.beard}
+            opacity={Math.min(1, (C.hair ?? 0) * 1.6)}
+            {...stroke}
+          />
+        ) : (
+          <ellipse cx={14} cy={-96} rx={16} ry={7} fill="#ffffff" opacity={0.45} transform="rotate(-18 14 -96)" />
+        )
       ) : C.headwear === "cap" ? (
         <path d="M -34 -86 Q -30 -122 10 -124 Q 50 -122 54 -86 Q 10 -94 -34 -86 Z" fill={C.turban} {...stroke} />
       ) : (

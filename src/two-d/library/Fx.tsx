@@ -132,3 +132,48 @@ export const SplashFx: React.FC<{ x: number; y: number; age: number; s?: number 
 
 /** Slow motion inside a shot: maps local frame l to a slower story time between a..b (factor < 1 = slower). */
 export const slowmo = (l: number, a: number, b: number, factor: number) => (l <= a ? l : l >= b ? a + (b - a) * factor + (l - b) : a + (l - a) * factor);
+
+/** Healing / blessing light around (x, y): a soft glow that blooms and sparkles that rise (k 0..1..0). */
+export const HealGlow: React.FC<{ x: number; y: number; k: number; t: number; r?: number; color?: string }> = ({ x, y, k, t, r = 260, color = "#fff4c2" }) => {
+  if (k <= 0.001) return null;
+  return (
+    <g style={{ mixBlendMode: "screen" }} opacity={k}>
+      <defs>
+        <radialGradient id="healG">
+          <stop offset="0" stopColor={color} stopOpacity={0.95} />
+          <stop offset="0.5" stopColor={color} stopOpacity={0.35} />
+          <stop offset="1" stopColor={color} stopOpacity={0} />
+        </radialGradient>
+      </defs>
+      <circle cx={x} cy={y} r={r * (0.7 + 0.3 * k)} fill="url(#healG)" />
+      {Array.from({ length: 16 }).map((_, i) => {
+        const ph = ((t * 0.6 + i / 16) % 1 + 1) % 1;
+        const px = x + Math.sin(i * 2.3) * r * 0.7;
+        const py = y + r * 0.5 - ph * r * 1.6;
+        const s = (1 - ph) * (6 + (i % 3) * 4);
+        return <path key={i} d={`M ${px} ${py - s} L ${px + s * 0.3} ${py} L ${px} ${py + s} L ${px - s * 0.3} ${py} Z M ${px - s} ${py} L ${px} ${py + s * 0.3} L ${px + s} ${py} L ${px} ${py - s * 0.3} Z`} fill="#ffffff" opacity={1 - ph} />;
+      })}
+    </g>
+  );
+};
+
+/** A memory ("his own past"): wrap the remembered picture in <g filter="url(#memory)"> and draw this on top:
+ * soft white edges, slow ripples, k = strength. */
+export const MemoryFx: React.FC<{ k: number; t: number; w: number; h: number }> = ({ k, t, w, h }) => {
+  if (k <= 0.001) return null;
+  return (
+    <g opacity={k}>
+      <defs>
+        <radialGradient id="memEdge" cx="50%" cy="48%" r="70%">
+          <stop offset="0.55" stopColor="#fff8ea" stopOpacity={0} />
+          <stop offset="1" stopColor="#fff8ea" stopOpacity={0.95} />
+        </radialGradient>
+      </defs>
+      <rect x={0} y={0} width={w} height={h} fill="url(#memEdge)" />
+      {[0, 1, 2].map((i) => {
+        const rr = ((t * 260 + i * 330) % 1000) + 100;
+        return <circle key={i} cx={w / 2} cy={h * 0.48} r={rr} fill="none" stroke="#ffffff" strokeWidth={6} opacity={0.25 * (1 - rr / 1100)} />;
+      })}
+    </g>
+  );
+};

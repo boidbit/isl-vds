@@ -183,4 +183,12 @@ export const LIBRARY: Record<string, { description: string; tags: string[]; buil
   "hammal": { description: "Porter: brown kurta, cloth on the shoulder, square face, big nose, very broad (LOOKS)", tags: ["character"], builtFor: "samundar-mein-1000-dinar" },
   "machhera": { description: "Old fisherman: long face, white beard, wrinkles, thin, stooped (LOOKS)", tags: ["character"], builtFor: "samundar-mein-1000-dinar" },
   "raahgir": { description: "Passer-by: sand kurta, yellow turban, round face, big eyes, short (LOOKS)", tags: ["character"], builtFor: "samundar-mein-1000-dinar" },
+  "sfx-stick-tap": { description: "Wooden stick tapping the ground (blind man's cane)", tags: ["sound", "real"], builtFor: "library" },
+  "sfx-heartbeat": { description: "Slow heartbeat (tension)", tags: ["sound", "real"], builtFor: "library" },
+  "sfx-flock": { description: "Flock of sheep/goats bleating (bed)", tags: ["sound", "real"], builtFor: "library" },
+  "kodhi": { description: "Leper (poor): long face, big nose, thin, patched grey kurta, skin patches (look.patches 0..1, animate to 0 to heal) (LOOKS)", tags: ["character"], builtFor: "teen-aadmi-ek-imtihaan" },
+  "ganja": { description: "Bald man (poor): round face, goatee, broad, bare head (headwear none, look.hair 0..1 grows hair) (LOOKS)", tags: ["character"], builtFor: "teen-aadmi-ek-imtihaan" },
+  "andha": { description: "Blind man (poor): square face, hook nose, clouded eyes (look.blind 0..1, animate to 0 to restore sight) (LOOKS)", tags: ["character"], builtFor: "teen-aadmi-ek-imtihaan" },
+  "fx-heal-glow": { description: "Fx.tsx HealGlow: healing/blessing light that blooms with rising sparkles", tags: ["fx"], builtFor: "teen-aadmi-ek-imtihaan" },
+  "fx-memory": { description: "Fx.tsx MemoryFx + BlurDefs filter#memory: a remembered past (sepia, white edges, ripples)", tags: ["fx", "transition"], builtFor: "teen-aadmi-ek-imtihaan" },
 };

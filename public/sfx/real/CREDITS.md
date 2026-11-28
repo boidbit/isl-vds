@@ -37,3 +37,6 @@ All files below are from [Freesound](https://freesound.org), licence **CC0 1.0 (
 | `boat-creak.mp3` | [G27-08-Movie Boat Creak Scene.wav](https://freesound.org/people/craigsmith/sounds/438354/) | craigsmith | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `chisel.mp3` | [chisels-on-wood.aiff](https://freesound.org/people/Simsym23/sounds/256953/) | Simsym23 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
 | `sea-bed.mp3` | [131018_WarnemuendeShorelineWide_R.wav](https://freesound.org/people/blaukreuz/sounds/212771/) | blaukreuz | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `stick-tap.mp3` | [Wooden_Stick_Put Down](https://freesound.org/people/maatre/sounds/735435/) | maatre | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `heartbeat.mp3` | [Heart beats](https://freesound.org/people/Urra/sounds/667164/) | Urra | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |
+| `flock.mp3` | [flock of sheep](https://freesound.org/people/eguaus/sounds/244552/) | eguaus | [CC0](http://creativecommons.org/publicdomain/zero/1.0/) |

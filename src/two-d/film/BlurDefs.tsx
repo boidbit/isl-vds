@@ -34,5 +34,9 @@ export const BlurDefs: React.FC = () => (
     <Cel id="celL" dir={-1} d={12} />
     <Cel id="celRBig" dir={1} d={30} />
     <Cel id="celLBig" dir={-1} d={30} />
+    {/* memory / flashback: warm sepia, almost no colour */}
+    <filter id="memory" colorInterpolationFilters="sRGB">
+      <feColorMatrix type="matrix" values="0.42 0.62 0.16 0 0.04  0.36 0.56 0.14 0 0.03  0.27 0.44 0.11 0 0.02  0 0 0 1 0" />
+    </filter>
   </defs>
 );

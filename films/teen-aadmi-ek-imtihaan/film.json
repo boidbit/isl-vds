@@ -1,0 +1,294 @@
+{
+  "id": "teen-aadmi-ek-imtihaan",
+  "title": "Teen Aadmi, Ek Imtihaan",
+  "fps": 30,
+  "format": "short",
+  "motionBlur": 5,
+  "look": "harvest-amber",
+  "source": {
+    "references": [
+      "Sahih al-Bukhari 3464"
+    ],
+    "verified": false
+  },
+  "voice": {
+    "enabled": true,
+    "model": "gemini-3.8-flash-tts",
+    "speakers": {
+      "narrator": {
+        "voice": "Fenrir",
+        "style": "natural, conversational Hindi storyteller like a gripping YouTube Short; mysterious suspense in the first line, gentle and sad while describing the three suffering men, warm wonder at the gifts, tense and a little cold while the two rich men refuse, deeply warm and emotional with the third man's answer, soft and calm at the end; short pauses at the dots, never slow or robotic",
+        "styleEn": "natural, conversational English storyteller like a gripping YouTube Short; mysterious at the start, gentle and sad for the three suffering men, warm wonder at the gifts, tense and cold while two rich men refuse, deeply warm with the third man's answer, soft and calm at the end"
+      }
+    }
+  },
+  "assets": [
+    "kodhi",
+    "ganja",
+    "andha",
+    "raahgir",
+    "maa",
+    "musafir-front",
+    "camel",
+    "cow",
+    "goat",
+    "village-sky",
+    "hills",
+    "birds",
+    "village-tree",
+    "mud-house",
+    "court-wall",
+    "dirt-ground",
+    "far-houses",
+    "time-sky",
+    "dust-motes",
+    "light-rays",
+    "fx-heal-glow",
+    "fx-memory",
+    "fx-whip",
+    "fx-flash",
+    "fx-light-leak",
+    "sfx-heartbeat",
+    "sfx-stick-tap",
+    "sfx-flock",
+    "sfx-camel",
+    "sfx-cow",
+    "sfx-goat",
+    "sfx-knock",
+    "sfx-door",
+    "sfx-steps-mud",
+    "sfx-step",
+    "sfx-whoosh",
+    "sfx-shimmer",
+    "sfx-chime",
+    "sfx-pad",
+    "sfx-birds",
+    "sfx-breeze",
+    "sfx-village-ambience",
+    "sfx-children-play"
+  ],
+  "publish": {
+    "ur": {
+      "title": "Teen aadmi, ek hi sawaal… sirf ek paas hua 😮 Aap hote to?",
+      "alts": [
+        "Kodhi, ganja aur andha… saalon baad ek ajnabi ne darwaza khatkhataya",
+        "Teen ameer aur ek gareeb musafir… aakhir tak dekhna"
+      ],
+      "description": "Ek kodhi, ek ganja aur ek andha. Teeno ki zindagi badal gayi… teeno ki waadiyan jaanwaron se bhar gayin.\nPhir ek din ek gareeb musafir unke darwaze par aaya… aur teeno ka imtihaan shuru hua.\n\n💬 Aap teeno mein se kaun hote? Sach batana.\n\n📖 Reference: Sahih al-Bukhari 3464 https://sunnah.com/bukhari:3464\nHadith ka matlab: Rasoolullah ﷺ ne Bani Israil ke teen aadmiyon (ek kodhi, ek ganja aur ek andha) ka zikr kiya jinhe Allah ne aazmaya. Unhe sehat aur maal diya gaya, phir unhi ki purani haalat wale ek musafir ne unse madad maangi. Poori Hadith link par padhein.\n(Kahani mein gaon, ghar, kapde aur manzar tasawwur par mabni hain. Hadith ka hissa waisa hi bataya gaya hai.)\n🔔 Har hafte ek nayi Islamic kahani: subscribe karein.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Shukr",
+        "#IslamicShorts",
+        "#Imtihaan",
+        "#IslamicCartoon",
+        "#UrduKahani",
+        "#IslamicKahani",
+        "#BaniIsrail"
+      ]
+    },
+    "en": {
+      "title": "Three men, one question… only one passed 😮 Would you?",
+      "alts": [
+        "A leper, a bald man and a blind man… years later a stranger knocked",
+        "Three rich men and one poor traveller… watch till the end"
+      ],
+      "description": "A leper, a bald man and a blind man. All three lives changed… their valleys filled with herds.\nThen one day a poor traveller came to their doors… and the test began.\n\n💬 Which of the three would you be? Be honest.\n\n📖 Reference: Sahih al-Bukhari 3464 https://sunnah.com/bukhari:3464\nMeaning of the Hadith: the Prophet ﷺ told of three men of Bani Israil (a leper, a bald man and a blind man) whom Allah tested. They were given health and wealth, then a traveller in their old condition asked them for help. Read the full Hadith at the link.\n(The village, houses, clothes and settings are imagined. The Hadith part is told as it is.)\n🔔 A new Islamic story every week: subscribe.",
+      "hashtags": [
+        "#Shorts",
+        "#IslamicStories",
+        "#Hadith",
+        "#Bukhari",
+        "#Gratitude",
+        "#IslamicShorts",
+        "#TheTest",
+        "#IslamicCartoon",
+        "#IslamicKidsStories",
+        "#BaniIsrael"
+      ]
+    }
+  },
+  "thumbnail": {
+    "at": 24,
+    "text": {
+      "ur": "Kaun paas hua?",
+      "en": "Who passed?"
+    },
+    "zoom": 1.08,
+    "focus": [
+      0.5,
+      0.55
+    ]
+  },
+  "scenes": [
+    {
+      "id": "s1-hook",
+      "lines": [
+        {
+          "text": "Teen aadmi… ek hi sawaal… aur sirf ek paas hua.",
+          "voiceText": "तीन आदमी… एक ही सवाल… और सिर्फ़ एक पास हुआ।",
+          "en": {
+            "text": "Three men… one question… and only one passed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2-teen-dukh",
+      "lines": [
+        {
+          "text": "Rasoolullah ﷺ ne bataya: Bani Israil mein teen aadmi the.",
+          "voiceText": "रसूलुल्लाह सल्लल्लाहु अलैहि वसल्लम ने बताया: बनी इसराईल में तीन आदमी थे।",
+          "en": {
+            "text": "The Prophet ﷺ told us: among the Children of Israel, there were three men.",
+            "voiceText": "The Prophet, peace be upon him, told us: among the Children of Israel, there were three men."
+          }
+        },
+        {
+          "text": "Ek kodhi, jisse log door bhaagte…",
+          "voiceText": "एक कोढ़ी, जिससे लोग दूर भागते…",
+          "en": {
+            "text": "A leper, whom people ran from…"
+          }
+        },
+        {
+          "text": "Ek ganja, jisse log katraate…",
+          "voiceText": "एक गंजा, जिससे लोग कतराते…",
+          "en": {
+            "text": "a bald man, whom people avoided…"
+          }
+        },
+        {
+          "text": "Aur ek andha, jo bas logon ko dekhna chahta tha.",
+          "voiceText": "और एक अंधा, जो बस लोगों को देखना चाहता था।",
+          "en": {
+            "text": "and a blind man, who only wished to see people."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s3-pehli-mulaqat",
+      "lines": [
+        {
+          "text": "Allah ne unhe aazmana chaha, aur ek farishta bheja. Usne teeno se ek hi sawaal poochha: tumhe sabse zyada kya pasand hai?",
+          "voiceText": "अल्लाह ने उन्हें आज़माना चाहा, और एक फ़रिश्ता भेजा। उसने तीनों से एक ही सवाल पूछा: तुम्हें सबसे ज़्यादा क्या पसंद है?",
+          "en": {
+            "text": "Allah willed to test them, and sent them an angel. He asked all three the same question: what do you love most?"
+          }
+        },
+        {
+          "text": "Kodhi ko saaf rang mila, aur ek gaabhin oontni.",
+          "voiceText": "कोढ़ी को साफ़ रंग मिला, और एक गाभिन ऊँटनी।",
+          "en": {
+            "text": "The leper got clear skin, and a pregnant camel."
+          }
+        },
+        {
+          "text": "Ganje ko baal, aur ek gaay.",
+          "voiceText": "गंजे को बाल, और एक गाय।",
+          "en": {
+            "text": "The bald man got hair, and a cow."
+          }
+        },
+        {
+          "text": "Andhe ko aankhen… aur ek bakri.",
+          "voiceText": "अंधे को आँखें… और एक बकरी।",
+          "en": {
+            "text": "The blind man got his sight… and a sheep."
+          }
+        },
+        {
+          "text": "Aur har ek ko dua mili: Allah tumhe isme barkat de.",
+          "voiceText": "और हर एक को दुआ मिली: अल्लाह तुम्हें इसमें बरकत दे।",
+          "en": {
+            "text": "And each was told: may Allah bless you in it."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s4-barkat",
+      "lines": [
+        {
+          "text": "Phir wohi ek oontni, ek gaay, ek bakri… badhte badhte teen poori waadiyan bhar gayin.",
+          "voiceText": "फिर वही एक ऊँटनी, एक गाय, एक बकरी… बढ़ते बढ़ते तीन पूरी वादियाँ भर गईं।",
+          "en": {
+            "text": "Then that one camel, one cow, one sheep… grew and grew, until three whole valleys were full."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s5-imtihaan",
+      "lines": [
+        {
+          "text": "Phir farishta lauta… is baar ek gareeb kodhi musafir ki shakl mein. 'Mera safar ka saamaan khatam ho gaya, Allah ke baad sirf tum ho… us Allah ke naam par jisne tumhe yeh rang aur yeh maal diya, ek oont de do.'",
+          "voiceText": "फिर फ़रिश्ता लौटा… इस बार एक ग़रीब कोढ़ी मुसाफ़िर की शक्ल में। 'मेरा सफ़र का सामान ख़त्म हो गया, अल्लाह के बाद सिर्फ़ तुम हो… उस अल्लाह के नाम पर जिसने तुम्हें यह रंग और यह माल दिया, एक ऊँट दे दो।'",
+          "en": {
+            "text": "Then the angel came back… this time as a poor leper on a journey. 'My provisions are gone, after Allah there is only you… by Allah who gave you this skin and this wealth, give me one camel.'"
+          }
+        },
+        {
+          "text": "Jawab mila: mujh par bahut zimmedariyan hain… 'Kya tum wahi kodhi nahi the?' 'Nahi, yeh sab toh baap-dada se mila hai.'",
+          "voiceText": "जवाब मिला: मुझ पर बहुत ज़िम्मेदारियाँ हैं… 'क्या तुम वही कोढ़ी नहीं थे?' 'नहीं, यह सब तो बाप-दादा से मिला है।'",
+          "en": {
+            "text": "The answer: I have too many obligations… 'Weren't you that leper?' 'No, I inherited all this from my forefathers.'"
+          }
+        },
+        {
+          "text": "Ganje ne bhi yahi kaha… aur dono se kaha gaya: agar jhoot bolte ho, toh Allah tumhe waisa hi kar de jaise tum the.",
+          "voiceText": "गंजे ने भी यही कहा… और दोनों से कहा गया: अगर झूठ बोलते हो, तो अल्लाह तुम्हें वैसा ही कर दे जैसे तुम थे।",
+          "en": {
+            "text": "The bald man said the same… and to both he said: if you are lying, may Allah make you as you were before."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s6-teesra-darwaza",
+      "lines": [
+        {
+          "text": "Aakhir mein woh ek andhe musafir ki shakl mein teesre ke paas gaya, aur ek bakri maangi.",
+          "voiceText": "आख़िर में वो एक अंधे मुसाफ़िर की शक्ल में तीसरे के पास गया, और एक बकरी माँगी।",
+          "en": {
+            "text": "Last, he came to the third man as a blind traveller, and asked for one sheep."
+          }
+        },
+        {
+          "text": "Usne kaha: main andha tha, Allah ne aankhen di… gareeb tha, Allah ne ameer banaya. Jo chaho le lo… Allah ke liye jo bhi loge, main nahi rokunga.",
+          "voiceText": "उसने कहा: मैं अंधा था, अल्लाह ने आँखें दीं… ग़रीब था, अल्लाह ने अमीर बनाया। जो चाहो ले लो… अल्लाह के लिए जो भी लोगे, मैं नहीं रोकूँगा।",
+          "en": {
+            "text": "He said: I was blind, and Allah gave me sight… I was poor, and Allah made me rich. Take whatever you want… whatever you take for Allah's sake, I will not stop you."
+          }
+        }
+      ]
+    },
+    {
+      "id": "s7-ant",
+      "subtitleMax": 0.75,
+      "lines": [
+        {
+          "text": "Tab jawab aaya: apna maal apne paas rakho. Tum teeno aazmaye gaye the… Allah tumse raazi hua, aur tumhare dono saathiyon se naraaz.",
+          "voiceText": "तब जवाब आया: अपना माल अपने पास रखो। तुम तीनों आज़माए गए थे… अल्लाह तुमसे राज़ी हुआ, और तुम्हारे दोनों साथियों से नाराज़।",
+          "en": {
+            "text": "Then came the answer: keep your wealth. All three of you were tested… Allah is pleased with you, and angry with your two companions."
+          }
+        },
+        {
+          "text": "Apna kal… mat bhoolo.",
+          "voiceText": "अपना कल… मत भूलो।",
+          "en": {
+            "text": "Never forget… where you came from."
+          }
+        }
+      ]
+    }
+  ],
+  "languages": [
+    "ur",
+    "en"
+  ]
+}

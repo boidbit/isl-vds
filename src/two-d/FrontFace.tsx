@@ -43,19 +43,20 @@ export type FrontPose = {
 
 export const FRONT_BASE: FrontPose = { eyeOpen: 1, lookX: 0, lookY: 0, brow: 0, wide: 0, mouth: "neutral", talk: 0, tilt: 0, turn: 0, t: 0, hands: "none", handsUp: 1, holdW: 120 };
 
-const Eye: React.FC<{ x: number; y: number; p: FrontPose; s: number }> = ({ x, y, p, s }) => {
+const Eye: React.FC<{ x: number; y: number; p: FrontPose; s: number; blind?: number }> = ({ x, y, p, s, blind = 0 }) => {
   const rx = (21 + p.wide * 4) * s;
-  const ry = (16 + p.wide * 8) * s * Math.max(0.08, p.eyeOpen);
+  const ry = (16 + p.wide * 8) * s * Math.max(0.08, p.eyeOpen) * (1 - blind * 0.3);
   const pr = (10 - p.wide * 2) * s;
   return (
     <g>
       <ellipse cx={x} cy={y} rx={rx} ry={ry} fill="#fffaf0" {...st} strokeWidth={4} />
-      {p.eyeOpen > 0.3 && (
-        <>
+      {blind > 0.02 && <ellipse cx={x} cy={y} rx={rx - 3} ry={Math.max(1, ry - 2)} fill="#d6dee6" opacity={blind * 0.92} />}
+      {p.eyeOpen > 0.3 && blind < 0.98 && (
+        <g opacity={1 - blind}>
           <circle cx={x + p.lookX * 9} cy={y + p.lookY * 6} r={pr + 2} fill="#4a2e1c" />
           <circle cx={x + p.lookX * 9} cy={y + p.lookY * 6} r={Math.max(2, pr - 3)} fill="#120c08" />
           <circle cx={x + p.lookX * 9 - 4} cy={y + p.lookY * 6 - 4} r={3.4} fill="#ffffff" />
-        </>
+        </g>
       )}
       <path d={`M ${x - rx - 2} ${y - 1} Q ${x} ${y - ry - 7} ${x + rx + 2} ${y - 1}`} fill="none" stroke={OUT} strokeWidth={5} strokeLinecap="round" />
     </g>
@@ -187,8 +188,16 @@ export const MusafirFront: React.FC<{
       ) : (
         <path d={`M ${fx - 4} -18 Q ${fx - 16} 18 ${fx - 10} 24 Q ${fx + 2} 30 ${fx + 14} 22`} fill="none" stroke={OUT} strokeWidth={4} strokeLinecap="round" />
       )}
-      <Eye x={-44 + fx} y={-12} p={p} s={es} />
-      <Eye x={44 + fx} y={-12} p={p} s={es} />
+      <Eye x={-44 + fx} y={-12} p={p} s={es} blind={C.blind ?? 0} />
+      <Eye x={44 + fx} y={-12} p={p} s={es} blind={C.blind ?? 0} />
+      {(C.patches ?? 0) > 0.01 && (
+        <g opacity={C.patches} fill="#f3cdb8" stroke="#d9a58a" strokeWidth={3}>
+          <path d={`M ${fx - 80} 20 q 20 -18 40 -4 q 10 20 -10 26 q -26 6 -30 -22 Z`} />
+          <path d={`M ${fx + 40} -78 q 18 -14 36 -2 q 8 16 -10 20 q -22 2 -26 -18 Z`} />
+          <path d={`M ${fx + 58} 40 q 12 -8 22 4 q 2 14 -12 14 q -12 -2 -10 -18 Z`} />
+          <path d={`M ${fx - 40} -96 q 10 -8 20 0 q 2 10 -8 12 q -12 0 -12 -12 Z`} />
+        </g>
+      )}
       <path d={`M ${-72 + fx} ${browY + 6} Q ${-48 + fx} ${browY - 8} ${-22 + fx} ${browY - browIn}`} fill="none" stroke={C.beard} strokeWidth={10 * bw} strokeLinecap="round" />
       <path d={`M ${72 + fx} ${browY + 6} Q ${48 + fx} ${browY - 8} ${22 + fx} ${browY - browIn}`} fill="none" stroke={C.beard} strokeWidth={10 * bw} strokeLinecap="round" />
       {(C.age ?? 0) > 0 && (
@@ -207,6 +216,18 @@ export const MusafirFront: React.FC<{
         </>
       )}
       {C.headwear === "cap" && <path d="M -100 -60 Q -96 -150 0 -154 Q 96 -150 100 -60 Q 0 -80 -100 -60 Z" fill={C.turban} {...st} />}
+      {C.headwear === "none" &&
+        ((C.hair ?? 0) > 0.02 ? (
+          <path
+            transform={`translate(0 -70) scale(1 ${0.35 + 0.65 * (C.hair ?? 0)}) translate(0 70)`}
+            d="M -110 -20 Q -124 -140 0 -142 Q 124 -140 110 -20 Q 96 -84 40 -92 Q 0 -96 -40 -92 Q -96 -84 -110 -20 Z"
+            fill={C.beard}
+            opacity={Math.min(1, (C.hair ?? 0) * 1.6)}
+            {...st}
+          />
+        ) : (
+          <ellipse cx={-26} cy={-96} rx={34} ry={14} fill="#ffffff" opacity={0.5} transform="rotate(-14 -26 -96)" />
+        ))}
       {C.headwear === "scarf" && <path d="M -118 60 Q -130 -150 0 -150 Q 130 -150 118 60 Q 110 -60 0 -84 Q -110 -60 -118 60 Z" fill={C.turban} {...st} />}
     </g>
   );
